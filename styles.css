@@ -655,12 +655,24 @@ img {
     transition: transform var(--transition-normal);
 }
 
+.icon-img {
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0 2px 8px rgba(80, 128, 142, 0.15));
+    transition: transform var(--transition-normal);
+}
+
 .content-card:hover .card-icon svg,
 .mission-card:hover .mission-icon svg,
 .program-card:hover .program-icon svg,
 .impact-card:hover .impact-icon svg,
-.model-pillar:hover .pillar-icon svg {
-    transform: scale(1.05);
+.model-pillar:hover .pillar-icon svg,
+.content-card:hover .icon-img,
+.mission-card:hover .icon-img,
+.program-card:hover .icon-img,
+.impact-card:hover .icon-img,
+.model-pillar:hover .icon-img {
+    transform: scale(1.1) rotate(2deg);
 }
 
 .content-card p,
