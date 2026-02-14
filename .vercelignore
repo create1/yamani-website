@@ -1,0 +1,5 @@
+# Vercel deployment settings
+.vercel/
+test.html
+deploy.log
+*.md
