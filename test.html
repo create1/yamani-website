@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Test - Yamani</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+    <style>
+        body { padding: 40px; }
+        .test-box {
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #ccc;
+        }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Yamani CSS Test Page</h1>
+    
+    <div class="test-box">
+        <h2>CSS Loading Test</h2>
+        <p class="hero-title" style="font-size: 2rem;">This should be in Georgia font</p>
+        <p class="success" id="font-test">✓ CSS Loaded Successfully</p>
+    </div>
+    
+    <div class="test-box">
+        <h2>Color Variables Test</h2>
+        <div style="background: var(--primary-slate); color: white; padding: 10px;">Primary Slate</div>
+        <div style="background: var(--secondary-sage); color: white; padding: 10px;">Secondary Sage</div>
+        <div style="background: var(--accent-eucalyptus); color: white; padding: 10px;">Accent Eucalyptus</div>
+    </div>
+    
+    <div class="test-box">
+        <h2>Component Test</h2>
+        <div class="content-card" style="max-width: 400px;">
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" width="48" height="48">
+                    <circle cx="32" cy="32" r="20" fill="#50808E"/>
+                </svg>
+            </div>
+            <h3>Test Card</h3>
+            <p>If this card has styling, CSS is working!</p>
+        </div>
+    </div>
+    
+    <script>
+        // Check if CSS loaded
+        const testEl = document.querySelector('.hero-title');
+        const computed = window.getComputedStyle(testEl);
+        const fontFamily = computed.getPropertyValue('font-family');
+        
+        console.log('Font Family:', fontFamily);
+        
+        if (fontFamily.includes('Georgia')) {
+            document.getElementById('font-test').textContent = '✓ CSS Loaded Successfully - Georgia font detected!';
+            document.getElementById('font-test').className = 'success';
+        } else {
+            document.getElementById('font-test').textContent = '✗ CSS Not Loading - Using default font';
+            document.getElementById('font-test').className = 'error';
+        }
+        
+        // Log CSS variables
+        const root = document.documentElement;
+        const styles = getComputedStyle(root);
+        console.log('--primary-slate:', styles.getPropertyValue('--primary-slate'));
+        console.log('--secondary-sage:', styles.getPropertyValue('--secondary-sage'));
+    </script>
+</body>
+</html>
