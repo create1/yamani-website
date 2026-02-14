@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yamani Logo Concepts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            padding: 3rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2C3E50;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .logo-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo-card h3 {
+            color: #50808E;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Logo 1: Classic Wordmark */
+        .logo-1 {
+            font-family: 'Georgia', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #50808E;
+            letter-spacing: 2px;
+            margin: 2rem 0;
+        }
+
+        .logo-1-subtitle {
+            font-family: 'Arial', sans-serif;
+            font-size: 0.9rem;
+            color: #84B59F;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Logo 2: Modern Geometric */
+        .logo-2-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .logo-2-icon {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .logo-2-icon .circle {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .logo-2-icon .circle-1 {
+            width: 40px;
+            height: 40px;
+            background-color: #50808E;
+            top: 0;
+            left: 0;
+            opacity: 0.8;
+        }
+
+        .logo-2-icon .circle-2 {
+            width: 40px;
+            height: 40px;
+            background-color: #84B59F;
+            top: 10px;
+            left: 10px;
+            opacity: 0.8;
+        }
+
+        .logo-2-icon .circle-3 {
+            width: 40px;
+            height: 40px;
+            background-color: #69A297;
+            top: 20px;
+            left: 20px;
+            opacity: 0.8;
+        }
+
+        .logo-2-text {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #50808E;
+        }
+
+        /* Logo 3: Minimalist Stone */
+        .logo-3-container {
+            margin: 2rem 0;
+        }
+
+        .logo-3-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #50808E 0%, #69A297 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .logo-3-text {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #50808E;
+        }
+
+        /* Logo 4: Interlocking */
+        .logo-4-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .logo-4-icon {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .logo-4-icon .square {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border-radius: 5px;
+        }
+
+        .logo-4-icon .square-1 {
+            background-color: #50808E;
+            top: 0;
+            left: 0;
+            transform: rotate(15deg);
+        }
+
+        .logo-4-icon .square-2 {
+            background-color: #84B59F;
+            bottom: 0;
+            right: 0;
+            transform: rotate(-15deg);
+        }
+
+        .logo-4-text {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #50808E;
+        }
+
+        /* Logo 5: Mountain Peak */
+        .logo-5-container {
+            margin: 2rem 0;
+        }
+
+        .logo-5-icon {
+            width: 100px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .logo-5-icon .peak {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .logo-5-icon .peak-1 {
+            border-width: 0 25px 40px 25px;
+            border-color: transparent transparent #50808E transparent;
+            left: 0;
+            bottom: 0;
+        }
+
+        .logo-5-icon .peak-2 {
+            border-width: 0 25px 50px 25px;
+            border-color: transparent transparent #84B59F transparent;
+            left: 25px;
+            bottom: 0;
+        }
+
+        .logo-5-icon .peak-3 {
+            border-width: 0 25px 35px 25px;
+            border-color: transparent transparent #69A297 transparent;
+            left: 50px;
+            bottom: 0;
+        }
+
+        .logo-5-text {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #50808E;
+        }
+
+        /* Logo 6: Letter Y Monogram */
+        .logo-6-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .logo-6-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #50808E 0%, #84B59F 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Georgia', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo-6-text {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #50808E;
+        }
+
+        .download-note {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-note p {
+            color: #2C3E50;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-name {
+            font-size: 0.8rem;
+            color: #2C3E50;
+            font-weight: 600;
+        }
+
+        .color-code {
+            font-size: 0.7rem;
+            color: #666;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Yamani Logo Concepts</h1>
+        
+        <div class="logo-grid">
+            <!-- Logo 1: Classic Wordmark -->
+            <div class="logo-card">
+                <h3>Option 1: Classic Wordmark</h3>
+                <div class="logo-1">Yamani</div>
+                <div class="logo-1-subtitle">Innovation & Wellness</div>
+            </div>
+
+            <!-- Logo 2: Modern Geometric Circles -->
+            <div class="logo-card">
+                <h3>Option 2: Integrated Circles</h3>
+                <div class="logo-2-container">
+                    <div class="logo-2-icon">
+                        <div class="circle circle-1"></div>
+                        <div class="circle circle-2"></div>
+                        <div class="circle circle-3"></div>
+                    </div>
+                    <div class="logo-2-text">Yamani</div>
+                </div>
+            </div>
+
+            <!-- Logo 3: Stone/Hexagon -->
+            <div class="logo-card">
+                <h3>Option 3: Stone Foundation</h3>
+                <div class="logo-3-container">
+                    <div class="logo-3-icon">Y</div>
+                    <div class="logo-3-text">Yamani</div>
+                </div>
+            </div>
+
+            <!-- Logo 4: Interlocking Squares -->
+            <div class="logo-card">
+                <h3>Option 4: Interlocking Balance</h3>
+                <div class="logo-4-container">
+                    <div class="logo-4-icon">
+                        <div class="square square-1"></div>
+                        <div class="square square-2"></div>
+                    </div>
+                    <div class="logo-4-text">Yamani</div>
+                </div>
+            </div>
+
+            <!-- Logo 5: Mountain Peak -->
+            <div class="logo-card">
+                <h3>Option 5: Sierra Peaks</h3>
+                <div class="logo-5-container">
+                    <div class="logo-5-icon">
+                        <div class="peak peak-1"></div>
+                        <div class="peak peak-2"></div>
+                        <div class="peak peak-3"></div>
+                    </div>
+                    <div class="logo-5-text">Yamani</div>
+                </div>
+            </div>
+
+            <!-- Logo 6: Y Monogram -->
+            <div class="logo-card">
+                <h3>Option 6: Y Monogram</h3>
+                <div class="logo-6-container">
+                    <div class="logo-6-icon">Y</div>
+                    <div class="logo-6-text">amani</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="download-note">
+            <h2 style="color: #50808E; margin-bottom: 1rem;">Brand Color Palette</h2>
+            <p>These are the official Yamani brand colors from the brand identity guide.</p>
+            
+            <div class="color-palette">
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: #50808E;"></div>
+                    <div class="color-name">Primary Slate</div>
+                    <div class="color-code">#50808E</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: #84B59F;"></div>
+                    <div class="color-name">Secondary Sage</div>
+                    <div class="color-code">#84B59F</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: #69A297;"></div>
+                    <div class="color-name">Accent Eucalyptus</div>
+                    <div class="color-code">#69A297</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: #2C3E50;"></div>
+                    <div class="color-name">Charcoal</div>
+                    <div class="color-code">#2C3E50</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: #F5F5F5;"></div>
+                    <div class="color-name">Off-White</div>
+                    <div class="color-code">#F5F5F5</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; font-style: italic;">
+                These logo concepts are created with HTML/CSS and can be easily exported or recreated in design software like Adobe Illustrator or Figma.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
