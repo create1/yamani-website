@@ -1,0 +1,24 @@
+Vercel CLI 50.16.0
+WARN! The "--team" option is deprecated. Please use "--scope" instead.
+Loading scopes…
+{
+  "status": "action_required",
+  "reason": "missing_scope",
+  "message": "Provide --scope or --team explicitly. No default is applied in non-interactive mode.",
+  "choices": [
+    {
+      "id": "team_ZFaaKdYqa59nKm6vO9q2Ob3M",
+      "name": "j-2674s-projects"
+    }
+  ],
+  "next": [
+    {
+      "command": "vercel link --scope j-2674s-projects",
+      "when": "Link first (then run any command without --scope)"
+    },
+    {
+      "command": "vercel deploy --prod --yes --scope j-2674s-projects",
+      "when": "Run this command with scope (no link)"
+    }
+  ]
+}
