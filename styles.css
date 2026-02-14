@@ -635,6 +635,34 @@ img {
     margin-bottom: var(--spacing-sm);
 }
 
+.card-icon,
+.mission-icon,
+.program-icon,
+.impact-icon,
+.pillar-icon {
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icon svg,
+.mission-icon svg,
+.program-icon svg,
+.impact-icon svg,
+.pillar-icon svg {
+    filter: drop-shadow(0 2px 8px rgba(80, 128, 142, 0.15));
+    transition: transform var(--transition-normal);
+}
+
+.content-card:hover .card-icon svg,
+.mission-card:hover .mission-icon svg,
+.program-card:hover .program-icon svg,
+.impact-card:hover .impact-icon svg,
+.model-pillar:hover .pillar-icon svg {
+    transform: scale(1.05);
+}
+
 .content-card p,
 .mission-card p,
 .program-card p,
