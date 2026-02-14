@@ -645,7 +645,8 @@ img {
 .mission-icon,
 .program-icon,
 .impact-icon,
-.pillar-icon {
+.pillar-icon,
+.vision-icon {
     margin-bottom: var(--spacing-md);
     display: flex;
     align-items: center;
@@ -683,11 +684,13 @@ img {
 .program-card:hover .program-icon svg,
 .impact-card:hover .impact-icon svg,
 .model-pillar:hover .pillar-icon svg,
+.vision-card:hover .vision-icon svg,
 .content-card:hover .icon-img,
 .mission-card:hover .icon-img,
 .program-card:hover .icon-img,
 .impact-card:hover .impact-icon img,
-.model-pillar:hover .icon-img {
+.model-pillar:hover .icon-img,
+.vision-card:hover .icon-img {
     transform: scale(1.15) rotate(5deg);
     filter: brightness(0) saturate(100%) invert(55%) sepia(18%) saturate(882%) hue-rotate(110deg) brightness(96%) contrast(90%);
 }
@@ -696,7 +699,8 @@ img {
 .mission-card:hover .mission-icon,
 .program-card:hover .program-icon,
 .impact-card:hover .impact-icon,
-.model-pillar:hover .pillar-icon {
+.model-pillar:hover .pillar-icon,
+.vision-card:hover .vision-icon {
     background: linear-gradient(135deg, rgba(132, 181, 159, 0.2), rgba(105, 162, 151, 0.2));
     border-color: rgba(132, 181, 159, 0.4);
     box-shadow: 0 10px 28px rgba(132, 181, 159, 0.25);
