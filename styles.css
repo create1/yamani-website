@@ -556,12 +556,18 @@ img {
    Content Cards & Grids
    =================================== */
 .content-grid,
-.mission-grid,
 .model-grid,
 .programs-grid,
 .impact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-md);
 }
@@ -644,6 +650,15 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.9));
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(132, 181, 159, 0.4);
+    box-shadow: 0 8px 24px rgba(80, 128, 142, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.6);
 }
 
 .card-icon svg,
@@ -656,10 +671,11 @@ img {
 }
 
 .icon-img {
-    width: 56px;
-    height: 56px;
-    filter: drop-shadow(0 2px 8px rgba(80, 128, 142, 0.15));
-    transition: transform var(--transition-normal);
+    width: 64px;
+    height: 64px;
+    filter: drop-shadow(0 4px 16px rgba(132, 181, 159, 0.4)) brightness(1.5) contrast(1.3) saturate(1.2);
+    transition: all var(--transition-normal);
+    opacity: 1;
 }
 
 .content-card:hover .card-icon svg,
@@ -670,9 +686,20 @@ img {
 .content-card:hover .icon-img,
 .mission-card:hover .icon-img,
 .program-card:hover .icon-img,
-.impact-card:hover .icon-img,
+.impact-card:hover .impact-icon img,
 .model-pillar:hover .icon-img {
-    transform: scale(1.1) rotate(2deg);
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 6px 24px rgba(132, 181, 159, 0.6)) brightness(1.6) contrast(1.4) saturate(1.3);
+}
+
+.content-card:hover .card-icon,
+.mission-card:hover .mission-icon,
+.program-card:hover .program-icon,
+.impact-card:hover .impact-icon,
+.model-pillar:hover .pillar-icon {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(240, 248, 255, 1));
+    border-color: rgba(132, 181, 159, 0.6);
+    box-shadow: 0 12px 32px rgba(132, 181, 159, 0.3), inset 0 2px 12px rgba(255, 255, 255, 0.8);
 }
 
 .content-card p,
@@ -784,9 +811,62 @@ img {
    =================================== */
 .location-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
     gap: var(--spacing-lg);
-    align-items: center;
+    align-items: start;
+}
+
+.location-intro {
+    margin-bottom: var(--spacing-lg);
+}
+
+.lead-text {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: var(--charcoal);
+    margin-bottom: var(--spacing-md);
+}
+
+.stone-house-features {
+    margin-bottom: var(--spacing-lg);
+}
+
+.stone-house-features h3 {
+    font-size: 1.75rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-slate);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.feature-item {
+    background: rgba(132, 181, 159, 0.08);
+    padding: var(--spacing-md);
+    border-radius: 12px;
+    border-left: 4px solid var(--accent-eucalyptus);
+}
+
+.feature-item strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--primary-slate);
+    margin-bottom: 0.5rem;
+}
+
+.feature-item p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--charcoal);
+    margin: 0;
+}
+
+.location-features {
+    margin-bottom: var(--spacing-lg);
 }
 
 .location-features h3 {
@@ -799,7 +879,12 @@ img {
     padding: 0.75rem 0;
     padding-left: 1.5rem;
     position: relative;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.feature-list li strong {
+    color: var(--primary-slate);
 }
 
 .feature-list li::before {
@@ -1371,6 +1456,10 @@ img {
         grid-template-columns: 1fr;
     }
 
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
     .membership-tiers {
         grid-template-columns: 1fr;
     }
@@ -1417,6 +1506,13 @@ img {
 
     .cta-button.large {
         width: 100%;
+    }
+}
+
+/* Tablet breakpoint for mission grid */
+@media (max-width: 1024px) and (min-width: 641px) {
+    .mission-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
