@@ -1,8 +1,8 @@
-# Yamani Website - Quick Start Guide
+# Apotheos Website - Quick Start Guide
 
 ## 🎉 Your Website is Ready!
 
-Congratulations! Your beautiful, animated website for Yamani Innovation & Wellness Hub has been created and is ready to launch.
+Congratulations! Your beautiful, animated website for Apotheos Innovation & Wellness Hub has been created and is ready to launch.
 
 ## 📁 What You Have
 
@@ -23,13 +23,13 @@ Your project includes:
 
 ### Option 2: Using Finder (Mac)
 1. Open Finder
-2. Navigate to: `/Users/jonathanrowe/Code Projects/Yamani Website/`
+2. Navigate to: `/Users/jonathanrowe/Code Projects/Apotheos Website/`
 3. Right-click `index.html`
 4. Choose "Open With" → Your preferred browser
 
 ### Option 3: Local Server (Recommended for Development)
 ```bash
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 python3 -m http.server 8000
 ```
 Then open: http://localhost:8000
@@ -102,7 +102,7 @@ All content is in `index.html`. Search for section IDs:
 3. Replace the text logo in the nav:
 ```html
 <div class="logo">
-    <img src="logo.png" alt="Yamani Logo">
+    <img src="logo.png" alt="Apotheos Logo">
 </div>
 ```
 
@@ -256,7 +256,7 @@ Choose your favorite and work with a designer to refine it!
 
 ## 🎉 You're All Set!
 
-Your website is professional, modern, animated, and ready to help Yamani make Nevada City a better place through innovation, education, and wellness.
+Your website is professional, modern, animated, and ready to help Apotheos make Nevada City a better place through innovation, education, and wellness.
 
 **Good luck with the launch!** 🚀
 

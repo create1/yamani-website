@@ -1,5 +1,5 @@
 // ===================================
-// Yamani Website JavaScript
+// Apotheos Website JavaScript
 // ===================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -481,6 +481,76 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(focusStyle);
+
+    // ===================================
+    // Waitlist Form (Formspree)
+    // ===================================
+    const waitlistForm = document.getElementById('waitlist-form');
+    const formSuccess = document.getElementById('form-success');
+
+    if (waitlistForm) {
+        waitlistForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = waitlistForm.querySelector('button[type="submit"]');
+            btn.textContent = 'Submitting...';
+            btn.disabled = true;
+
+            const data = new FormData(waitlistForm);
+
+            try {
+                const response = await fetch(waitlistForm.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    waitlistForm.style.display = 'none';
+                    formSuccess.style.display = 'block';
+                } else {
+                    btn.textContent = 'Try Again';
+                    btn.disabled = false;
+                    alert('Something went wrong. Please try again or email us directly.');
+                }
+            } catch (err) {
+                btn.textContent = 'Try Again';
+                btn.disabled = false;
+                alert('Something went wrong. Please try again or email us directly.');
+            }
+        });
+    }
+
+    // Contact form (Formspree)
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = contactForm.querySelector('button[type="submit"]');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            const data = new FormData(contactForm);
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    btn.textContent = 'Message Sent!';
+                    contactForm.reset();
+                } else {
+                    btn.textContent = 'Send Message';
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                btn.textContent = 'Send Message';
+                btn.disabled = false;
+            }
+        });
+    }
 
 });
 

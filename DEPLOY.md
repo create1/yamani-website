@@ -1,4 +1,4 @@
-# Deploy Yamani Website to Vercel
+# Deploy Apotheos Website to Vercel
 
 ## 🚀 Quick Deploy Options
 
@@ -14,7 +14,7 @@
 ### Option 2: Vercel CLI (From Terminal)
 
 ```bash
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 
 # First time setup - link project
 vercel link
@@ -28,7 +28,7 @@ vercel --prod
 1. Push your code to GitHub:
    ```bash
    # Create a new repo on GitHub first, then:
-   git remote add origin https://github.com/YOUR_USERNAME/yamani-website.git
+   git remote add origin https://github.com/YOUR_USERNAME/apotheos-website.git
    git branch -M main
    git push -u origin main
    ```
@@ -55,7 +55,7 @@ The `vercel.json` file is already set up for optimal deployment.
 ## 🌐 After Deployment
 
 Once deployed, you'll get:
-- ✅ Live URL (e.g., `yamani-website.vercel.app`)
+- ✅ Live URL (e.g., `apotheos-website.vercel.app`)
 - ✅ Automatic HTTPS/SSL
 - ✅ Global CDN
 - ✅ Fast loading worldwide

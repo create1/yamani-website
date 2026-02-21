@@ -1,4 +1,4 @@
-# Yamani Website - Deployment Checklist
+# Apotheos Website - Deployment Checklist
 
 ## Pre-Launch Checklist
 
@@ -168,7 +168,7 @@ npm install -g netlify-cli
 netlify login
 
 # Deploy
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 netlify deploy --prod
 ```
 
@@ -177,10 +177,10 @@ netlify deploy --prod
 # Initialize git (if not already)
 git init
 git add .
-git commit -m "Initial commit - Yamani website"
+git commit -m "Initial commit - Apotheos website"
 
 # Create repo on GitHub, then:
-git remote add origin https://github.com/yourusername/yamani-website.git
+git remote add origin https://github.com/yourusername/apotheos-website.git
 git branch -M main
 git push -u origin main
 

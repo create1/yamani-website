@@ -1,7 +1,7 @@
-# Yamani Website - File Structure
+# Apotheos Website - File Structure
 
 ```
-📁 Yamani Website/
+📁 Apotheos Website/
 │
 ├── 🌐 index.html (28KB)
 │   └── Main website with 13 complete sections
@@ -159,7 +159,7 @@ Just 3 steps:
 2. Customize content as needed
 3. Deploy to your hosting platform
 
-Everything is ready to go live and help Yamani make
+Everything is ready to go live and help Apotheos make
 Nevada City a better place through innovation, education,
 and wellness!
 

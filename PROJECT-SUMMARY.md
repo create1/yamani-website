@@ -1,8 +1,8 @@
-# 🎉 Yamani Website - Project Complete!
+# 🎉 Apotheos Website - Project Complete!
 
 ## What Has Been Created
 
-I've built a **complete, professional, animated website** for Yamani Innovation & Wellness Hub based on your PowerPoint presentation and brand identity guide. This is a fully functional, ready-to-launch website.
+I've built a **complete, professional, animated website** for Apotheos Innovation & Wellness Hub based on your PowerPoint presentation and brand identity guide. This is a fully functional, ready-to-launch website.
 
 ---
 
@@ -250,13 +250,13 @@ Navigate to the folder and double-click index.html
 
 **Method 2: Terminal**
 ```bash
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 open index.html
 ```
 
 **Method 3: Local Server (Recommended)**
 ```bash
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 python3 -m http.server 8000
 # Then visit: http://localhost:8000
 ```
@@ -464,7 +464,7 @@ You now have a **complete, professional, animated website** that:
 
 ## 🚀 You're Ready to Launch!
 
-Your beautiful website is ready to help Yamani Innovation & Wellness Hub make Nevada City and the Sierra Foothills a better place through innovation, education, and wellness.
+Your beautiful website is ready to help Apotheos Innovation & Wellness Hub make Nevada City and the Sierra Foothills a better place through innovation, education, and wellness.
 
 **Location:** 107 Sacramento Street, Nevada City, CA 95959
 

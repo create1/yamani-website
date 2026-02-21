@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Simple deployment workflow for Yamani Website
+# Simple deployment workflow for Apotheos Website
 
-echo "🚀 Yamani Website - Quick Deploy"
+echo "🚀 Apotheos Website - Quick Deploy"
 echo "================================="
 echo ""
 
 # Navigate to project
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 
 # 1. Stage all changes
 echo "📦 Staging changes..."
@@ -27,4 +27,4 @@ vercel --prod --yes
 
 echo ""
 echo "✅ Deployment complete!"
-echo "🌐 Live at: https://yamani-website.vercel.app"
+echo "🌐 Live at: https://apotheos.org"

@@ -7,7 +7,7 @@ The `vercel.json` file had a bad configuration that was breaking the deployment.
 
 ### Option 1: One-Command Deploy (Easiest!)
 ```bash
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 ./deploy-simple.sh
 ```
 This script does everything automatically:
@@ -17,7 +17,7 @@ This script does everything automatically:
 
 ### Option 2: Manual Steps
 ```bash
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 
 # 1. Save to GitHub
 git add -A
@@ -61,7 +61,7 @@ Or just:
 
 **Test Locally First:**
 ```bash
-cd "/Users/jonathanrowe/Code Projects/Yamani Website"
+cd "/Users/jonathanrowe/Code Projects/Apotheos Website"
 python3 -m http.server 8000
 # Visit: http://localhost:8000
 ```
