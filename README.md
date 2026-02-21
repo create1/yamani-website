@@ -1,14 +1,14 @@
-# Yamani - Innovation & Wellness Hub Website
+# Apotheos - Innovation & Wellness Hub Website
 
-![Yamani Logo](https://img.shields.io/badge/Yamani-Innovation%20%26%20Wellness-50808E?style=for-the-badge)
+![Apotheos Logo](https://img.shields.io/badge/Apotheos-Innovation%20%26%20Wellness-50808E?style=for-the-badge)
 
 ## Overview
 
-This is the official website for **Yamani**, a nonprofit Innovation & Wellness Hub located in Nevada City, California. The website is designed to showcase our mission of building community through innovation, education, and wellness.
+This is the official website for **Apotheos**, a nonprofit Innovation & Wellness Hub located in Nevada City, California. The website is designed to showcase our mission of building community through innovation, education, and wellness.
 
 ## Project Description
 
-Yamani exists to bridge the gap for remote workers, founders, and creatives who have relocated to smaller, lifestyle-driven towns. We provide structured founder ecosystems, access to capital, professional development, and integrated wellness support in the heart of the Sierra Foothills.
+Apotheos exists to bridge the gap for remote workers, founders, and creatives who have relocated to smaller, lifestyle-driven towns. We provide structured founder ecosystems, access to capital, professional development, and integrated wellness support in the heart of the Sierra Foothills.
 
 ## Brand Identity
 
@@ -208,13 +208,13 @@ Potential additions for future versions:
 
 ## Contact
 
-For questions about the website or Yamani:
+For questions about the website or Apotheos:
 - **Address**: 107 Sacramento Street, Nevada City, CA 95959
 - **Website**: [Coming Soon]
 
 ## License
 
-© 2026 Yamani Innovation & Wellness Hub. All rights reserved.
+© 2026 Apotheos Innovation & Wellness Hub. All rights reserved.
 
 ---
 
