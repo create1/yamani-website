@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curriculum — Apotheos Learning & Innovation Center</title>
+  <meta name="description" content="Three tracks, one campus. AI Learning, Founder Ecosystem, and Wellness — in the heart of Nevada City.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:       #C9A84C;
+      --gold-light: #E8C87A;
+      --gold-dim:   #8A6F35;
+      --gold-glow:  rgba(201,168,76,0.15);
+      --ink:        #0D0C09;
+      --ink2:       #1A1912;
+      --ink3:       #252318;
+      --surface:    #1E1D16;
+      --surface2:   #2A2920;
+      --surface3:   #34332A;
+      --sage:       #7A9E7E;
+      --sage-light: #A8C5AC;
+      --rust:       #C4613A;
+      --rust-light: #E07A52;
+      --teal:       #50808E;
+      --teal-light: #69A297;
+      --bone:       #F5F0E8;
+      --muted:      #8A8575;
+      --text:       #EDE8DC;
+      --border:     rgba(201,168,76,0.18);
+      --border2:    rgba(201,168,76,0.08);
+      --font-serif:  'Cormorant Garamond', Georgia, serif;
+      --font-sans:   'Outfit', sans-serif;
+      --font-mono:   'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--ink);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(13,12,9,0.92);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand a {
+      text-decoration: none;
+    }
+
+    .nav-wordmark {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .nav-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--gold); }
+
+    .nav-pill {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-pill:hover { background: var(--gold-glow); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9rem 3rem 6rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-orb-l {
+      position: absolute; top: 10%; left: -15%;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(201,168,76,0.06), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-orb-r {
+      position: absolute; bottom: 5%; right: -15%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(122,158,126,0.06), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner { max-width: 880px; position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .eyebrow-line { width: 40px; height: 1px; background: var(--gold); }
+
+    .eyebrow-text {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3.5rem, 7vw, 7rem);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-title em { font-style: italic; color: var(--gold); }
+
+    .hero-sub {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 640px;
+      margin: 0 auto 3rem;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+
+    .hero-desc strong { color: var(--text); font-weight: 500; }
+
+    /* Schedule summary cards */
+    .schedule-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+
+    .sch-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.75rem 1.5rem;
+      text-align: left;
+    }
+
+    .sch-time {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 2rem;
+      display: inline-block;
+    }
+
+    .sch-time.morning { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .sch-time.allday  { background: rgba(122,158,126,0.12); color: var(--sage-light); }
+
+    .sch-name {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .sch-detail {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .sch-bar {
+      height: 2px;
+      border-radius: 1px;
+      margin-top: 1.25rem;
+    }
+
+    /* ─── LAYOUT BASE ─── */
+    .full-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .section {
+      padding: 7rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .eyebrow-line-sm { width: 28px; height: 1px; background: var(--gold); }
+
+    .eyebrow-sm {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .section-h {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.75rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-h em { font-style: italic; color: var(--gold); }
+
+    .section-p {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 580px;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ─── TRACK HEADERS ─── */
+    .track-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem 1.5rem 0 0;
+      border-bottom: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .track-header .bg-glyph {
+      position: absolute;
+      right: 2rem; bottom: -1rem;
+      font-family: var(--font-serif);
+      font-size: 9rem;
+      font-weight: 700;
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .th-left { position: relative; z-index: 1; }
+
+    .th-track-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .th-icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+
+    .th-name {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .th-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 480px;
+    }
+
+    .th-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .th-schedule-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .badge-morning { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); }
+    .badge-allday  { background: rgba(122,158,126,0.15); border: 1px solid rgba(122,158,126,0.3); color: var(--sage-light); }
+
+    .th-stats {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .th-stat { text-align: right; }
+
+    .th-stat-num {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 700;
+      display: block;
+      line-height: 1;
+    }
+
+    .th-stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ─── COURSE TABLE ─── */
+    .course-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 1px solid var(--border2);
+      margin-bottom: 0;
+    }
+
+    .course-section:last-of-type {
+      border-radius: 0 0 1.5rem 1.5rem;
+    }
+
+    .cs-heading {
+      padding: 1.5rem 3rem 1rem;
+      border-bottom: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .cs-icon { font-size: 1.25rem; }
+
+    .cs-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .cs-count {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-left: auto;
+    }
+
+    .course-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .course-table thead th {
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border2);
+    }
+
+    .course-table thead th:first-child { padding-left: 3rem; }
+    .course-table thead th:last-child { padding-right: 3rem; text-align: right; }
+
+    .course-table tbody tr {
+      border-bottom: 1px solid var(--border2);
+      transition: background 0.15s;
+    }
+
+    .course-table tbody tr:last-child { border-bottom: none; }
+    .course-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+    .course-table td {
+      padding: 0.9rem 1rem;
+      font-size: 0.875rem;
+      vertical-align: middle;
+    }
+
+    .course-table td:first-child { padding-left: 3rem; }
+    .course-table td:last-child { padding-right: 3rem; text-align: right; }
+
+    .course-name {
+      font-weight: 500;
+      color: var(--text);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .course-skills {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .format-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 0.25rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .level-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 2rem;
+    }
+
+    .lvl-beginner   { background: rgba(122,158,126,0.12); color: var(--sage-light); }
+    .lvl-intermediate { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .lvl-advanced   { background: rgba(196,97,58,0.12); color: var(--rust-light); }
+
+    .audience-tag {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+    }
+
+    .price-col {
+      text-align: right;
+    }
+
+    .price-online {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      display: block;
+    }
+
+    .price-inperson {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+
+    /* Track block wrapper */
+    .track-block {
+      margin-bottom: 5rem;
+    }
+
+    /* ─── WELLNESS SCHEDULE ─── */
+    .wellness-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .wellness-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .wellness-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201,168,76,0.35);
+    }
+
+    .wc-time {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .wc-icon { font-size: 1.75rem; margin-bottom: 0.75rem; display: block; }
+
+    .wc-name {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .wc-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+
+    .wc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .wc-tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.2rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .wc-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    /* Morning schedule timeline */
+    .morning-band {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 2.5rem 3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .mb-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mb-label::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: glow-pulse 2s infinite;
+    }
+
+    .timeline {
+      display: flex;
+      gap: 0;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      top: 28px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .tl-slot {
+      flex: 1;
+      padding-top: 3rem;
+      position: relative;
+      padding-right: 0.5rem;
+    }
+
+    .tl-dot {
+      position: absolute;
+      top: 22px; left: 0;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: var(--ink3);
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 10px rgba(201,168,76,0.4);
+    }
+
+    .tl-time {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .tl-class {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .tl-note { font-size: 0.7rem; color: var(--muted); }
+
+    /* ─── PRICING ─── */
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .pricing-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .tier-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .tier-card:hover { transform: translateY(-4px); }
+
+    .tier-card.featured {
+      border-color: var(--gold);
+      box-shadow: 0 0 40px rgba(201,168,76,0.12);
+    }
+
+    .tier-top {
+      padding: 2.5rem 2rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tier-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .tier-name {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .tier-price {
+      font-family: var(--font-serif);
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .tier-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      font-family: var(--font-sans);
+    }
+
+    .tier-annual {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--sage);
+      letter-spacing: 0.06em;
+      margin-top: 0.3rem;
+    }
+
+    .tier-body { padding: 2rem; }
+
+    .tier-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .tier-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    .tier-list li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.55rem;
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .tier-featured-badge {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      background: var(--gold);
+      color: var(--ink);
+      padding: 0.25rem 0.6rem;
+      border-radius: 2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ─── BUNDLES ─── */
+    .bundles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .bundle-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+
+    .bundle-card:hover { border-color: rgba(201,168,76,0.35); }
+
+    .bundle-name {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .bundle-desc { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.55; }
+
+    .bundle-prices {
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+    }
+
+    .bp-online {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .bp-inperson {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* ─── DISCOUNTS ─── */
+    .discounts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .discount-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 0.75rem;
+    }
+
+    .dr-label { font-size: 0.875rem; color: var(--text); font-weight: 300; }
+    .dr-value {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── CTA ─── */
+    .cta-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto 6rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-wrap::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07), transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-h {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+      line-height: 1.05;
+    }
+
+    .cta-h em { font-style: italic; color: var(--gold); }
+
+    .cta-p {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; }
+
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gold);
+      color: var(--ink);
+      padding: 0.875rem 1.75rem;
+      border-radius: 0.35rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(201,168,76,0.3);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      padding: 0.875rem 1.75rem;
+      border-radius: 0.35rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 400;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .footer-word {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .footer-addr {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-right {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-align: right;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 6px rgba(201,168,76,0.6); }
+      50% { box-shadow: 0 0 14px rgba(201,168,76,1); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 8rem 1.5rem 4rem; }
+      .section { padding: 5rem 1.5rem; }
+      .schedule-cards { grid-template-columns: 1fr; }
+      .track-header { flex-direction: column; padding: 2rem; }
+      .th-right { align-items: flex-start; }
+      .course-table thead th:first-child,
+      .course-table td:first-child { padding-left: 1.5rem; }
+      .course-table thead th:last-child,
+      .course-table td:last-child { padding-right: 1.5rem; }
+      .cs-heading { padding: 1.25rem 1.5rem 0.875rem; }
+      .wellness-grid { grid-template-columns: 1fr; }
+      .tier-grid { grid-template-columns: 1fr; }
+      .bundles-grid { grid-template-columns: 1fr; }
+      .discounts-grid { grid-template-columns: 1fr; }
+      .cta-wrap { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-right { text-align: center; }
+      .morning-band { padding: 1.75rem; }
+      .timeline { flex-direction: column; gap: 1.25rem; }
+      .timeline::before { display: none; }
+      .tl-slot { padding-top: 0; padding-left: 1.5rem; }
+      .tl-dot { top: 4px; left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <a href="index.html">
+      <div class="nav-wordmark">Apotheos</div>
+      <div class="nav-tagline">Learning & Innovation Center</div>
+    </a>
+  </div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="curriculum.html" class="active">Curriculum</a></li>
+      <li><a href="index.html#membership">Membership</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="index.html#waitlist" class="nav-pill">Join Waitlist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div style="position:relative;overflow:hidden;">
+  <div class="hero-orb-l"></div>
+  <div class="hero-orb-r"></div>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Apotheos Curriculum</div>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h1 class="hero-title">Three tracks.<br><em>One campus.</em></h1>
+      <p class="hero-sub">Nevada City's home for AI, entrepreneurship, and human flourishing.</p>
+      <p class="hero-desc">
+        Every program at Apotheos is organized into three tracks — <strong>AI Learning</strong>,
+        <strong>Founder Ecosystem</strong>, and <strong>Wellness</strong> — designed to serve the
+        whole person. Wellness grounds your morning. Learning and building fill your day.
+      </p>
+
+      <div class="schedule-cards">
+        <div class="sch-card">
+          <span class="sch-time morning">🌅 Morning · 7–11 AM</span>
+          <div class="sch-name">Wellness</div>
+          <div class="sch-detail">Movement, sauna, breathwork, and recovery. Start every day grounded.</div>
+          <div class="sch-bar" style="background:linear-gradient(90deg,var(--gold),transparent);"></div>
+        </div>
+        <div class="sch-card">
+          <span class="sch-time allday">☀️ All Day · 9 AM–6 PM</span>
+          <div class="sch-name">AI Learning</div>
+          <div class="sch-detail">Courses in AI tools, creative applications, and technical coding — from beginner to advanced.</div>
+          <div class="sch-bar" style="background:linear-gradient(90deg,var(--sage),transparent);"></div>
+        </div>
+        <div class="sch-card">
+          <span class="sch-time allday">☀️ All Day · 9 AM–6 PM</span>
+          <div class="sch-name">Founder Ecosystem</div>
+          <div class="sch-detail">Entrepreneur education, startup workshops, pitch prep, and business-building programs.</div>
+          <div class="sch-bar" style="background:linear-gradient(90deg,var(--rust),transparent);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<!-- ═══════════════════════════════════════
+     TRACK 1 — WELLNESS
+═══════════════════════════════════════ -->
+<section class="section" id="wellness">
+  <div class="eyebrow reveal">
+    <div class="eyebrow-line-sm"></div>
+    <div class="eyebrow-sm">Track 1 · Morning Program</div>
+  </div>
+
+  <div class="track-block">
+    <div class="track-header reveal" style="background:linear-gradient(135deg,var(--surface),var(--surface2));">
+      <div class="track-header::before" style="background:linear-gradient(90deg,var(--gold),transparent);"></div>
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:1.5rem 1.5rem 0 0;"></div>
+      <div class="bg-glyph" style="color:var(--gold);">🌿</div>
+      <div class="th-left">
+        <div class="th-track-num" style="color:var(--gold);">Track 01 · Wellness</div>
+        <span class="th-icon">🌿</span>
+        <div class="th-name">Wellness &amp; Recovery</div>
+        <div class="th-desc">Morning programming designed to ground the mind and body before the workday begins. Apotheos integrates wellness because sustainable innovation starts with sustainable humans.</div>
+      </div>
+      <div class="th-right">
+        <div class="th-schedule-badge badge-morning">🌅 Morning Only · 7–11 AM</div>
+        <div class="th-stats">
+          <div class="th-stat">
+            <span class="th-stat-num" style="color:var(--gold);">6</span>
+            <span class="th-stat-label">Class Types</span>
+          </div>
+          <div class="th-stat">
+            <span class="th-stat-num" style="color:var(--gold);">Daily</span>
+            <span class="th-stat-label">Schedule</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Morning Timeline -->
+    <div class="course-section" style="border-radius:0;border-top:1px solid var(--border2);">
+      <div class="cs-heading">
+        <span class="cs-icon">🕖</span>
+        <span class="cs-title">Daily Morning Schedule</span>
+        <span class="cs-count">Mon – Sat</span>
+      </div>
+      <div style="padding:2rem 3rem;">
+        <div class="morning-band" style="margin-bottom:0;">
+          <div class="mb-label">Live Morning Programming</div>
+          <div class="timeline">
+            <div class="tl-slot">
+              <div class="tl-dot"></div>
+              <div class="tl-time">7:00 AM</div>
+              <div class="tl-class">Sauna &amp; Cold Plunge</div>
+              <div class="tl-note">Open access — 45 min sessions</div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-dot"></div>
+              <div class="tl-time">8:00 AM</div>
+              <div class="tl-class">Movement Class</div>
+              <div class="tl-note">Yoga, Pilates, or Mobility (rotating)</div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-dot"></div>
+              <div class="tl-time">9:00 AM</div>
+              <div class="tl-class">Breathwork &amp; Meditation</div>
+              <div class="tl-note">30 min guided session</div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-dot"></div>
+              <div class="tl-time">9:30 AM</div>
+              <div class="tl-class">Recovery &amp; Open Wellness</div>
+              <div class="tl-note">Sauna, stretching, quiet work</div>
+            </div>
+            <div class="tl-slot">
+              <div class="tl-dot"></div>
+              <div class="tl-time">11:00 AM</div>
+              <div class="tl-class">Wellness Suite Closes</div>
+              <div class="tl-note">AI &amp; Founder tracks begin</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wellness Classes -->
+    <div class="course-section" style="border-radius:0 0 1.5rem 1.5rem;">
+      <div class="cs-heading">
+        <span class="cs-icon">🧘</span>
+        <span class="cs-title">Wellness Programming</span>
+        <span class="cs-count">Included with Builder &amp; Founder membership</span>
+      </div>
+      <div style="padding:2rem 3rem;">
+        <div class="wellness-grid">
+          <div class="wellness-card reveal">
+            <div class="wc-bar"></div>
+            <div class="wc-time">Daily · 8:00 AM</div>
+            <span class="wc-icon">🧘</span>
+            <div class="wc-name">Movement Classes</div>
+            <div class="wc-desc">Yoga, Pilates, and mobility work — taught by certified instructors. Rotating class types Monday through Saturday.</div>
+            <div class="wc-tags">
+              <span class="wc-tag">Yoga</span><span class="wc-tag">Pilates</span><span class="wc-tag">Mobility</span><span class="wc-tag">Stretch</span>
+            </div>
+          </div>
+          <div class="wellness-card reveal reveal-d1">
+            <div class="wc-bar"></div>
+            <div class="wc-time">Daily · 7:00 AM &amp; 9:30 AM</div>
+            <span class="wc-icon">🔥</span>
+            <div class="wc-name">Sauna &amp; Recovery</div>
+            <div class="wc-desc">Stone House's wellness suite features an infrared sauna and cold plunge for optimal recovery and mental clarity.</div>
+            <div class="wc-tags">
+              <span class="wc-tag">Infrared Sauna</span><span class="wc-tag">Cold Plunge</span><span class="wc-tag">Recovery</span>
+            </div>
+          </div>
+          <div class="wellness-card reveal reveal-d2">
+            <div class="wc-bar"></div>
+            <div class="wc-time">Daily · 9:00 AM</div>
+            <span class="wc-icon">🌬</span>
+            <div class="wc-name">Breathwork &amp; Meditation</div>
+            <div class="wc-desc">Guided 30-minute morning breathwork and meditation sessions. Drop-in friendly — no experience required.</div>
+            <div class="wc-tags">
+              <span class="wc-tag">Breathwork</span><span class="wc-tag">Meditation</span><span class="wc-tag">Mindfulness</span>
+            </div>
+          </div>
+          <div class="wellness-card reveal">
+            <div class="wc-bar"></div>
+            <div class="wc-time">Weekly Workshop</div>
+            <span class="wc-icon">⚡</span>
+            <div class="wc-name">Burnout Prevention</div>
+            <div class="wc-desc">A weekly workshop on sustainable productivity, stress management, and building resilience as a founder or knowledge worker.</div>
+            <div class="wc-tags">
+              <span class="wc-tag">Stress Management</span><span class="wc-tag">Resilience</span><span class="wc-tag">Productivity</span>
+            </div>
+          </div>
+          <div class="wellness-card reveal reveal-d1">
+            <div class="wc-bar"></div>
+            <div class="wc-time">Monthly Workshop</div>
+            <span class="wc-icon">🌱</span>
+            <div class="wc-name">Community Care Circle</div>
+            <div class="wc-desc">Monthly gathering focused on connection, peer support, and the emotional dimensions of building something new. Open to all members.</div>
+            <div class="wc-tags">
+              <span class="wc-tag">Community</span><span class="wc-tag">Connection</span><span class="wc-tag">Support</span>
+            </div>
+          </div>
+          <div class="wellness-card reveal reveal-d2">
+            <div class="wc-bar"></div>
+            <div class="wc-time">Monthly Intensive</div>
+            <span class="wc-icon">🏔</span>
+            <div class="wc-name">Nature &amp; Adventure Days</div>
+            <div class="wc-desc">Monthly group excursions into Nevada City's surrounding wilderness — hiking, forest bathing, and team connection in the Sierra Foothills.</div>
+            <div class="wc-tags">
+              <span class="wc-tag">Hiking</span><span class="wc-tag">Nature</span><span class="wc-tag">Team Building</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-rule"></div>
+
+<!-- ═══════════════════════════════════════
+     TRACK 2 — AI LEARNING
+═══════════════════════════════════════ -->
+<section class="section" id="ai-learning">
+  <div class="eyebrow reveal">
+    <div class="eyebrow-line-sm"></div>
+    <div class="eyebrow-sm">Track 2 · All Day Program</div>
+  </div>
+
+  <div class="track-block">
+    <div class="track-header reveal">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--sage),transparent);border-radius:1.5rem 1.5rem 0 0;"></div>
+      <div class="bg-glyph" style="color:var(--sage);">AI</div>
+      <div class="th-left">
+        <div class="th-track-num" style="color:var(--sage-light);">Track 02 · AI Learning</div>
+        <span class="th-icon">🤖</span>
+        <div class="th-name">AI Learning<br>(Code &amp; Creative)</div>
+        <div class="th-desc">Two sub-tracks in one — AI tools for creators and AI coding for builders. Whether you're making art with AI or building apps with Python, this is your track. All day, every day.</div>
+      </div>
+      <div class="th-right">
+        <div class="th-schedule-badge badge-allday">☀️ All Day · 9 AM–6 PM</div>
+        <div class="th-stats">
+          <div class="th-stat">
+            <span class="th-stat-num" style="color:var(--sage-light);">20</span>
+            <span class="th-stat-label">Courses</span>
+          </div>
+          <div class="th-stat">
+            <span class="th-stat-num" style="color:var(--sage-light);">All</span>
+            <span class="th-stat-label">Levels</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Literacy & Tools -->
+    <div class="course-section reveal">
+      <div class="cs-heading">
+        <span class="cs-icon">🤖</span>
+        <span class="cs-title">AI Literacy &amp; Creative Tools</span>
+        <span class="cs-count">10 courses · All ages &amp; levels</span>
+      </div>
+      <table class="course-table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Format</th>
+            <th>Audience</th>
+            <th>Level</th>
+            <th>Online</th>
+            <th>In-Person</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="course-name">AI Foundations: How Machines Think</span><span class="course-skills">AI concepts, LLMs, neural networks</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">All Ages</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$20</span></td>
+            <td class="price-col"><span class="price-online">$35</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">ChatGPT &amp; Claude Power User</span><span class="course-skills">Prompt engineering, productivity, creativity</span></td>
+            <td><span class="format-badge">Workshop · Self-Paced</span></td>
+            <td><span class="audience-tag">13+ / Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span><span class="price-inperson">Self-paced: $19</span></td>
+            <td class="price-col"><span class="price-online">$40</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI for Everyday Life</span><span class="course-skills">AI tools for home, work, health, finance</span></td>
+            <td><span class="format-badge">4-Week Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$99</span></td>
+            <td class="price-col"><span class="price-online">$149</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Prompt Engineering Masterclass</span><span class="course-skills">Advanced prompting, system design, workflows</span></td>
+            <td><span class="format-badge">Bootcamp · Course</span></td>
+            <td><span class="audience-tag">Young Adults+</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$299</span><span class="price-inperson">Course: $149</span></td>
+            <td class="price-col"><span class="price-online">$499</span><span class="price-inperson">Course: $249</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI Image &amp; Video Creation</span><span class="course-skills">Midjourney, DALL-E, Runway, Sora</span></td>
+            <td><span class="format-badge">Workshop · Course</span></td>
+            <td><span class="audience-tag">13+</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span><span class="price-inperson">Course: $119</span></td>
+            <td class="price-col"><span class="price-online">$45</span><span class="price-inperson">Course: $199</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI Music &amp; Audio Production</span><span class="course-skills">Suno, Udio, ElevenLabs, voice cloning</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">All Ages</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$20</span></td>
+            <td class="price-col"><span class="price-online">$35</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Building AI Workflows with n8n &amp; Zapier</span><span class="course-skills">Automation, no-code, API integration</span></td>
+            <td><span class="format-badge">6-Week Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$169</span></td>
+            <td class="price-col"><span class="price-online">$269</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI Agents: Build Your Digital Workforce</span><span class="course-skills">AutoGPT, CrewAI, agent orchestration</span></td>
+            <td><span class="format-badge">Bootcamp · 1 Week</span></td>
+            <td><span class="audience-tag">Young Adults+</span></td>
+            <td><span class="level-badge lvl-advanced">Advanced</span></td>
+            <td class="price-col"><span class="price-online">$399</span></td>
+            <td class="price-col"><span class="price-online">$649</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Local AI: Running Models on Your Machine</span><span class="course-skills">Ollama, LM Studio, privacy-first AI</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$30</span></td>
+            <td class="price-col"><span class="price-online">$50</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI Ethics &amp; Digital Citizenship</span><span class="course-skills">Bias, fairness, responsible use, deepfakes</span></td>
+            <td><span class="format-badge">4-Week Course</span></td>
+            <td><span class="audience-tag">All Ages</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$99</span></td>
+            <td class="price-col"><span class="price-online">$149</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tech & Coding -->
+    <div class="course-section reveal">
+      <div class="cs-heading">
+        <span class="cs-icon">💻</span>
+        <span class="cs-title">Tech &amp; Coding for AI</span>
+        <span class="cs-count">10 courses · Beginner → Advanced</span>
+      </div>
+      <table class="course-table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Format</th>
+            <th>Audience</th>
+            <th>Level</th>
+            <th>Online</th>
+            <th>In-Person</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="course-name">Python for AI Beginners</span><span class="course-skills">Python basics, libraries, AI scripting</span></td>
+            <td><span class="format-badge">6-Week Course</span></td>
+            <td><span class="audience-tag">13+ / Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$149</span></td>
+            <td class="price-col"><span class="price-online">$249</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">No-Code AI App Builder</span><span class="course-skills">Bubble, Glide, Softr, AI integrations</span></td>
+            <td><span class="format-badge">Workshop · Course</span></td>
+            <td><span class="audience-tag">All Ages</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span><span class="price-inperson">Course: $119</span></td>
+            <td class="price-col"><span class="price-online">$45</span><span class="price-inperson">Course: $199</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Build Your First Chatbot</span><span class="course-skills">RAG, knowledge bases, deployment</span></td>
+            <td><span class="format-badge">Bootcamp · 3 Days</span></td>
+            <td><span class="audience-tag">13+ / Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$249</span></td>
+            <td class="price-col"><span class="price-online">$399</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Machine Learning Without Math Fear</span><span class="course-skills">Supervised/unsupervised ML, real datasets</span></td>
+            <td><span class="format-badge">8-Week Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$199</span></td>
+            <td class="price-col"><span class="price-online">$299</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Fine-Tuning AI Models</span><span class="course-skills">LoRA, Hugging Face, custom training</span></td>
+            <td><span class="format-badge">6-Week Course</span></td>
+            <td><span class="audience-tag">Young Adults+</span></td>
+            <td><span class="level-badge lvl-advanced">Advanced</span></td>
+            <td class="price-col"><span class="price-online">$179</span></td>
+            <td class="price-col"><span class="price-online">$279</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI-Powered Web Apps</span><span class="course-skills">Next.js, Vercel AI SDK, OpenAI API</span></td>
+            <td><span class="format-badge">Bootcamp · 1 Week</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$349</span></td>
+            <td class="price-col"><span class="price-online">$549</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Computer Vision &amp; Robotics Basics</span><span class="course-skills">OpenCV, object detection, sensors</span></td>
+            <td><span class="format-badge">8-Week Course</span></td>
+            <td><span class="audience-tag">13+ / Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$199</span></td>
+            <td class="price-col"><span class="price-online">$299</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Data Literacy for the AI Age</span><span class="course-skills">Reading data, charts, AI outputs, statistics</span></td>
+            <td><span class="format-badge">Workshop · Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span><span class="price-inperson">Course: $99</span></td>
+            <td class="price-col"><span class="price-online">$45</span><span class="price-inperson">Course: $169</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">APIs &amp; AI Integration</span><span class="course-skills">REST APIs, webhooks, Anthropic/OpenAI APIs</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$35</span></td>
+            <td class="price-col"><span class="price-online">$55</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Cybersecurity in the AI Era</span><span class="course-skills">AI threats, deepfake detection, privacy</span></td>
+            <td><span class="format-badge">4-Week Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$149</span></td>
+            <td class="price-col"><span class="price-online">$229</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Kids & Teens -->
+    <div class="course-section" style="border-radius:0 0 1.5rem 1.5rem;">
+      <div class="cs-heading">
+        <span class="cs-icon">⭐</span>
+        <span class="cs-title">Kids &amp; Teens Program</span>
+        <span class="cs-count">8 courses · Ages 8–17</span>
+      </div>
+      <table class="course-table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Format</th>
+            <th>Audience</th>
+            <th>Level</th>
+            <th>Online</th>
+            <th>In-Person</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="course-name">AI Explorers</span><span class="course-skills">What is AI, fun experiments, art &amp; stories</span></td>
+            <td><span class="format-badge">Workshop · Course</span></td>
+            <td><span class="audience-tag">Ages 8–12</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$20</span><span class="price-inperson">Course: $89</span></td>
+            <td class="price-col"><span class="price-online">$35</span><span class="price-inperson">Course: $149</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Code &amp; Create with AI</span><span class="course-skills">Scratch, MIT AI tools, simple projects</span></td>
+            <td><span class="format-badge">6-Week Course</span></td>
+            <td><span class="audience-tag">Ages 10–14</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$129</span></td>
+            <td class="price-col"><span class="price-online">$199</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Robotics Club</span><span class="course-skills">LEGO Mindstorms, sensors, programming</span></td>
+            <td><span class="format-badge">Ongoing Monthly</span></td>
+            <td><span class="audience-tag">Ages 8–14</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$49/mo</span></td>
+            <td class="price-col"><span class="price-online">$89/mo</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Teen AI Innovators</span><span class="course-skills">Real AI tools, build a project, pitch it</span></td>
+            <td><span class="format-badge">Bootcamp · 1 Week</span></td>
+            <td><span class="audience-tag">Ages 13–17</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$199</span></td>
+            <td class="price-col"><span class="price-online">$349</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI Art &amp; Music Studio</span><span class="course-skills">Generative art, AI music, creative projects</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Ages 8–17</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$20</span></td>
+            <td class="price-col"><span class="price-online">$35</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Digital Safety &amp; AI Smarts</span><span class="course-skills">Online safety, deepfakes, critical thinking</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Ages 10–17</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$15</span></td>
+            <td class="price-col"><span class="price-online">$25</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Summer AI Camp</span><span class="course-skills">Full-week immersive AI + entrepreneurship</span></td>
+            <td><span class="format-badge">Bootcamp · 1 Week</span></td>
+            <td><span class="audience-tag">Ages 10–16</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$299</span></td>
+            <td class="price-col"><span class="price-online">$499</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Young Entrepreneurs</span><span class="course-skills">Ideation, business basics, AI products</span></td>
+            <td><span class="format-badge">6-Week Course</span></td>
+            <td><span class="audience-tag">Ages 12–17</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$119</span></td>
+            <td class="price-col"><span class="price-online">$189</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="full-rule"></div>
+
+<!-- ═══════════════════════════════════════
+     TRACK 3 — FOUNDER ECOSYSTEM
+═══════════════════════════════════════ -->
+<section class="section" id="founder">
+  <div class="eyebrow reveal">
+    <div class="eyebrow-line-sm"></div>
+    <div class="eyebrow-sm">Track 3 · All Day Program</div>
+  </div>
+
+  <div class="track-block">
+    <div class="track-header reveal">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rust),transparent);border-radius:1.5rem 1.5rem 0 0;"></div>
+      <div class="bg-glyph" style="color:var(--rust);">🚀</div>
+      <div class="th-left">
+        <div class="th-track-num" style="color:var(--rust-light);">Track 03 · Founder Ecosystem</div>
+        <span class="th-icon">🚀</span>
+        <div class="th-name">Founder Ecosystem</div>
+        <div class="th-desc">From validating your first idea to pitching investors — and from future-proofing your career to reskilling at 40. This track covers the full journey of building and navigating the new economy. All day, structured around your goals.</div>
+      </div>
+      <div class="th-right">
+        <div class="th-schedule-badge badge-allday">☀️ All Day · 9 AM–6 PM</div>
+        <div class="th-stats">
+          <div class="th-stat">
+            <span class="th-stat-num" style="color:var(--rust-light);">20</span>
+            <span class="th-stat-label">Courses</span>
+          </div>
+          <div class="th-stat">
+            <span class="th-stat-num" style="color:var(--rust-light);">Adults</span>
+            <span class="th-stat-label">Primary</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entrepreneurship -->
+    <div class="course-section reveal">
+      <div class="cs-heading">
+        <span class="cs-icon">🚀</span>
+        <span class="cs-title">Entrepreneurship &amp; Business</span>
+        <span class="cs-count">10 courses · Young Adults+</span>
+      </div>
+      <table class="course-table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Format</th>
+            <th>Audience</th>
+            <th>Level</th>
+            <th>Online</th>
+            <th>In-Person</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="course-name">Entrepreneurship 101: Start With Why</span><span class="course-skills">Problem-finding, value prop, ideation</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">All Ages</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$20</span></td>
+            <td class="price-col"><span class="price-online">$35</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">The AI Business Model Playbook</span><span class="course-skills">SaaS, marketplace, API business models</span></td>
+            <td><span class="format-badge">6-Week Course</span></td>
+            <td><span class="audience-tag">Young Adults+</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$169</span></td>
+            <td class="price-col"><span class="price-online">$269</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Launch in 90 Days: AI Startup Bootcamp</span><span class="course-skills">MVP, GTM strategy, pitch, early customers</span></td>
+            <td><span class="format-badge">Bootcamp · 2 Weeks</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$449</span></td>
+            <td class="price-col"><span class="price-online">$699</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Freelancing with AI: Earn Now</span><span class="course-skills">Upwork, Fiverr, AI-powered service business</span></td>
+            <td><span class="format-badge">Workshop · Self-Paced</span></td>
+            <td><span class="audience-tag">18+</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span><span class="price-inperson">Self-paced: $29</span></td>
+            <td class="price-col"><span class="price-online">$45</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI Marketing &amp; Growth Hacking</span><span class="course-skills">Content AI, SEO, social automation, ads</span></td>
+            <td><span class="format-badge">4-Week Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$129</span></td>
+            <td class="price-col"><span class="price-online">$199</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Raise Money: Grants, Angels &amp; Crowdfunding</span><span class="course-skills">Pitch decks, investor comms, Kickstarter</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span></td>
+            <td class="price-col"><span class="price-online">$40</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Legal &amp; Finance Basics for AI Startups</span><span class="course-skills">LLC, IP, contracts, bookkeeping, taxes</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span></td>
+            <td class="price-col"><span class="price-online">$40</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Product Thinking: Build What People Want</span><span class="course-skills">User research, PRDs, roadmaps, feedback loops</span></td>
+            <td><span class="format-badge">4-Week Course</span></td>
+            <td><span class="audience-tag">Young Adults+</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$129</span></td>
+            <td class="price-col"><span class="price-online">$199</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI Tools for Small Business Owners</span><span class="course-skills">CRM, invoicing, scheduling, customer AI</span></td>
+            <td><span class="format-badge">Self-Paced · Workshop</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$29</span><span class="price-inperson">Workshop: $25</span></td>
+            <td class="price-col"><span class="price-online">$40</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">From Idea to App Store: Mobile AI Apps</span><span class="course-skills">FlutterFlow, no-code mobile, monetization</span></td>
+            <td><span class="format-badge">Bootcamp · 1 Week</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$349</span></td>
+            <td class="price-col"><span class="price-online">$549</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Future Work -->
+    <div class="course-section" style="border-radius:0 0 1.5rem 1.5rem;">
+      <div class="cs-heading">
+        <span class="cs-icon">🌐</span>
+        <span class="cs-title">Future Work &amp; Career Reinvention</span>
+        <span class="cs-count">10 courses · All adults</span>
+      </div>
+      <table class="course-table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Format</th>
+            <th>Audience</th>
+            <th>Level</th>
+            <th>Online</th>
+            <th>In-Person</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="course-name">Future Jobs: What's Coming, What's Changing</span><span class="course-skills">Labor market trends, AI impact by sector</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">All Ages</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$15</span></td>
+            <td class="price-col"><span class="price-online">$30</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Human Skills in an AI World</span><span class="course-skills">Creativity, empathy, leadership, judgment</span></td>
+            <td><span class="format-badge">Workshop · Course</span></td>
+            <td><span class="audience-tag">All Ages</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$20</span><span class="price-inperson">Course: $99</span></td>
+            <td class="price-col"><span class="price-online">$35</span><span class="price-inperson">Course: $149</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI for Healthcare Workers</span><span class="course-skills">Clinical AI tools, diagnostics, admin AI</span></td>
+            <td><span class="format-badge">4-Week Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$149</span></td>
+            <td class="price-col"><span class="price-online">$229</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI for Educators &amp; Trainers</span><span class="course-skills">Personalized learning, AI tutors, grading</span></td>
+            <td><span class="format-badge">4-Week Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$149</span></td>
+            <td class="price-col"><span class="price-online">$229</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI for Finance &amp; Accounting</span><span class="course-skills">Forecasting, fraud detection, reporting</span></td>
+            <td><span class="format-badge">Workshop · Course</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$30</span><span class="price-inperson">Course: $149</span></td>
+            <td class="price-col"><span class="price-online">$50</span><span class="price-inperson">Course: $229</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI for Legal Professionals</span><span class="course-skills">Contract review, research, e-discovery</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-intermediate">Intermediate</span></td>
+            <td class="price-col"><span class="price-online">$35</span></td>
+            <td class="price-col"><span class="price-online">$55</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI for Creatives &amp; Artists</span><span class="course-skills">AI-assisted design, storytelling, branding</span></td>
+            <td><span class="format-badge">6-Week Course</span></td>
+            <td><span class="audience-tag">All Ages</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$149</span></td>
+            <td class="price-col"><span class="price-online">$229</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">AI for Trades &amp; Manufacturing</span><span class="course-skills">Predictive maintenance, robotics, QA</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span></td>
+            <td class="price-col"><span class="price-online">$40</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Reskilling Over 40: Your AI Career Pivot</span><span class="course-skills">Identity, skills audit, pivot planning</span></td>
+            <td><span class="format-badge">Bootcamp · 1 Week</span></td>
+            <td><span class="audience-tag">Adults 40+</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$299</span></td>
+            <td class="price-col"><span class="price-online">$499</span></td>
+          </tr>
+          <tr>
+            <td><span class="course-name">Building a Personal Brand with AI</span><span class="course-skills">LinkedIn, content strategy, thought leadership</span></td>
+            <td><span class="format-badge">Workshop</span></td>
+            <td><span class="audience-tag">Adults</span></td>
+            <td><span class="level-badge lvl-beginner">Beginner</span></td>
+            <td class="price-col"><span class="price-online">$25</span></td>
+            <td class="price-col"><span class="price-online">$40</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="full-rule"></div>
+
+<!-- ═══════════════════════════════════════
+     PRICING
+═══════════════════════════════════════ -->
+<section class="section" id="pricing" style="padding-bottom:3rem;">
+  <div class="pricing-header">
+    <div class="pricing-eyebrow reveal">
+      <div class="eyebrow-line-sm"></div>
+      <div class="eyebrow-sm">Membership &amp; Pricing</div>
+      <div class="eyebrow-line-sm"></div>
+    </div>
+    <h2 class="section-h reveal" style="max-width:700px;margin:0 auto 1.25rem;">One home.<br><em>Three ways in.</em></h2>
+    <p class="section-p reveal" style="margin:0 auto 0;text-align:center;">Every tier is a front door, not a ceiling. Scholarship and sliding-scale pricing ensure no one is turned away — because Nevada City's innovation ecosystem grows when everyone can participate.</p>
+  </div>
+
+  <!-- Membership Tiers -->
+  <div class="tier-grid reveal">
+    <div class="tier-card">
+      <div class="tier-top">
+        <div class="tier-label">Community Tier</div>
+        <div class="tier-name">Explorer</div>
+        <div class="tier-price">$95<span>–$150/mo</span></div>
+        <div class="tier-annual">Annual plan: save up to $360/yr</div>
+      </div>
+      <div class="tier-body">
+        <ul class="tier-list">
+          <li>All online curriculum — unlimited workshops, self-paced modules &amp; courses</li>
+          <li>In-person workshop access (1 per month)</li>
+          <li>Community events &amp; networking</li>
+          <li>AI Tutor access (online)</li>
+          <li>Digital certificates &amp; badges</li>
+          <li>Community Discord &amp; peer learning network</li>
+          <li>Monthly live Q&amp;A with instructors</li>
+          <li>Recorded session library (lifetime access while subscribed)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tier-card featured reveal reveal-d1">
+      <div class="tier-featured-badge">Most Popular</div>
+      <div class="tier-top">
+        <div class="tier-label">Builder Tier</div>
+        <div class="tier-name">Builder</div>
+        <div class="tier-price">$350<span>–$550/mo</span></div>
+        <div class="tier-annual">Annual plan: save up to $1,200/yr</div>
+      </div>
+      <div class="tier-body">
+        <ul class="tier-list">
+          <li>Everything in Explorer (full online access)</li>
+          <li>Unlimited in-person workshop &amp; course attendance</li>
+          <li>Full co-working access to Stone House</li>
+          <li>Studio credits — podcast, music, content creation</li>
+          <li>Wellness access — morning sauna, movement, breathwork</li>
+          <li>Masterclasses with regional founders &amp; practitioners</li>
+          <li>2 bootcamp intensives per year included</li>
+          <li>Priority Demo Day participation &amp; mentor matching</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tier-card reveal reveal-d2">
+      <div class="tier-top">
+        <div class="tier-label">Founder Tier</div>
+        <div class="tier-name">Founder</div>
+        <div class="tier-price">$1,000<span>+/mo</span></div>
+        <div class="tier-annual">Annual: negotiated for founding members</div>
+      </div>
+      <div class="tier-body">
+        <ul class="tier-list">
+          <li>Everything in Builder (full access)</li>
+          <li>Priority studio booking — podcast, music, video</li>
+          <li>Private rooms for deep work &amp; team sprints</li>
+          <li>Direct pitch opportunities to regional investors</li>
+          <li>Apotheos incubator eligibility</li>
+          <li>1:1 advisor sessions (monthly)</li>
+          <li>Founding member recognition &amp; legacy benefits</li>
+          <li>Capital access events &amp; investor introductions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Special Pricing -->
+  <div class="reveal" style="margin-top:4rem;">
+    <div class="eyebrow" style="margin-bottom:1.25rem;">
+      <div class="eyebrow-line-sm"></div>
+      <div class="eyebrow-sm">Special Passes &amp; Plans</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:3rem;">
+      <div class="bundle-card">
+        <div class="bundle-name">Family Plan (up to 4 members)</div>
+        <div class="bundle-desc">Full Explorer or Builder access for up to 4 family members. Includes Kids &amp; Teens tracks for all minors. Separate dashboards and progress tracking per member. One family coaching session per month.</div>
+        <div class="bundle-prices">
+          <span class="bp-online">$79<span style="font-size:0.75rem;color:var(--muted);font-family:var(--font-sans);">/mo online</span></span>
+          <span class="bp-inperson">$199/mo online + in-person</span>
+        </div>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Kids &amp; Teens Pass (Ages 8–17)</div>
+        <div class="bundle-desc">Full access to all Kids &amp; Teens Track content. Age-appropriate modules with parent dashboard. Unlimited online youth workshops. Summer AI Camp discount (25% off) and annual Young Innovator showcase.</div>
+        <div class="bundle-prices">
+          <span class="bp-online">$39<span style="font-size:0.75rem;color:var(--muted);font-family:var(--font-sans);">/mo online</span></span>
+          <span class="bp-inperson">$99/mo online + in-person</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:1.25rem;">
+      <div class="eyebrow-line-sm"></div>
+      <div class="eyebrow-sm">Value Bundles</div>
+    </div>
+
+    <div class="bundles-grid" style="margin-top:0;">
+      <div class="bundle-card">
+        <div class="bundle-name">Starter Bundle</div>
+        <div class="bundle-desc">3 workshops of your choice. Perfect for exploring before committing to a track.</div>
+        <div class="bundle-prices">
+          <span class="bp-online">$49 online</span>
+          <span class="bp-inperson">$89 in-person</span>
+        </div>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Deep Dive Bundle</div>
+        <div class="bundle-desc">1 course + 2 workshops. Get a full track experience at a discount.</div>
+        <div class="bundle-prices">
+          <span class="bp-online">$129 online</span>
+          <span class="bp-inperson">$199 in-person</span>
+        </div>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Career Pivot Bundle</div>
+        <div class="bundle-desc">3 courses from the Future Work track. Designed for adults switching careers.</div>
+        <div class="bundle-prices">
+          <span class="bp-online">$299 online</span>
+          <span class="bp-inperson">$499 in-person</span>
+        </div>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Founder Bundle</div>
+        <div class="bundle-desc">1 startup bootcamp + 2 business courses. Everything to launch your idea.</div>
+        <div class="bundle-prices">
+          <span class="bp-online">$549 online</span>
+          <span class="bp-inperson">$899 in-person</span>
+        </div>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Family Starter Bundle</div>
+        <div class="bundle-desc">4 workshops for the whole family. Mix and match tracks for each member.</div>
+        <div class="bundle-prices">
+          <span class="bp-online">$79 online</span>
+          <span class="bp-inperson">$139 in-person</span>
+        </div>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Gift Card</div>
+        <div class="bundle-desc">Give the gift of learning. Redeemable for any course, workshop, or bootcamp — online or in-person.</div>
+        <div class="bundle-prices">
+          <span class="bp-online">From $25</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discounts -->
+    <div style="margin-top:3rem;">
+      <div class="eyebrow" style="margin-bottom:1.25rem;">
+        <div class="eyebrow-line-sm"></div>
+        <div class="eyebrow-sm">Scholarships &amp; Discounts</div>
+      </div>
+      <div class="discounts-grid" style="margin-top:0;">
+        <div class="discount-row">
+          <span class="dr-label">Need-Based Scholarship (full)</span>
+          <span class="dr-value">100% Free — application required</span>
+        </div>
+        <div class="discount-row">
+          <span class="dr-label">Sliding Scale Pricing</span>
+          <span class="dr-value">Pay what you can — no docs required</span>
+        </div>
+        <div class="discount-row">
+          <span class="dr-label">Veterans &amp; Active Military</span>
+          <span class="dr-value">50% off à la carte · $25/mo subscription</span>
+        </div>
+        <div class="discount-row">
+          <span class="dr-label">Seniors (65+)</span>
+          <span class="dr-value">50% off à la carte · $25/mo subscription</span>
+        </div>
+        <div class="discount-row">
+          <span class="dr-label">Nonprofit Employees</span>
+          <span class="dr-value">30% off all pricing tiers</span>
+        </div>
+        <div class="discount-row">
+          <span class="dr-label">Workforce Development Partners</span>
+          <span class="dr-value">Free for qualifying job seekers (grant-funded)</span>
+        </div>
+        <div class="discount-row">
+          <span class="dr-label">Corporate Team Training (up to 10)</span>
+          <span class="dr-value">From $299 online · $499 in-person per workshop</span>
+        </div>
+        <div class="discount-row">
+          <span class="dr-label">School Partnerships (site license)</span>
+          <span class="dr-value">From $2,999/yr online · $5,999/yr hybrid</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:2rem;">
+      <p style="font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;">Free first workshop for all new learners · No credit card required · Scholarship applications reviewed within 5 business days</p>
+    </div>
+  </div>
+</section>
+
+<div class="full-rule"></div>
+
+<!-- CTA -->
+<div style="padding:5rem 3rem 4rem;max-width:1400px;margin:0 auto;">
+  <div class="cta-wrap reveal">
+    <h2 class="cta-h">
+      Ready to<br><em>become a builder?</em>
+    </h2>
+    <p class="cta-p">Join the waitlist for founding member access, early pricing, and first pick of courses when Apotheos opens at Stone House in Nevada City.</p>
+    <div class="cta-btns">
+      <a href="index.html#waitlist" class="btn-gold">Join the Waitlist</a>
+      <a href="index.html#contact" class="btn-ghost">Get in Touch →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-word">Apotheos</div>
+    <div class="footer-addr">107 Sacramento Street · Nevada City, CA 95959</div>
+    <div class="footer-addr" style="margin-top:0.25rem;">A 501(c)(3) Nonprofit Organization</div>
+  </div>
+  <div class="footer-right">
+    <div style="color:var(--gold);margin-bottom:0.25rem;">apotheos.org</div>
+    <div>Learning &amp; Innovation Center</div>
+    <div style="margin-top:0.25rem;">© 2026 Apotheos</div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+
+</body>
+</html>
