@@ -424,6 +424,45 @@
         </div>
     </section>
 
+    <!-- Waitlist Section -->
+    <section id="waitlist" class="section section-dark">
+        <div class="container">
+            <div class="section-header fade-in-on-scroll">
+                <h2 class="section-title">Join the Waitlist</h2>
+                <p class="section-subtitle">Be among the first to become an Apotheos founding member</p>
+            </div>
+            <div class="waitlist-wrapper fade-in-on-scroll delay-1">
+                <div class="waitlist-intro">
+                    <p>We're building our founding member community. Sign up below and we'll reach out with updates, exclusive previews, and early-access opportunities.</p>
+                </div>
+                <form class="waitlist-form" id="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="Full Name" required>
+                        <input type="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="tel" name="phone" placeholder="Phone (optional)">
+                        <select name="tier" class="form-select">
+                            <option value="">Membership Tier Interest</option>
+                            <option value="Community ($95-150/mo)">Community ($95–150/mo)</option>
+                            <option value="Builder ($350-550/mo)">Builder ($350–550/mo)</option>
+                            <option value="Studio/Founder ($1000+/mo)">Studio/Founder ($1,000+/mo)</option>
+                            <option value="Not sure yet">Not sure yet</option>
+                        </select>
+                    </div>
+                    <textarea name="message" placeholder="Tell us a bit about yourself or your business (optional)" rows="3"></textarea>
+                    <input type="hidden" name="_subject" value="New Apotheos Waitlist Signup">
+                    <button type="submit" class="cta-button waitlist-submit">Join the Waitlist</button>
+                </form>
+                <div id="form-success" class="form-success" style="display:none;">
+                    <div class="success-icon">✓</div>
+                    <h3>You're on the list!</h3>
+                    <p>Thank you for your interest in Apotheos. We'll be in touch soon with updates and early-access information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Impact Section -->
     <section id="impact" class="section section-accent">
         <div class="container">

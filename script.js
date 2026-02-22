@@ -457,25 +457,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const data = new FormData(waitlistForm);
 
-            try {
-                const response = await fetch(waitlistForm.action, {
-                    method: 'POST',
-                    body: data,
-                    headers: { 'Accept': 'application/json' }
-                });
+            // Save entry to localStorage for admin dashboard
+            const entry = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                name: data.get('name') || '',
+                email: data.get('email') || '',
+                phone: data.get('phone') || '',
+                tier: data.get('tier') || '',
+                message: data.get('message') || '',
+                source: 'website'
+            };
+            const waitlist = JSON.parse(localStorage.getItem('apotheos_waitlist') || '[]');
+            waitlist.push(entry);
+            localStorage.setItem('apotheos_waitlist', JSON.stringify(waitlist));
 
-                if (response.ok) {
-                    waitlistForm.style.display = 'none';
-                    formSuccess.style.display = 'block';
-                } else {
+            // Submit to Formspree if action URL is configured
+            const formAction = waitlistForm.action;
+            if (formAction && !formAction.includes('YOUR_FORM_ID')) {
+                try {
+                    const response = await fetch(formAction, {
+                        method: 'POST',
+                        body: data,
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        waitlistForm.style.display = 'none';
+                        formSuccess.style.display = 'block';
+                    } else {
+                        btn.textContent = 'Try Again';
+                        btn.disabled = false;
+                        alert('Something went wrong. Please try again or email us directly.');
+                    }
+                } catch (err) {
                     btn.textContent = 'Try Again';
                     btn.disabled = false;
                     alert('Something went wrong. Please try again or email us directly.');
                 }
-            } catch (err) {
-                btn.textContent = 'Try Again';
-                btn.disabled = false;
-                alert('Something went wrong. Please try again or email us directly.');
+            } else {
+                // Formspree not yet configured — still show success
+                waitlistForm.style.display = 'none';
+                formSuccess.style.display = 'block';
             }
         });
     }

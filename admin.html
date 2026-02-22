@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apotheos — Waitlist Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #50808E;
+            --sage: #84B59F;
+            --eucalyptus: #69A297;
+            --charcoal: #2C3E50;
+            --off-white: #F5F5F5;
+            --white: #FFFFFF;
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --border: #e0e0e0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--off-white);
+            color: var(--charcoal);
+            min-height: 100vh;
+        }
+
+        /* ---- LOGIN SCREEN ---- */
+        #login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #50808E 0%, #69A297 50%, #84B59F 100%);
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .login-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .login-subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .login-card input[type="password"] {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+            margin-bottom: 1rem;
+        }
+
+        .login-card input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--primary), var(--eucalyptus));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .login-btn:hover { opacity: 0.9; }
+
+        .login-error {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            display: none;
+        }
+
+        /* ---- DASHBOARD ---- */
+        #dashboard { display: none; }
+
+        .topbar {
+            background: linear-gradient(135deg, var(--primary), var(--eucalyptus));
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .topbar-brand { font-size: 1.3rem; font-weight: 700; }
+        .topbar-sub { font-size: 0.8rem; opacity: 0.8; }
+
+        .topbar-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+        .btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-white {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .btn-white:hover { background: rgba(255,255,255,0.3); }
+
+        .btn-outline-white {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        .btn-success:hover { opacity: 0.9; }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.7rem;
+        }
+        .btn-danger:hover { opacity: 0.85; }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ---- STATS ---- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .stat-num {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ---- SECTION HEADERS ---- */
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+
+        /* ---- TABLE ---- */
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table-toolbar {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            min-width: 220px;
+        }
+
+        .search-input:focus { outline: none; border-color: var(--primary); }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            background: white;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            background: var(--off-white);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        thead th:hover { color: var(--primary); }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: #f9f9f9; }
+
+        td {
+            padding: 0.9rem 1rem;
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tier-community { background: #e8f5e9; color: #2e7d32; }
+        .tier-builder { background: #e3f2fd; color: #1565c0; }
+        .tier-founder { background: #fff3e0; color: #e65100; }
+        .tier-unsure { background: #f3e5f5; color: #6a1b9a; }
+        .tier-other { background: #fafafa; color: #555; }
+
+        .source-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .source-website { background: #e8f5e9; color: #2e7d32; }
+        .source-manual { background: #fff3e0; color: #e65100; }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #aaa;
+        }
+
+        .empty-state p { font-size: 1rem; margin-bottom: 0.5rem; }
+        .empty-state small { font-size: 0.85rem; }
+
+        /* ---- ADD ENTRY MODAL ---- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+            display: none;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .modal h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 80px; }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .btn-cancel {
+            background: var(--off-white);
+            color: var(--charcoal);
+            border: 1px solid var(--border);
+        }
+
+        /* ---- FORMSPREE TIP ---- */
+        .tip-card {
+            background: linear-gradient(135deg, rgba(80,128,142,0.08), rgba(132,181,159,0.08));
+            border: 1px solid rgba(80,128,142,0.2);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .tip-content h4 { font-size: 0.95rem; margin-bottom: 0.4rem; color: var(--primary); }
+        .tip-content p { font-size: 0.85rem; color: #555; line-height: 1.5; }
+        .tip-content a { color: var(--primary); text-decoration: underline; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 700px) {
+            .main-content { padding: 1rem; }
+            .topbar { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .table-toolbar { flex-direction: column; align-items: stretch; }
+            .search-input { min-width: unset; }
+            table { font-size: 0.8rem; }
+            td, th { padding: 0.6rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+    <div class="login-card">
+        <div class="login-logo">Apotheos</div>
+        <div class="login-subtitle">Waitlist Admin Dashboard</div>
+        <input type="password" id="password-input" placeholder="Enter admin password" autocomplete="current-password">
+        <button class="login-btn" onclick="attemptLogin()">Sign In</button>
+        <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+    <div class="topbar">
+        <div>
+            <div class="topbar-brand">Apotheos Admin</div>
+            <div class="topbar-sub">Waitlist Dashboard</div>
+        </div>
+        <div class="topbar-actions">
+            <button class="btn btn-white" onclick="exportCSV()">Export CSV</button>
+            <button class="btn btn-outline-white" onclick="openAddModal()">+ Add Entry</button>
+            <button class="btn btn-outline-white" onclick="logout()">Log Out</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <!-- Stats -->
+        <div class="stats-grid" id="stats-grid">
+            <div class="stat-card">
+                <div class="stat-num" id="stat-total">0</div>
+                <div class="stat-label">Total Signups</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-community">0</div>
+                <div class="stat-label">Community</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-builder">0</div>
+                <div class="stat-label">Builder</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-founder">0</div>
+                <div class="stat-label">Studio / Founder</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-this-week">0</div>
+                <div class="stat-label">This Week</div>
+            </div>
+        </div>
+
+        <!-- Formspree tip -->
+        <div class="tip-card">
+            <div class="tip-icon">☁️</div>
+            <div class="tip-content">
+                <h4>Online submissions are stored in Formspree</h4>
+                <p>
+                    Entries submitted through the website are backed up in your
+                    <a href="https://formspree.io/forms" target="_blank">Formspree dashboard</a>
+                    and emailed to you. Use this page to add manual entries (phone calls, in-person signups)
+                    and to see a combined view. To set up Formspree, create a free account and replace
+                    <code>YOUR_FORM_ID</code> in <code>index.html</code> with your form's ID.
+                </p>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-card">
+            <div class="table-toolbar">
+                <div class="section-title">Waitlist Entries</div>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                    <input class="search-input" id="search-input" placeholder="Search name or email…" oninput="renderTable()">
+                    <select class="filter-select" id="tier-filter" onchange="renderTable()">
+                        <option value="">All Tiers</option>
+                        <option value="Community">Community</option>
+                        <option value="Builder">Builder</option>
+                        <option value="Studio">Studio/Founder</option>
+                        <option value="Not sure">Not sure</option>
+                    </select>
+                    <select class="filter-select" id="source-filter" onchange="renderTable()">
+                        <option value="">All Sources</option>
+                        <option value="website">Website</option>
+                        <option value="manual">Manual</option>
+                    </select>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th onclick="sortBy('date')">Date ↕</th>
+                            <th onclick="sortBy('name')">Name ↕</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th onclick="sortBy('tier')">Tier ↕</th>
+                            <th>Notes</th>
+                            <th>Source</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="waitlist-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ADD ENTRY MODAL -->
+<div class="modal-overlay" id="add-modal">
+    <div class="modal">
+        <h3>Add Manual Entry</h3>
+        <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="m-name" placeholder="Jane Smith" required>
+        </div>
+        <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="m-email" placeholder="jane@example.com" required>
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" id="m-phone" placeholder="(555) 123-4567">
+        </div>
+        <div class="form-group">
+            <label>Membership Tier Interest</label>
+            <select id="m-tier">
+                <option value="">Not specified</option>
+                <option value="Community ($95-150/mo)">Community ($95–150/mo)</option>
+                <option value="Builder ($350-550/mo)">Builder ($350–550/mo)</option>
+                <option value="Studio/Founder ($1000+/mo)">Studio/Founder ($1,000+/mo)</option>
+                <option value="Not sure yet">Not sure yet</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea id="m-message" placeholder="How you met them, their interests, etc."></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-cancel" onclick="closeAddModal()">Cancel</button>
+            <button class="btn btn-success" onclick="saveManualEntry()">Save Entry</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===================================
+    // CONFIG — change your password here
+    // ===================================
+    const ADMIN_PASSWORD = 'apotheos2026';
+
+    // ===================================
+    // Auth
+    // ===================================
+    function attemptLogin() {
+        const val = document.getElementById('password-input').value;
+        if (val === ADMIN_PASSWORD) {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            renderAll();
+        } else {
+            document.getElementById('login-error').style.display = 'block';
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-input').focus();
+        }
+    }
+
+    document.getElementById('password-input').addEventListener('keydown', e => {
+        if (e.key === 'Enter') attemptLogin();
+    });
+
+    function logout() {
+        document.getElementById('dashboard').style.display = 'none';
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('password-input').value = '';
+    }
+
+    // ===================================
+    // Data helpers
+    // ===================================
+    function getWaitlist() {
+        return JSON.parse(localStorage.getItem('apotheos_waitlist') || '[]');
+    }
+
+    function saveWaitlist(list) {
+        localStorage.setItem('apotheos_waitlist', JSON.stringify(list));
+    }
+
+    // ===================================
+    // Stats
+    // ===================================
+    function renderStats(list) {
+        const now = new Date();
+        const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
+
+        document.getElementById('stat-total').textContent = list.length;
+        document.getElementById('stat-community').textContent =
+            list.filter(e => (e.tier || '').toLowerCase().includes('community')).length;
+        document.getElementById('stat-builder').textContent =
+            list.filter(e => (e.tier || '').toLowerCase().includes('builder')).length;
+        document.getElementById('stat-founder').textContent =
+            list.filter(e => (e.tier || '').toLowerCase().includes('studio') || (e.tier || '').toLowerCase().includes('founder')).length;
+        document.getElementById('stat-this-week').textContent =
+            list.filter(e => new Date(e.date) >= weekAgo).length;
+    }
+
+    // ===================================
+    // Table rendering
+    // ===================================
+    let sortKey = 'date';
+    let sortDir = -1;
+
+    function sortBy(key) {
+        if (sortKey === key) sortDir *= -1;
+        else { sortKey = key; sortDir = -1; }
+        renderTable();
+    }
+
+    function tierClass(tier) {
+        const t = (tier || '').toLowerCase();
+        if (t.includes('community')) return 'tier-community';
+        if (t.includes('builder')) return 'tier-builder';
+        if (t.includes('studio') || t.includes('founder')) return 'tier-founder';
+        if (t.includes('not sure') || t.includes('unsure')) return 'tier-unsure';
+        return 'tier-other';
+    }
+
+    function tierLabel(tier) {
+        if (!tier) return '—';
+        const t = tier.toLowerCase();
+        if (t.includes('community')) return 'Community';
+        if (t.includes('builder')) return 'Builder';
+        if (t.includes('studio') || t.includes('founder')) return 'Studio/Founder';
+        if (t.includes('not sure') || t.includes('unsure')) return 'Not sure';
+        return tier;
+    }
+
+    function formatDate(iso) {
+        if (!iso) return '—';
+        const d = new Date(iso);
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function renderTable() {
+        const search = document.getElementById('search-input').value.toLowerCase();
+        const tierFilter = document.getElementById('tier-filter').value.toLowerCase();
+        const sourceFilter = document.getElementById('source-filter').value.toLowerCase();
+
+        let list = getWaitlist();
+
+        // Filter
+        list = list.filter(e => {
+            const matchSearch = !search ||
+                (e.name || '').toLowerCase().includes(search) ||
+                (e.email || '').toLowerCase().includes(search) ||
+                (e.phone || '').toLowerCase().includes(search);
+            const matchTier = !tierFilter || (e.tier || '').toLowerCase().includes(tierFilter);
+            const matchSource = !sourceFilter || (e.source || '').toLowerCase().includes(sourceFilter);
+            return matchSearch && matchTier && matchSource;
+        });
+
+        // Sort
+        list.sort((a, b) => {
+            const va = (a[sortKey] || '').toString().toLowerCase();
+            const vb = (b[sortKey] || '').toString().toLowerCase();
+            return va < vb ? -sortDir : va > vb ? sortDir : 0;
+        });
+
+        const tbody = document.getElementById('waitlist-tbody');
+        if (list.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8">
+                <div class="empty-state">
+                    <p>No entries yet</p>
+                    <small>Entries from the website form and manual additions will appear here.</small>
+                </div>
+            </td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = list.map(e => `
+            <tr>
+                <td style="white-space:nowrap; color:#888; font-size:0.8rem;">${formatDate(e.date)}</td>
+                <td><strong>${escHtml(e.name || '—')}</strong></td>
+                <td><a href="mailto:${escHtml(e.email)}" style="color:var(--primary);">${escHtml(e.email || '—')}</a></td>
+                <td>${escHtml(e.phone || '—')}</td>
+                <td><span class="tier-badge ${tierClass(e.tier)}">${tierLabel(e.tier)}</span></td>
+                <td style="max-width:200px; color:#555; font-size:0.82rem;">${escHtml(e.message || '—')}</td>
+                <td><span class="source-badge source-${escHtml(e.source || 'manual')}">${escHtml(e.source || 'manual')}</span></td>
+                <td><button class="btn btn-danger" onclick="deleteEntry(${e.id})">Delete</button></td>
+            </tr>
+        `).join('');
+    }
+
+    function escHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function deleteEntry(id) {
+        if (!confirm('Delete this entry?')) return;
+        const list = getWaitlist().filter(e => e.id !== id);
+        saveWaitlist(list);
+        renderAll();
+    }
+
+    function renderAll() {
+        const list = getWaitlist();
+        renderStats(list);
+        renderTable();
+    }
+
+    // ===================================
+    // Manual entry modal
+    // ===================================
+    function openAddModal() {
+        document.getElementById('add-modal').style.display = 'flex';
+        document.getElementById('m-name').focus();
+    }
+
+    function closeAddModal() {
+        document.getElementById('add-modal').style.display = 'none';
+        ['m-name','m-email','m-phone','m-message'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('m-tier').value = '';
+    }
+
+    function saveManualEntry() {
+        const name = document.getElementById('m-name').value.trim();
+        const email = document.getElementById('m-email').value.trim();
+        if (!name || !email) {
+            alert('Name and email are required.');
+            return;
+        }
+
+        const entry = {
+            id: Date.now(),
+            date: new Date().toISOString(),
+            name,
+            email,
+            phone: document.getElementById('m-phone').value.trim(),
+            tier: document.getElementById('m-tier').value,
+            message: document.getElementById('m-message').value.trim(),
+            source: 'manual'
+        };
+
+        const list = getWaitlist();
+        list.push(entry);
+        saveWaitlist(list);
+        closeAddModal();
+        renderAll();
+    }
+
+    // ===================================
+    // Export CSV
+    // ===================================
+    function exportCSV() {
+        const list = getWaitlist();
+        if (list.length === 0) {
+            alert('No entries to export.');
+            return;
+        }
+        const headers = ['Date', 'Name', 'Email', 'Phone', 'Tier', 'Notes', 'Source'];
+        const rows = list.map(e => [
+            formatDate(e.date),
+            e.name, e.email, e.phone, e.tier, e.message, e.source
+        ].map(v => `"${(v || '').replace(/"/g, '""')}"`));
+
+        const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `apotheos-waitlist-${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // ===================================
+    // Close modal on overlay click
+    // ===================================
+    document.getElementById('add-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeAddModal();
+    });
+</script>
+</body>
+</html>
