@@ -85,7 +85,6 @@ img {
 .section {
     padding: var(--spacing-xl) 0;
     position: relative;
-    z-index: 1;
 }
 
 .section-light {
