@@ -185,46 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===================================
-    // Contact Form Handling
-    // ===================================
-    const contactForm = document.getElementById('contact-form');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
-            
-            // Show success message (in production, this would send to a backend)
-            alert(`Thank you for reaching out, ${data.name}! We'll get back to you soon at ${data.email}.`);
-            
-            // Reset form
-            contactForm.reset();
-            
-            // In production, you would send this data to your backend:
-            /*
-            fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                alert('Message sent successfully!');
-                contactForm.reset();
-            })
-            .catch(error => {
-                alert('Error sending message. Please try again.');
-            });
-            */
-        });
-    }
-
-    // ===================================
     // Card Tilt Effect on Hover
     // ===================================
     const cards = document.querySelectorAll('.content-card, .mission-card, .program-card, .tier-card');
