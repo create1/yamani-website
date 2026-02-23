@@ -329,15 +329,12 @@ function CalendarEvent({ course }: { course: CourseData }) {
   const isShort = height < 48
 
   return (
-    <Link href={`/courses/${course.slug}`} style={{ textDecoration: 'none' }}>
+    <div style={{ position: 'absolute', top: `${top}px`, left: '2px', right: '2px', height: `${height}px`, zIndex: 2 }}>
+      <Link href={`/courses/${course.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
       <div
         className="event-card"
         style={{
-          position: 'absolute',
-          top: `${top}px`,
-          left: '2px',
-          right: '2px',
-          height: `${height}px`,
+          height: '100%',
           background: colors.bg,
           border: `1px solid ${colors.border}`,
           borderLeft: `3px solid ${colors.solid}`,
@@ -345,7 +342,7 @@ function CalendarEvent({ course }: { course: CourseData }) {
           padding: isShort ? '0.2rem 0.4rem' : '0.35rem 0.5rem',
           overflow: 'hidden',
           cursor: 'pointer',
-          zIndex: 2,
+          boxSizing: 'border-box',
         }}
       >
         <div style={{
@@ -386,6 +383,7 @@ function CalendarEvent({ course }: { course: CourseData }) {
           </div>
         )}
       </div>
-    </Link>
+      </Link>
+    </div>
   )
 }
