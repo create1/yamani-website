@@ -68,12 +68,13 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-brand a { text-decoration: none; }
-    .nav-wordmark { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-wordmark { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 600; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; }
     .nav-tagline  { font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+    .nav-right { display: flex; align-items: center; gap: 2.5rem; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-family: var(--font-mono); font-size: 0.66rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
-    .nav-pill { font-family: var(--font-mono); font-size: 0.63rem; padding: 0.4rem 1rem; border: 1px solid var(--border); border-radius: 2rem; color: var(--gold); text-decoration: none; transition: background 0.2s; }
+    .nav-pill { font-family: var(--font-mono); font-size: 0.63rem; padding: 0.4rem 1rem; border: 1px solid var(--border); border-radius: 2rem; color: var(--gold); text-decoration: none; transition: background 0.2s; white-space: nowrap; }
     .nav-pill:hover { background: var(--gold-glow); }
 
     /* ── PAGE HEADER ── */
@@ -444,14 +445,15 @@
 <nav>
   <div class="nav-brand"><a href="index.html">
     <div class="nav-wordmark">Apotheos</div>
-    <div class="nav-tagline">Stone House · Nevada City</div>
+    <div class="nav-tagline">Learning &amp; Innovation Center</div>
   </a></div>
-  <div style="display:flex;align-items:center;gap:2rem;">
+  <div class="nav-right">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="curriculum.html">Curriculum</a></li>
       <li><a href="calendar.html" class="active">Schedule</a></li>
       <li><a href="index.html#membership">Membership</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
     </ul>
     <a href="index.html#waitlist" class="nav-pill">Join Waitlist</a>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
@@ -465,6 +467,7 @@
   <a href="curriculum.html">Curriculum</a>
   <a href="calendar.html" class="active">Schedule</a>
   <a href="index.html#membership">Membership</a>
+  <a href="index.html#contact">Contact</a>
   <a href="index.html#waitlist" style="color:var(--gold);">Join Waitlist →</a>
 </div>
 

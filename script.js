@@ -7,62 +7,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===================================
     // Mobile Navigation Toggle
     // ===================================
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const hamburger = document.getElementById('nav-hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-    if (hamburger) {
+    if (hamburger && mobileMenu) {
         hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+            const isOpen = mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open', isOpen);
+            hamburger.setAttribute('aria-expanded', isOpen);
         });
 
-        // Close mobile menu when clicking on a link
-        navLinks.forEach(link => {
+        mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+                mobileMenu.classList.remove('open');
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
             });
         });
     }
 
     // ===================================
-    // Navbar Scroll Effect
+    // Smooth Scroll for anchor links
     // ===================================
-    const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', function() {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll <= 0) {
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            navbar.style.boxShadow = '0 2px 30px rgba(0, 0, 0, 0.15)';
-        }
-
-        lastScroll = currentScroll;
-    });
-
-    // ===================================
-    // Smooth Scroll for Navigation Links
-    // ===================================
-    navLinks.forEach(link => {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            
-            if (href.startsWith('#')) {
+            if (href === '#') return;
+            const target = document.querySelector(href);
+            if (target) {
                 e.preventDefault();
-                const targetId = href.substring(1);
-                const targetSection = document.getElementById(targetId);
-                
-                if (targetSection) {
-                    const offsetTop = targetSection.offsetTop - 80; // Account for navbar height
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
+                const offsetTop = target.offsetTop - 72;
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
             }
         });
     });

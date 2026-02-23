@@ -12,45 +12,36 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="nav" id="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <div class="logo-icon">
-                    <svg viewBox="0 0 100 100" width="36" height="36">
-                        <circle cx="50" cy="50" r="45" fill="none" stroke="#C9A84C" stroke-width="1" opacity="0.3"/>
-                        <circle cx="50" cy="50" r="18" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
-                        <circle cx="50" cy="50" r="8"  fill="none" stroke="#E8C87A" stroke-width="1"/>
-                        <line x1="50" y1="42" x2="50" y2="58" stroke="#E8C87A" stroke-width="1"/>
-                        <line x1="42" y1="50" x2="58" y2="50" stroke="#E8C87A" stroke-width="1"/>
-                        <path d="M 50 10 L 45 25 L 50 22 L 55 25 Z" fill="#C9A84C"/>
-                        <path d="M 50 90 L 45 75 L 50 78 L 55 75 Z" fill="#8A6F35"/>
-                        <path d="M 10 50 L 25 45 L 22 50 L 25 55 Z" fill="#C9A84C"/>
-                        <path d="M 90 50 L 75 45 L 78 50 L 75 55 Z" fill="#E8C87A"/>
-                    </svg>
-                </div>
-                <div>
-                    <div class="logo-text">Apotheos</div>
-                    <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:#8A8575;letter-spacing:0.18em;text-transform:uppercase;">Learning &amp; Innovation</div>
-                </div>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#mission" class="nav-link">Mission</a></li>
-                <li><a href="#model" class="nav-link">Model</a></li>
-                <li><a href="curriculum.html" class="nav-link">Curriculum</a></li>
-                <li><a href="calendar.html" class="nav-link">Schedule</a></li>
-                <li><a href="#programs" class="nav-link">Programs</a></li>
-                <li><a href="#membership" class="nav-link">Membership</a></li>
-                <li><a href="#impact" class="nav-link">Impact</a></li>
-                <li><a href="#join" class="nav-link join-btn">Join Us</a></li>
+    <nav>
+        <div class="nav-brand">
+            <a href="index.html">
+                <div class="nav-wordmark">Apotheos</div>
+                <div class="nav-tagline">Learning &amp; Innovation Center</div>
+            </a>
+        </div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="curriculum.html">Curriculum</a></li>
+                <li><a href="calendar.html">Schedule</a></li>
+                <li><a href="#membership">Membership</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <a href="#waitlist" class="nav-pill">Join Waitlist</a>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
+
+    <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+        <a href="index.html" class="active">Home</a>
+        <a href="curriculum.html">Curriculum</a>
+        <a href="calendar.html">Schedule</a>
+        <a href="#membership">Membership</a>
+        <a href="#contact">Contact</a>
+        <a href="#waitlist" style="color:var(--gold);">Join Waitlist →</a>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
