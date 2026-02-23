@@ -23,6 +23,13 @@ const TOTAL_HEIGHT = TOTAL_HOURS * HOUR_PX
 
 const TRACK_NAMES: TrackName[] = ['wellness', 'ai', 'founder', 'community']
 
+const TRACK_COLORS: Record<TrackName, { solid: string; bg: string; border: string }> = {
+  wellness:  { solid: '#C9A84C', bg: 'rgba(201,168,76,0.15)',  border: 'rgba(201,168,76,0.5)'  },
+  ai:        { solid: '#7BB3BE', bg: 'rgba(80,128,142,0.18)',  border: 'rgba(80,128,142,0.5)'  },
+  founder:   { solid: '#D4856A', bg: 'rgba(196,97,58,0.18)',   border: 'rgba(196,97,58,0.5)'   },
+  community: { solid: '#8DA88F', bg: 'rgba(122,158,126,0.18)', border: 'rgba(122,158,126,0.5)' },
+}
+
 const ROTATION_ANCHOR = new Date(2026, 1, 23) // Feb 23 2026 = Week 0 Monday
 
 function getWeekMonday(offset: number): Date {
@@ -307,7 +314,7 @@ function DayColumn({ courses, weekOffset, dayIdx }: {
 
 // ─── EVENT BLOCK ───────────────────────────────────────────────
 function CalendarEvent({ course }: { course: CourseData }) {
-  const meta = TRACK_META[course.track]
+  const colors = TRACK_COLORS[course.track]
   const startMin = timeToMinutes(course.start_time)
   const startOffset = startMin - HOUR_START * 60
   const top = (startOffset / 60) * HOUR_PX
@@ -331,9 +338,9 @@ function CalendarEvent({ course }: { course: CourseData }) {
           left: '2px',
           right: '2px',
           height: `${height}px`,
-          background: meta.color.replace(')', ', 0.18)').replace('rgb', 'rgba'),
-          border: `1px solid ${meta.color.replace(')', ', 0.4)').replace('rgb', 'rgba')}`,
-          borderLeft: `3px solid ${meta.color}`,
+          background: colors.bg,
+          border: `1px solid ${colors.border}`,
+          borderLeft: `3px solid ${colors.solid}`,
           borderRadius: '4px',
           padding: isShort ? '0.2rem 0.4rem' : '0.35rem 0.5rem',
           overflow: 'hidden',
@@ -343,7 +350,7 @@ function CalendarEvent({ course }: { course: CourseData }) {
       >
         <div style={{
           fontFamily: 'var(--font-mono)', fontSize: '0.5rem',
-          color: meta.color, letterSpacing: '0.04em',
+          color: colors.solid, letterSpacing: '0.04em',
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
         }}>
           {course.start_time}–{endTime}
