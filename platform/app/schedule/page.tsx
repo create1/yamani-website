@@ -72,12 +72,29 @@ export default function SchedulePage() {
   const coursesByDay = useMemo(() => {
     const map: Record<string, CourseData[]> = {}
     DAYS.forEach(d => { map[d.key] = [] })
+
+    // Group by day → time slot, keep only one course per slot
+    const byDayAndTime: Record<string, Record<string, CourseData>> = {}
+    DAYS.forEach(d => { byDayAndTime[d.key] = {} })
+
+    // Track priority: wellness first in morning, ai/founder midday, community evening
+    const trackPriority: Record<TrackName, number> = { wellness: 0, ai: 1, founder: 2, community: 3 }
+
     ALL_COURSES.forEach(c => {
       if (!activeFilters.has(c.track)) return
       if (c.rotation_week !== null && c.rotation_week !== rotationIdx) return
-      map[c.day_of_week]?.push(c)
+      const slot = byDayAndTime[c.day_of_week]
+      if (!slot) return
+      const existing = slot[c.start_time]
+      // Keep highest-priority track for this time slot
+      if (!existing || trackPriority[c.track] < trackPriority[existing.track]) {
+        slot[c.start_time] = c
+      }
     })
-    Object.keys(map).forEach(k => map[k].sort((a, b) => a.start_time.localeCompare(b.start_time)))
+
+    Object.keys(byDayAndTime).forEach(day => {
+      map[day] = Object.values(byDayAndTime[day]).sort((a, b) => a.start_time.localeCompare(b.start_time))
+    })
     return map
   }, [rotationIdx, activeFilters])
 
@@ -234,7 +251,7 @@ function EventTile({ course }: { course: CourseData }) {
       }}
     >
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.48rem', color, letterSpacing: '0.04em', marginBottom: '0.15rem' }}>
-        {course.start_time}–{end}
+        {course.start_time}–{end} · {TRACK_META[course.track].icon}
       </div>
       <div style={{ fontFamily: 'var(--font-serif)', fontSize: '0.72rem', color: 'var(--text)', lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
         {course.name}
