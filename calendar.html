@@ -280,16 +280,161 @@
     .footer-addr { font-family: var(--font-mono); font-size: 0.63rem; color: var(--muted); letter-spacing: 0.08em; margin-top: 0.2rem; }
     .footer-right { font-family: var(--font-mono); font-size: 0.63rem; color: var(--muted); letter-spacing: 0.06em; text-align: right; }
 
-    @media (max-width: 700px) {
-      nav { padding: 0.9rem 1.25rem; }
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      background: rgba(13,12,9,0.98);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem 1.5rem;
+      z-index: 99;
+      flex-direction: column;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border2);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; padding-top: 1rem; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--gold); }
+
+    /* ── MOBILE LIST VIEW ── */
+    .cal-list-outer { display: none; }
+
+    .list-panel { display: none; flex-direction: column; gap: 0.55rem; padding: 0 1rem 3rem; }
+    .list-panel.active { display: flex; }
+
+    .ev-card {
+      display: flex;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-left: 3px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .ev-card[data-t="wellness"]  { border-left-color: var(--c-wellness); }
+    .ev-card[data-t="ai"]        { border-left-color: var(--c-ai); }
+    .ev-card[data-t="founder"]   { border-left-color: var(--c-founder); }
+    .ev-card[data-t="community"] { border-left-color: var(--c-community); }
+    .ev-card[data-t="open"]      { border-left-color: var(--c-open); }
+    .ev-card.hidden              { display: none !important; }
+
+    .ec-time-col {
+      padding: 0.875rem 0.65rem;
+      min-width: 54px;
+      border-right: 1px solid var(--border2);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      background: rgba(255,255,255,0.02);
+      flex-shrink: 0;
+    }
+    .ec-hr   { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1; }
+    .ec-min  { font-family: var(--font-mono); font-size: 0.58rem; font-weight: 500; color: var(--text); }
+    .ec-ampm { font-family: var(--font-mono); font-size: 0.5rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 1px; }
+
+    .ec-body { padding: 0.75rem 0.875rem; flex: 1; min-width: 0; }
+    .ec-name { font-size: 0.875rem; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 0.3rem; }
+    .ec-dur  { font-family: var(--font-mono); font-size: 0.57rem; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 0.45rem; }
+    .ec-meta { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+    .ec-space { font-family: var(--font-mono); font-size: 0.58rem; color: var(--muted); letter-spacing: 0.04em; }
+    .ec-badge {
+      font-family: var(--font-mono); font-size: 0.53rem;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.15rem 0.45rem; border-radius: 2px;
+    }
+
+    /* Day-list header */
+    .list-day-label {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--gold);
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0 1rem 0.6rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .list-day-label::before {
+      content: ''; display: inline-block;
+      width: 20px; height: 1px; background: var(--gold);
+    }
+
+    /* ── RESPONSIVE: TABLET (900px) ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      .page-head { padding: 7rem 1.25rem 1.5rem; }
-      .controls { padding: 0 1.25rem 1rem; flex-direction: column; align-items: flex-start; }
-      .track-filters { margin-left: 0; }
-      .cal-outer { padding: 0 0 3rem; }
-      .note-bar { padding: 0 1.25rem 0.75rem; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.25rem; }
+      .nav-pill  { display: none; }
+      .nav-hamburger { display: flex; }
+      .page-head { padding: 7rem 1.5rem 2rem; }
+      .controls  { padding: 0 1.5rem 1.25rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
       .footer-right { text-align: center; }
+    }
+
+    /* ── RESPONSIVE: PHONE (680px) — switch to list view ── */
+    @media (max-width: 680px) {
+      nav { padding: 0.875rem 1.1rem; }
+      .mobile-menu { top: 52px; }
+
+      .page-head {
+        padding: 6.5rem 1.1rem 1.5rem;
+        flex-direction: column; align-items: flex-start; gap: 1.25rem;
+      }
+      .ph-title { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+      .legend { gap: 0.65rem; }
+
+      /* Controls: both rows scrollable */
+      .controls { padding: 0 1.1rem 1rem; flex-direction: column; gap: 0.65rem; align-items: flex-start; }
+      .day-tabs {
+        overflow-x: auto; -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap; width: 100%; padding-bottom: 2px;
+        scrollbar-width: none;
+      }
+      .day-tabs::-webkit-scrollbar { display: none; }
+      .day-tab { flex-shrink: 0; padding: 0.4rem 0.875rem; font-size: 0.6rem; }
+
+      .track-filters {
+        overflow-x: auto; -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap; margin-left: 0; width: 100%;
+        padding-bottom: 2px; scrollbar-width: none;
+      }
+      .track-filters::-webkit-scrollbar { display: none; }
+      .tf-btn { flex-shrink: 0; }
+
+      .note-bar { padding: 0 1.1rem 0.75rem; }
+
+      /* Hide grid, show list */
+      .cal-outer { display: none; }
+      .cal-list-outer { display: block; }
+
+      footer { padding: 1.75rem 1.1rem; }
     }
   </style>
 </head>
@@ -309,8 +454,19 @@
       <li><a href="index.html#membership">Membership</a></li>
     </ul>
     <a href="index.html#waitlist" class="nav-pill">Join Waitlist</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="curriculum.html">Curriculum</a>
+  <a href="calendar.html" class="active">Schedule</a>
+  <a href="index.html#membership">Membership</a>
+  <a href="index.html#waitlist" style="color:var(--gold);">Join Waitlist →</a>
+</div>
 
 <!-- PAGE HEADER -->
 <div class="page-head">
@@ -353,7 +509,7 @@
   </div>
 </div>
 
-<!-- CALENDAR PANELS -->
+<!-- CALENDAR PANELS (desktop grid) -->
 <div class="cal-outer">
   <div id="cal-mon" class="cal-panel active"></div>
   <div id="cal-tue" class="cal-panel"></div>
@@ -361,6 +517,16 @@
   <div id="cal-thu" class="cal-panel"></div>
   <div id="cal-fri" class="cal-panel"></div>
   <div id="cal-sat" class="cal-panel"></div>
+</div>
+
+<!-- LIST PANELS (mobile) -->
+<div class="cal-list-outer">
+  <div id="list-mon" class="list-panel active"></div>
+  <div id="list-tue" class="list-panel"></div>
+  <div id="list-wed" class="list-panel"></div>
+  <div id="list-thu" class="list-panel"></div>
+  <div id="list-fri" class="list-panel"></div>
+  <div id="list-sat" class="list-panel"></div>
 </div>
 
 <!-- FOOTER -->
@@ -380,18 +546,17 @@
 // ─────────────────────────────────────────────────────────────
 // CONFIG
 // ─────────────────────────────────────────────────────────────
-const HOUR_PX  = 72;   // pixels per hour
-const START_HR = 7;    // 7 AM
-const END_HR   = 22;   // 10 PM
+const HOUR_PX  = 72;
+const START_HR = 7;
+const END_HR   = 22;
 
-// Spaces in column order
 const SPACES = [
-  { id: 'parlour',   icon: '🍸', label: 'Bar',          name: 'Parlour'    },
-  { id: 'greathall', icon: '🏛', label: 'Dining Room',   name: 'Great Hall' },
-  { id: 'showroom',  icon: '🎭', label: 'Show Room',     name: 'Showroom'   },
-  { id: 'cavern',    icon: '🕯', label: 'Cave',          name: 'Cavern'     },
-  { id: 'patio',     icon: '🌿', label: 'Patio',         name: 'Patio'      },
-  { id: 'penthouse', icon: '🏔', label: 'Penthouse',     name: 'Penthouse'  },
+  { id: 'parlour',   icon: '🍸', label: 'Bar',        name: 'Parlour'    },
+  { id: 'greathall', icon: '🏛', label: 'Dining Room', name: 'Great Hall' },
+  { id: 'showroom',  icon: '🎭', label: 'Show Room',   name: 'Showroom'   },
+  { id: 'cavern',    icon: '🕯', label: 'Cave',        name: 'Cavern'     },
+  { id: 'patio',     icon: '🌿', label: 'Patio',       name: 'Patio'      },
+  { id: 'penthouse', icon: '🏔', label: 'Penthouse',   name: 'Penthouse'  },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -624,42 +789,124 @@ function buildCalendar(dayKey) {
 }
 
 // ─────────────────────────────────────────────────────────────
+// MOBILE LIST VIEW BUILDER
+// ─────────────────────────────────────────────────────────────
+const TRACK_BG = {
+  wellness:  { bg: 'rgba(201,168,76,0.15)',  color: 'var(--gold)'    },
+  ai:        { bg: 'rgba(80,128,142,0.2)',   color: 'var(--teal-lt)' },
+  founder:   { bg: 'rgba(196,97,58,0.2)',    color: 'var(--rust-lt)' },
+  community: { bg: 'rgba(122,158,126,0.2)',  color: 'var(--sage-lt)' },
+  open:      { bg: 'rgba(255,255,255,0.06)', color: 'var(--muted)'   },
+};
+
+function buildListView(dayKey) {
+  const panel = document.getElementById(`list-${dayKey}`);
+  if (!panel) return;
+  const events = SCHEDULE[dayKey] || [];
+
+  const sorted = [...events].sort((a, b) => {
+    const at = parseTime(a.start), bt = parseTime(b.start);
+    return (at.h * 60 + at.m) - (bt.h * 60 + bt.m);
+  });
+
+  const dayNames = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday' };
+  let html = `<div class="list-day-label">${dayNames[dayKey]}</div>`;
+
+  sorted.forEach(ev => {
+    const end  = endTime(ev.start, ev.dur);
+    const sp   = SPACES.find(s => s.id === ev.space);
+    const { h, m } = parseTime(ev.start);
+    const ampm = h < 12 ? 'AM' : 'PM';
+    const h12  = h % 12 || 12;
+    const durH = Math.floor(ev.dur / 60);
+    const durM = ev.dur % 60;
+    const durStr = durH > 0 ? (durM > 0 ? `${durH}h ${durM}m` : `${durH}h`) : `${durM}m`;
+    const tc   = TRACK_BG[ev.track] || TRACK_BG.open;
+    const minStr = m > 0 ? `:${String(m).padStart(2,'0')}` : '';
+
+    html += `<div class="ev-card" data-t="${ev.track}">
+      <div class="ec-time-col">
+        <div class="ec-hr">${h12}${minStr ? `<span class="ec-min">${minStr}</span>` : ''}</div>
+        <div class="ec-ampm">${ampm}</div>
+      </div>
+      <div class="ec-body">
+        <div class="ec-name">${ev.name}</div>
+        <div class="ec-dur">${fmt12(ev.start)} – ${fmt12(end)} · ${durStr}</div>
+        <div class="ec-meta">
+          ${sp ? `<span class="ec-space">${sp.icon} ${sp.name}</span>` : ''}
+          <span class="ec-badge" style="background:${tc.bg};color:${tc.color};">${TRACK_LABELS[ev.track]}</span>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  panel.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────────────────────
 const DAYS = ['mon','tue','wed','thu','fri','sat'];
-DAYS.forEach(d => buildCalendar(d));
+DAYS.forEach(d => { buildCalendar(d); buildListView(d); });
 
-// Day tab switching
+// Day tab switching (syncs both grid and list panels)
 document.querySelectorAll('.day-tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.cal-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.list-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById(`cal-${btn.dataset.day}`).classList.add('active');
+    const day = btn.dataset.day;
+    document.getElementById(`cal-${day}`).classList.add('active');
+    const lp = document.getElementById(`list-${day}`);
+    if (lp) lp.classList.add('active');
   });
 });
 
-// Track filter toggling
+// Track filter toggling (works on both grid events and list cards)
 const activeFilters = new Set(['wellness','ai','founder','community']);
 
 document.querySelectorAll('.tf-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const t = btn.dataset.t;
     if (activeFilters.has(t)) {
-      if (activeFilters.size === 1) return; // keep at least one
+      if (activeFilters.size === 1) return;
       activeFilters.delete(t);
       btn.classList.remove('on');
     } else {
       activeFilters.add(t);
       btn.classList.add('on');
     }
+    // Grid events
     document.querySelectorAll('.ev').forEach(ev => {
       const et = ev.dataset.t;
-      const hide = et !== 'open' && !activeFilters.has(et);
-      ev.classList.toggle('hidden', hide);
+      ev.classList.toggle('hidden', et !== 'open' && !activeFilters.has(et));
+    });
+    // List cards
+    document.querySelectorAll('.ev-card').forEach(card => {
+      const et = card.dataset.t;
+      card.classList.toggle('hidden', et !== 'open' && !activeFilters.has(et));
     });
   });
 });
+
+// Hamburger menu
+const hamburger = document.getElementById('nav-hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
 </script>
 </body>
 </html>
