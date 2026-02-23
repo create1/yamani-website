@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Schedule — Apotheos at Stone House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:      #C9A84C;
+      --gold-dim:  #8A6F35;
+      --gold-glow: rgba(201,168,76,0.15);
+      --ink:       #0D0C09;
+      --ink2:      #1A1912;
+      --surface:   #1E1D16;
+      --surface2:  #2A2920;
+      --surface3:  #34332A;
+      --sage:      #7A9E7E;
+      --sage-lt:   #A8C5AC;
+      --rust:      #C4613A;
+      --rust-lt:   #E07A52;
+      --teal:      #50808E;
+      --teal-lt:   #6FA3B0;
+      --muted:     #8A8575;
+      --text:      #EDE8DC;
+      --border:    rgba(201,168,76,0.18);
+      --border2:   rgba(201,168,76,0.07);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Outfit', sans-serif;
+      --font-mono:  'DM Mono', monospace;
+
+      /* Track colours */
+      --c-wellness: #C9A84C;
+      --c-ai:       #50808E;
+      --c-founder:  #C4613A;
+      --c-community:#7A9E7E;
+      --c-open:     #4a4840;
+
+      --hour: 72px;   /* px per hour */
+      --start: 7;     /* calendar starts 7 AM */
+      --hours: 15;    /* 7 AM → 10 PM */
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--ink);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 1.1rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(13,12,9,0.94);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand a { text-decoration: none; }
+    .nav-wordmark { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-tagline  { font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--font-mono); font-size: 0.66rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-pill { font-family: var(--font-mono); font-size: 0.63rem; padding: 0.4rem 1rem; border: 1px solid var(--border); border-radius: 2rem; color: var(--gold); text-decoration: none; transition: background 0.2s; }
+    .nav-pill:hover { background: var(--gold-glow); }
+
+    /* ── PAGE HEADER ── */
+    .page-head {
+      padding: 8rem 2.5rem 2.5rem;
+      max-width: 1600px; margin: 0 auto;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    }
+    .ph-left {}
+    .ph-eyebrow { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+    .ph-line { width: 28px; height: 1px; background: var(--gold); }
+    .ph-label { font-family: var(--font-mono); font-size: 0.63rem; color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase; }
+    .ph-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; line-height: 1.05; }
+    .ph-title em { font-style: italic; color: var(--gold); }
+    .ph-sub { font-size: 0.9rem; color: var(--muted); margin-top: 0.6rem; font-weight: 300; }
+
+    /* Legend */
+    .legend { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .leg-item { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+    .leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+    /* ── CONTROLS ── */
+    .controls {
+      padding: 0 2.5rem 1.5rem;
+      max-width: 1600px; margin: 0 auto;
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+    }
+
+    /* Day tabs */
+    .day-tabs { display: flex; gap: 0.35rem; }
+    .day-tab {
+      font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.45rem 1rem; border-radius: 0.35rem; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s;
+    }
+    .day-tab:hover { color: var(--gold); border-color: var(--border); }
+    .day-tab.active { background: var(--gold); color: var(--ink); border-color: var(--gold); font-weight: 600; }
+
+    /* Track filters */
+    .track-filters { display: flex; gap: 0.35rem; margin-left: auto; }
+    .tf-btn {
+      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.35rem 0.8rem; border-radius: 2rem; border: 1px solid transparent;
+      cursor: pointer; transition: all 0.2s; opacity: 0.5;
+    }
+    .tf-btn.on { opacity: 1; }
+    .tf-btn[data-t="wellness"]  { border-color: rgba(201,168,76,0.4); color: var(--gold);   background: rgba(201,168,76,0.08); }
+    .tf-btn[data-t="ai"]       { border-color: rgba(80,128,142,0.4); color: var(--teal-lt); background: rgba(80,128,142,0.08); }
+    .tf-btn[data-t="founder"]  { border-color: rgba(196,97,58,0.4);  color: var(--rust-lt); background: rgba(196,97,58,0.08); }
+    .tf-btn[data-t="community"]{ border-color: rgba(122,158,126,0.4);color: var(--sage-lt); background: rgba(122,158,126,0.08); }
+
+    /* ── CALENDAR WRAPPER ── */
+    .cal-outer {
+      padding: 0 2.5rem 4rem;
+      max-width: 1600px; margin: 0 auto;
+      overflow-x: auto;
+    }
+
+    .cal-panel { display: none; }
+    .cal-panel.active { display: block; }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: 54px repeat(6, 1fr);
+      min-width: 900px;
+    }
+
+    /* Column headers */
+    .cal-col-head {
+      padding: 0.75rem 0.5rem 0.75rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 64px; z-index: 10;
+      background: var(--ink2);
+    }
+    .cal-col-head:first-child { border-right: 1px solid var(--border2); }
+    .space-label { font-family: var(--font-mono); font-size: 0.58rem; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.2rem; }
+    .space-icon  { font-size: 1.1rem; }
+    .space-name  { font-family: var(--font-serif); font-size: 1rem; font-weight: 600; color: var(--text); }
+
+    /* Body grid */
+    .cal-body {
+      display: contents;
+    }
+
+    /* Time gutter */
+    .time-col {
+      grid-column: 1;
+      grid-row: 2;
+      position: relative;
+      border-right: 1px solid var(--border2);
+    }
+
+    /* Space columns */
+    .space-col {
+      grid-row: 2;
+      position: relative;
+      border-right: 1px solid var(--border2);
+    }
+    .space-col:last-child { border-right: none; }
+
+    /* Inner positioned area */
+    .col-inner {
+      position: relative;
+      height: calc(var(--hour) * var(--hours));
+    }
+
+    /* Hour lines */
+    .col-inner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        var(--border2) 0,
+        var(--border2) 1px,
+        transparent 1px,
+        transparent var(--hour)
+      );
+      pointer-events: none;
+    }
+
+    /* Half-hour lines */
+    .col-inner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent calc(var(--hour) / 2 - 1px),
+        rgba(255,255,255,0.025) calc(var(--hour) / 2 - 1px),
+        rgba(255,255,255,0.025) calc(var(--hour) / 2),
+        transparent calc(var(--hour) / 2),
+        transparent var(--hour)
+      );
+      pointer-events: none;
+    }
+
+    /* Time labels */
+    .t-label {
+      position: absolute; left: 0; right: 0;
+      padding: 0 6px 0 0;
+      font-family: var(--font-mono); font-size: 0.56rem; color: var(--muted);
+      letter-spacing: 0.05em; text-align: right;
+      transform: translateY(-50%);
+    }
+
+    /* ── EVENT BLOCKS ── */
+    .ev {
+      position: absolute;
+      left: 3px; right: 3px;
+      border-radius: 6px;
+      padding: 5px 7px;
+      overflow: hidden;
+      cursor: default;
+      transition: opacity 0.2s, transform 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .ev:hover { transform: scale(1.015); z-index: 10; }
+
+    .ev[data-t="wellness"]  { background: rgba(201,168,76,0.12);  border-color: var(--c-wellness); }
+    .ev[data-t="ai"]        { background: rgba(80,128,142,0.15);  border-color: var(--c-ai);       }
+    .ev[data-t="founder"]   { background: rgba(196,97,58,0.15);   border-color: var(--c-founder);  }
+    .ev[data-t="community"] { background: rgba(122,158,126,0.14); border-color: var(--c-community);}
+    .ev[data-t="open"]      { background: rgba(255,255,255,0.03); border-color: var(--c-open);     }
+
+    .ev.hidden { opacity: 0.08; pointer-events: none; }
+
+    .ev-name {
+      font-size: 0.72rem; font-weight: 500; color: var(--text); line-height: 1.3;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .ev-time {
+      font-family: var(--font-mono); font-size: 0.55rem; color: var(--muted);
+      margin-top: 3px; letter-spacing: 0.04em;
+    }
+    .ev-tag {
+      display: inline-block; margin-top: 3px;
+      font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 1px 5px; border-radius: 2px;
+    }
+    .ev[data-t="wellness"]  .ev-tag { background: rgba(201,168,76,0.2);  color: var(--gold);    }
+    .ev[data-t="ai"]        .ev-tag { background: rgba(80,128,142,0.25); color: var(--teal-lt); }
+    .ev[data-t="founder"]   .ev-tag { background: rgba(196,97,58,0.2);  color: var(--rust-lt); }
+    .ev[data-t="community"] .ev-tag { background: rgba(122,158,126,0.2);color: var(--sage-lt); }
+    .ev[data-t="open"]      .ev-tag { background: rgba(255,255,255,0.06);color: var(--muted);  }
+
+    /* Note bar */
+    .note-bar {
+      max-width: 1600px; margin: 0 auto;
+      padding: 0 2.5rem 1rem;
+    }
+    .note-inner {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.75rem 1.25rem;
+      background: rgba(201,168,76,0.06); border: 1px solid var(--border2);
+      border-radius: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.63rem; color: var(--muted); letter-spacing: 0.04em;
+    }
+    .note-inner span { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-word { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; }
+    .footer-addr { font-family: var(--font-mono); font-size: 0.63rem; color: var(--muted); letter-spacing: 0.08em; margin-top: 0.2rem; }
+    .footer-right { font-family: var(--font-mono); font-size: 0.63rem; color: var(--muted); letter-spacing: 0.06em; text-align: right; }
+
+    @media (max-width: 700px) {
+      nav { padding: 0.9rem 1.25rem; }
+      .nav-links { display: none; }
+      .page-head { padding: 7rem 1.25rem 1.5rem; }
+      .controls { padding: 0 1.25rem 1rem; flex-direction: column; align-items: flex-start; }
+      .track-filters { margin-left: 0; }
+      .cal-outer { padding: 0 0 3rem; }
+      .note-bar { padding: 0 1.25rem 0.75rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.25rem; }
+      .footer-right { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand"><a href="index.html">
+    <div class="nav-wordmark">Apotheos</div>
+    <div class="nav-tagline">Stone House · Nevada City</div>
+  </a></div>
+  <div style="display:flex;align-items:center;gap:2rem;">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="curriculum.html">Curriculum</a></li>
+      <li><a href="calendar.html" class="active">Schedule</a></li>
+      <li><a href="index.html#membership">Membership</a></li>
+    </ul>
+    <a href="index.html#waitlist" class="nav-pill">Join Waitlist</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-head">
+  <div class="ph-left">
+    <div class="ph-eyebrow"><div class="ph-line"></div><div class="ph-label">Stone House · 107 Sacramento St</div></div>
+    <h1 class="ph-title">Weekly <em>Schedule</em></h1>
+    <p class="ph-sub">Six spaces · Three tracks · Morning wellness · All-day learning</p>
+  </div>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-wellness);"></div>Wellness</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-ai);"></div>AI Learning</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-founder);"></div>Founder Ecosystem</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-community);"></div>Community</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--c-open);"></div>Open / Available</div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="day-tabs">
+    <button class="day-tab active" data-day="mon">Monday</button>
+    <button class="day-tab" data-day="tue">Tuesday</button>
+    <button class="day-tab" data-day="wed">Wednesday</button>
+    <button class="day-tab" data-day="thu">Thursday</button>
+    <button class="day-tab" data-day="fri">Friday</button>
+    <button class="day-tab" data-day="sat">Saturday</button>
+  </div>
+  <div class="track-filters">
+    <button class="tf-btn on" data-t="wellness">🌿 Wellness</button>
+    <button class="tf-btn on" data-t="ai">🤖 AI Learning</button>
+    <button class="tf-btn on" data-t="founder">🚀 Founder</button>
+    <button class="tf-btn on" data-t="community">🤝 Community</button>
+  </div>
+</div>
+
+<!-- NOTE -->
+<div class="note-bar">
+  <div class="note-inner">
+    <span>✦</span> Sample weekly schedule — actual programming rotates by cohort. Courses run in multi-week blocks; individual days show the standing weekly format. <span>stonehouse.io</span> handles private bookings for open slots.
+  </div>
+</div>
+
+<!-- CALENDAR PANELS -->
+<div class="cal-outer">
+  <div id="cal-mon" class="cal-panel active"></div>
+  <div id="cal-tue" class="cal-panel"></div>
+  <div id="cal-wed" class="cal-panel"></div>
+  <div id="cal-thu" class="cal-panel"></div>
+  <div id="cal-fri" class="cal-panel"></div>
+  <div id="cal-sat" class="cal-panel"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-word">Apotheos</div>
+    <div class="footer-addr">Stone House · 107 Sacramento Street · Nevada City, CA 95959</div>
+    <div class="footer-addr" style="margin-top:0.15rem;">A 501(c)(3) Nonprofit Organization</div>
+  </div>
+  <div class="footer-right">
+    <div style="color:var(--gold);margin-bottom:0.2rem;">apotheos.org</div>
+    <div>© 2026 Apotheos</div>
+  </div>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────────────────────
+const HOUR_PX  = 72;   // pixels per hour
+const START_HR = 7;    // 7 AM
+const END_HR   = 22;   // 10 PM
+
+// Spaces in column order
+const SPACES = [
+  { id: 'parlour',   icon: '🍸', label: 'Bar',          name: 'Parlour'    },
+  { id: 'greathall', icon: '🏛', label: 'Dining Room',   name: 'Great Hall' },
+  { id: 'showroom',  icon: '🎭', label: 'Show Room',     name: 'Showroom'   },
+  { id: 'cavern',    icon: '🕯', label: 'Cave',          name: 'Cavern'     },
+  { id: 'patio',     icon: '🌿', label: 'Patio',         name: 'Patio'      },
+  { id: 'penthouse', icon: '🏔', label: 'Penthouse',     name: 'Penthouse'  },
+];
+
+// ─────────────────────────────────────────────────────────────
+// EVENT DATA
+// Each event: { name, track, space, start:"HH:MM", dur: minutes, tag? }
+// track: wellness | ai | founder | community | open
+// ─────────────────────────────────────────────────────────────
+const SCHEDULE = {
+
+  mon: [
+    // Wellness — morning
+    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
+    { name:'Morning Yoga',                 track:'wellness', space:'patio',     start:'08:00', dur:60  },
+    { name:'Breathwork & Meditation',      track:'wellness', space:'cavern',    start:'09:00', dur:45  },
+    { name:'Coffee & Open Cowork',         track:'wellness', space:'parlour',   start:'09:30', dur:90  },
+    // AI Learning — all day
+    { name:'AI Foundations Workshop',      track:'ai',       space:'greathall', start:'10:00', dur:120 },
+    { name:'Python for AI Beginners',      track:'ai',       space:'greathall', start:'13:00', dur:180 },
+    { name:'No-Code App Builder Workshop', track:'ai',       space:'greathall', start:'16:30', dur:90  },
+    // Founder — all day
+    { name:'Entrepreneurship 101: Start With Why', track:'founder', space:'cavern',  start:'10:00', dur:120 },
+    { name:'AI Business Model Playbook',   track:'founder',  space:'parlour',   start:'13:00', dur:120 },
+    { name:'Open Cowork & Maker Space',    track:'open',     space:'penthouse', start:'10:00', dur:480 },
+    // Community
+    { name:'Community Happy Hour',         track:'community',space:'parlour',   start:'18:00', dur:120 },
+  ],
+
+  tue: [
+    // Wellness
+    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
+    { name:'Pilates Class',                track:'wellness', space:'patio',     start:'08:00', dur:60  },
+    { name:'Guided Meditation',            track:'wellness', space:'cavern',    start:'09:00', dur:45  },
+    { name:'Recovery & Coffee',            track:'wellness', space:'patio',     start:'09:30', dur:90  },
+    // AI Learning
+    { name:'Prompt Engineering Masterclass', track:'ai',     space:'greathall', start:'10:00', dur:180 },
+    { name:'Build Your First Chatbot — Day 1', track:'ai',   space:'greathall', start:'13:00', dur:180 },
+    // Founder
+    { name:'Freelancing with AI: Earn Now',track:'founder',  space:'parlour',   start:'10:00', dur:120 },
+    { name:'AI Marketing & Growth Hacking',track:'founder',  space:'parlour',   start:'13:00', dur:120 },
+    { name:'Founder Roundtable',           track:'founder',  space:'cavern',    start:'17:00', dur:120 },
+    { name:'Podcast Studio — Open Sessions',track:'founder', space:'showroom',  start:'18:00', dur:120 },
+    // Open
+    { name:'Deep Work & Studio Time',      track:'open',     space:'penthouse', start:'15:00', dur:180 },
+  ],
+
+  wed: [
+    // Wellness
+    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
+    { name:'Mobility Flow',                track:'wellness', space:'patio',     start:'08:00', dur:60  },
+    { name:'Breathwork Session',           track:'wellness', space:'cavern',    start:'09:00', dur:45  },
+    { name:'Open Wellness & Nature Time',  track:'wellness', space:'patio',     start:'09:30', dur:90  },
+    // AI Learning
+    { name:'AI Image & Video Creation',    track:'ai',       space:'greathall', start:'10:00', dur:120 },
+    { name:'Machine Learning Without Math Fear', track:'ai', space:'greathall', start:'13:00', dur:120 },
+    { name:'Computer Vision & Robotics',   track:'ai',       space:'greathall', start:'15:30', dur:120 },
+    // Founder
+    { name:'Product Thinking: Build What People Want', track:'founder', space:'parlour', start:'10:00', dur:120 },
+    { name:'Legal & Finance Basics',       track:'founder',  space:'cavern',    start:'13:00', dur:120 },
+    { name:'Future Work & Career Workshop',track:'founder',  space:'parlour',   start:'15:00', dur:120 },
+    // Community
+    { name:'Community Lunch',              track:'community',space:'greathall', start:'12:00', dur:60  },
+    // Open
+    { name:'Mentor Matching Sessions',     track:'founder',  space:'penthouse', start:'17:00', dur:120 },
+    { name:'Private Event / Booking',      track:'open',     space:'showroom',  start:'10:00', dur:480 },
+  ],
+
+  thu: [
+    // Wellness
+    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
+    { name:'Morning Yoga',                 track:'wellness', space:'patio',     start:'08:00', dur:60  },
+    { name:'Guided Meditation',            track:'wellness', space:'cavern',    start:'09:00', dur:45  },
+    { name:'Burnout Prevention Workshop',  track:'wellness', space:'cavern',    start:'09:45', dur:75  },
+    // AI Learning
+    { name:'Data Literacy for the AI Age', track:'ai',       space:'greathall', start:'10:00', dur:120 },
+    { name:'APIs & AI Integration',        track:'ai',       space:'greathall', start:'13:00', dur:120 },
+    { name:'Cybersecurity in the AI Era',  track:'ai',       space:'greathall', start:'15:30', dur:120 },
+    // Founder
+    { name:'AI Tools for Small Business',  track:'founder',  space:'parlour',   start:'10:00', dur:120 },
+    { name:'Raise Money: Grants & Angels', track:'founder',  space:'parlour',   start:'13:00', dur:120 },
+    { name:'1:1 Advisor Sessions',         track:'founder',  space:'penthouse', start:'15:00', dur:180 },
+    // Open
+    { name:'Open Cowork',                  track:'open',     space:'patio',     start:'12:00', dur:300 },
+    { name:'Private Event / Booking',      track:'open',     space:'showroom',  start:'10:00', dur:480 },
+  ],
+
+  fri: [
+    // Wellness
+    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
+    { name:'Pilates Class',                track:'wellness', space:'patio',     start:'08:00', dur:60  },
+    { name:'Breathwork Session',           track:'wellness', space:'cavern',    start:'09:00', dur:45  },
+    { name:'Recovery & Open Wellness',     track:'wellness', space:'patio',     start:'09:30', dur:90  },
+    // AI Learning — Kids Day + Adult workshops
+    { name:'Kids: AI Explorers (Ages 8–12)', track:'ai',     space:'greathall', start:'10:00', dur:120 },
+    { name:'AI Workflows with n8n & Zapier', track:'ai',     space:'parlour',   start:'10:00', dur:120 },
+    { name:'Robotics Club (Ages 8–14)',    track:'ai',       space:'greathall', start:'13:00', dur:120 },
+    { name:'Teen AI Innovators (Ages 13–17)', track:'ai',    space:'greathall', start:'15:00', dur:120 },
+    { name:'Project Office Hours',         track:'ai',       space:'penthouse', start:'17:00', dur:60  },
+    // Founder
+    { name:'Building a Personal Brand with AI', track:'founder', space:'parlour', start:'13:00', dur:120 },
+    { name:'Raise Money / Crowdfunding',   track:'founder',  space:'cavern',    start:'15:00', dur:120 },
+    // Community — Showcase Night
+    { name:'Community Showcase & Pitch Practice', track:'community', space:'showroom', start:'18:00', dur:120 },
+  ],
+
+  sat: [
+    // Wellness
+    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
+    { name:'Community Yoga (Open to All)', track:'wellness', space:'patio',     start:'08:00', dur:60  },
+    { name:'Guided Meditation',            track:'wellness', space:'cavern',    start:'09:00', dur:45  },
+    { name:'Nature Walk & Recovery',       track:'wellness', space:'patio',     start:'09:30', dur:90  },
+    // AI Learning
+    { name:'AI Music & Audio Production Workshop', track:'ai', space:'showroom', start:'10:00', dur:120 },
+    { name:'Kids Summer AI Camp',          track:'ai',       space:'parlour',   start:'13:00', dur:180 },
+    { name:'AI Art & Creative Studio',     track:'ai',       space:'showroom',  start:'13:00', dur:120 },
+    // Founder
+    { name:'Weekend Bootcamp: Launch in 90 Days — Part 1', track:'founder', space:'greathall', start:'10:00', dur:180 },
+    { name:'Young Entrepreneurs (Ages 12–17)', track:'founder', space:'parlour', start:'10:00', dur:120 },
+    { name:'Weekend Bootcamp — Part 2',    track:'founder',  space:'greathall', start:'13:00', dur:180 },
+    { name:'Demo Day Prep & Advisory',     track:'founder',  space:'penthouse', start:'16:00', dur:120 },
+    { name:'Demo Day Prep (Overflow)',     track:'founder',  space:'cavern',    start:'16:00', dur:120 },
+    // Community
+    { name:'Monthly Community Gathering',  track:'community',space:'showroom',  start:'18:00', dur:180 },
+    { name:'Evening at the Parlour',       track:'community',space:'parlour',   start:'18:00', dur:180 },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────
+function parseTime(str) {
+  const [h, m] = str.split(':').map(Number);
+  return { h, m };
+}
+
+function timeToTop(str) {
+  const { h, m } = parseTime(str);
+  return ((h - START_HR) + m / 60) * HOUR_PX;
+}
+
+function durToHeight(min) {
+  return (min / 60) * HOUR_PX;
+}
+
+function fmt12(str) {
+  const { h, m } = parseTime(str);
+  const ampm = h < 12 ? 'AM' : 'PM';
+  const h12  = h % 12 || 12;
+  return `${h12}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
+function endTime(start, dur) {
+  const { h, m } = parseTime(start);
+  const total = h * 60 + m + dur;
+  return `${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`;
+}
+
+const TRACK_LABELS = {
+  wellness: 'Wellness', ai: 'AI Learning',
+  founder: 'Founder', community: 'Community', open: 'Open'
+};
+
+// ─────────────────────────────────────────────────────────────
+// RENDER CALENDAR
+// ─────────────────────────────────────────────────────────────
+function buildCalendar(dayKey) {
+  const panel = document.getElementById(`cal-${dayKey}`);
+  const events = SCHEDULE[dayKey] || [];
+  const totalH = (END_HR - START_HR) * HOUR_PX;
+
+  // Build column header row
+  let html = `<div class="cal-grid">`;
+
+  // Header: time gutter
+  html += `<div class="cal-col-head" style="border-right:1px solid rgba(201,168,76,0.12);">
+    <div class="space-label">Time</div>
+    <div class="space-icon">🕐</div>
+    <div class="space-name" style="color:var(--muted);font-size:0.8rem;">—</div>
+  </div>`;
+
+  // Headers: spaces
+  SPACES.forEach(sp => {
+    html += `<div class="cal-col-head">
+      <div class="space-label">${sp.label}</div>
+      <div class="space-icon">${sp.icon}</div>
+      <div class="space-name">${sp.name}</div>
+    </div>`;
+  });
+
+  // TIME gutter column
+  html += `<div class="time-col"><div class="col-inner" style="height:${totalH}px;">`;
+  for (let hr = START_HR; hr <= END_HR; hr++) {
+    const top = (hr - START_HR) * HOUR_PX;
+    const label = hr === 12 ? '12 PM' : hr < 12 ? `${hr} AM` : `${hr-12} PM`;
+    html += `<div class="t-label" style="top:${top}px;">${label}</div>`;
+  }
+  html += `</div></div>`;
+
+  // Space columns
+  SPACES.forEach(sp => {
+    const spEvents = events.filter(e => e.space === sp.id);
+    html += `<div class="space-col"><div class="col-inner" style="height:${totalH}px;">`;
+
+    // Open slot indicator if empty
+    if (spEvents.length === 0) {
+      html += `<div class="ev" data-t="open" style="top:${timeToTop('09:00')}px;height:${durToHeight(480)}px;">
+        <div class="ev-name" style="color:var(--muted);">Available for private bookings</div>
+        <div class="ev-time">9 AM – 5 PM</div>
+        <div class="ev-tag">Open</div>
+      </div>`;
+    }
+
+    spEvents.forEach(ev => {
+      const top    = timeToTop(ev.start);
+      const height = durToHeight(ev.dur);
+      const end    = endTime(ev.start, ev.dur);
+      html += `<div class="ev" data-t="${ev.track}"
+        style="top:${top}px;height:${height}px;"
+        title="${ev.name}">
+        <div class="ev-name">${ev.name}</div>
+        <div class="ev-time">${fmt12(ev.start)} – ${fmt12(end)}</div>
+        <div class="ev-tag">${TRACK_LABELS[ev.track]}</div>
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  });
+
+  html += `</div>`;
+  panel.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+const DAYS = ['mon','tue','wed','thu','fri','sat'];
+DAYS.forEach(d => buildCalendar(d));
+
+// Day tab switching
+document.querySelectorAll('.day-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.cal-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(`cal-${btn.dataset.day}`).classList.add('active');
+  });
+});
+
+// Track filter toggling
+const activeFilters = new Set(['wellness','ai','founder','community']);
+
+document.querySelectorAll('.tf-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.t;
+    if (activeFilters.has(t)) {
+      if (activeFilters.size === 1) return; // keep at least one
+      activeFilters.delete(t);
+      btn.classList.remove('on');
+    } else {
+      activeFilters.add(t);
+      btn.classList.add('on');
+    }
+    document.querySelectorAll('.ev').forEach(ev => {
+      const et = ev.dataset.t;
+      const hide = et !== 'open' && !activeFilters.has(et);
+      ev.classList.toggle('hidden', hide);
+    });
+  });
+});
+</script>
+</body>
+</html>
