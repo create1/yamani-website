@@ -134,7 +134,7 @@ export default function HomePage() {
             {MEMBERSHIP_TIERS.map(tier => (
               <div key={tier.name} className="card" style={{
                 display: 'flex', flexDirection: 'column', gap: '1.25rem',
-                ...(tier.featured ? { border: '1px solid var(--border)', background: 'rgba(201,168,76,0.04)' } : {})
+                ...(tier.featured ? { border: '1px solid var(--gold-dim)', background: 'rgba(201,168,76,0.04)' } : {})
               }}>
                 {tier.featured && <div className="eyebrow" style={{ fontSize: '0.55rem' }}>Most Popular</div>}
                 <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem' }}>{tier.name}</h3>
@@ -154,6 +154,33 @@ export default function HomePage() {
                 </Link>
               </div>
             ))}
+          </div>
+
+          {/* À La Carte */}
+          <div style={{ marginTop: '3rem', paddingTop: '2.5rem', borderTop: '1px solid var(--border2)' }}>
+            <p className="eyebrow" style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Or Attend À La Carte</p>
+            <p style={{ textAlign: 'center', color: 'var(--muted)', fontSize: '0.85rem', marginBottom: '2rem' }}>
+              No membership required — buy single classes, workshops, or bundles
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
+              {ALA_CARTE.map(item => (
+                <div key={item.type} style={{
+                  background: 'var(--surface)', border: '1px solid var(--border2)',
+                  borderRadius: '1rem', padding: '1.25rem 1.5rem',
+                  display: 'flex', flexDirection: 'column', gap: '0.35rem',
+                }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--gold)' }}>
+                    {item.type}
+                  </span>
+                  <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--text)' }}>{item.price}</span>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--muted)', lineHeight: 1.5 }}>{item.desc}</span>
+                </div>
+              ))}
+            </div>
+            <p style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.05em' }}>
+              Free first workshop for all new learners · Sliding-scale & scholarship pricing available ·{' '}
+              <Link href="/curriculum" style={{ color: 'var(--gold)', textDecoration: 'none' }}>View full pricing →</Link>
+            </p>
           </div>
         </div>
       </section>
@@ -201,20 +228,29 @@ function ChatLine({ name, msg, highlight = false }: { name: string; msg: string;
 const MEMBERSHIP_TIERS = [
   {
     name: 'Community', price: '$49', featured: false,
-    perks: ['Digital access only', 'Online course library', 'Community chat', 'Monthly virtual events'],
+    perks: ['Online course library', 'Community chat & Discord', 'Monthly virtual events', 'Digital certificates & badges'],
   },
   {
     name: 'Seeker', price: '$149', featured: false,
-    perks: ['Campus access (weekends)', '4 live classes/month', 'Online + in-person', 'Wellness programming'],
+    perks: ['Campus access (weekends)', '4 live classes/month', 'Online + in-person hybrid', 'Wellness programming'],
   },
   {
     name: 'Founder', price: '$399', featured: true,
-    perks: ['Full campus access', 'Unlimited live classes', 'Founder cohort access', 'AI lab office hours', 'Priority scheduling'],
+    perks: ['Full campus access — any day', 'Unlimited live classes & workshops', 'Full cowork at Stone House', 'AI lab & founder office hours', 'Priority scheduling'],
   },
   {
     name: 'Visionary', price: '$899', featured: false,
     perks: ['Everything in Founder', '1:1 mentorship (monthly)', 'Investor intro network', 'Recording studio access', 'Private cohort events'],
   },
+]
+
+const ALA_CARTE = [
+  { type: 'Drop-In Workshop', price: '$20–$50', desc: 'Single session · online or in-person · any track' },
+  { type: '4–8 Week Course', price: '$99–$299', desc: 'Full structured enrollment · online · live or self-paced' },
+  { type: 'Bootcamp Intensive', price: '$249–$649', desc: 'Immersive 1-week sprint · online or in-person' },
+  { type: 'Starter Bundle', price: '$49 / $89', desc: '3 workshops of your choice · online / in-person' },
+  { type: 'Family Plan', price: '$79–$199/mo', desc: 'Up to 4 family members · all ages · kids track included' },
+  { type: 'Kids & Teens Pass', price: '$39–$99/mo', desc: 'Ages 8–17 · full youth track · coding, AI & maker classes' },
 ]
 
 function WaitlistForm() {
@@ -237,6 +273,7 @@ function WaitlistForm() {
           <option value="seeker">Seeker — $149/mo</option>
           <option value="founder">Founder — $399/mo</option>
           <option value="visionary">Visionary — $899/mo</option>
+          <option value="alacarte">À La Carte — workshops &amp; courses</option>
         </select>
       </div>
       <button type="submit" className="btn btn-gold" style={{ justifyContent: 'center' }}>
