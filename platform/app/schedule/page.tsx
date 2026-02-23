@@ -93,7 +93,19 @@ export default function SchedulePage() {
     })
 
     Object.keys(byDayAndTime).forEach(day => {
-      map[day] = Object.values(byDayAndTime[day]).sort((a, b) => a.start_time.localeCompare(b.start_time))
+      const sorted = Object.values(byDayAndTime[day]).sort((a, b) => a.start_time.localeCompare(b.start_time))
+      // Remove any course that overlaps the previous one
+      const noOverlap: CourseData[] = []
+      let lastEndMin = 0
+      for (const course of sorted) {
+        const [h, m] = course.start_time.split(':').map(Number)
+        const startMin = h * 60 + m
+        if (startMin >= lastEndMin) {
+          noOverlap.push(course)
+          lastEndMin = startMin + course.duration_min
+        }
+      }
+      map[day] = noOverlap
     })
     return map
   }, [rotationIdx, activeFilters])
