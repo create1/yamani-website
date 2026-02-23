@@ -37,9 +37,9 @@
       --c-community:#7A9E7E;
       --c-open:     #4a4840;
 
-      --hour: 72px;   /* px per hour */
-      --start: 7;     /* calendar starts 7 AM */
-      --hours: 15;    /* 7 AM → 10 PM */
+      --hour: 60px;   /* px per hour */
+      --start: 6;     /* calendar starts 6 AM */
+      --hours: 16;    /* 6 AM → 10 PM */
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -476,7 +476,7 @@
   <div class="ph-left">
     <div class="ph-eyebrow"><div class="ph-line"></div><div class="ph-label">Stone House · 107 Sacramento St</div></div>
     <h1 class="ph-title">Weekly <em>Schedule</em></h1>
-    <p class="ph-sub">Six spaces · Three tracks · Morning wellness · All-day learning</p>
+    <p class="ph-sub">Six spaces · Morning wellness · Afternoon learning · Evening creative</p>
   </div>
   <div class="legend">
     <div class="leg-item"><div class="leg-dot" style="background:var(--c-wellness);"></div>Wellness</div>
@@ -508,7 +508,7 @@
 <!-- NOTE -->
 <div class="note-bar">
   <div class="note-inner">
-    <span>✦</span> Sample weekly schedule — actual programming rotates by cohort. Courses run in multi-week blocks; individual days show the standing weekly format. <span>stonehouse.io</span> handles private bookings for open slots.
+    <span>✦</span> Sample weekly schedule — mornings are wellness-focused (6–12), afternoons are learning & building (12–6), evenings are creative & community (6–10). Kids classes run after 3 pm on weekdays. <span>stonehouse.io</span> handles private bookings for open slots.
   </div>
 </div>
 
@@ -549,8 +549,8 @@
 // ─────────────────────────────────────────────────────────────
 // CONFIG
 // ─────────────────────────────────────────────────────────────
-const HOUR_PX  = 72;
-const START_HR = 7;
+const HOUR_PX  = 60;
+const START_HR = 6;
 const END_HR   = 22;
 
 const SPACES = [
@@ -564,125 +564,159 @@ const SPACES = [
 
 // ─────────────────────────────────────────────────────────────
 // EVENT DATA
-// Each event: { name, track, space, start:"HH:MM", dur: minutes, tag? }
+// Framework: 6am–12pm Wellness · 12pm–6pm Learning · 6pm–10pm Creative
+// Kids classes after 3pm on weekdays (school hours)
 // track: wellness | ai | founder | community | open
 // ─────────────────────────────────────────────────────────────
 const SCHEDULE = {
 
   mon: [
-    // Wellness — morning
-    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
-    { name:'Morning Yoga',                 track:'wellness', space:'patio',     start:'08:00', dur:60  },
-    { name:'Breathwork & Meditation',      track:'wellness', space:'cavern',    start:'09:00', dur:45  },
-    { name:'Coffee & Open Cowork',         track:'wellness', space:'parlour',   start:'09:30', dur:90  },
-    // AI Learning — all day
-    { name:'AI Foundations Workshop',      track:'ai',       space:'greathall', start:'10:00', dur:120 },
-    { name:'Python for AI Beginners',      track:'ai',       space:'greathall', start:'13:00', dur:180 },
-    { name:'No-Code App Builder Workshop', track:'ai',       space:'greathall', start:'16:30', dur:90  },
-    // Founder — all day
-    { name:'Entrepreneurship 101: Start With Why', track:'founder', space:'cavern',  start:'10:00', dur:120 },
-    { name:'AI Business Model Playbook',   track:'founder',  space:'parlour',   start:'13:00', dur:120 },
-    { name:'Open Cowork & Maker Space',    track:'open',     space:'penthouse', start:'10:00', dur:480 },
-    // Community
-    { name:'Community Happy Hour',         track:'community',space:'parlour',   start:'18:00', dur:120 },
+    // ── Wellness · 6am–12pm ──
+    { name:'Sauna & Cold Plunge',            track:'wellness', space:'cavern',    start:'06:00', dur:60  },
+    { name:'Morning Yoga',                   track:'wellness', space:'patio',     start:'07:00', dur:60  },
+    { name:'Breathwork & Meditation',        track:'wellness', space:'cavern',    start:'08:00', dur:45  },
+    { name:'Recovery Lounge & Coffee',       track:'wellness', space:'parlour',   start:'09:00', dur:180 },
+    // ── Learning · 12pm–6pm ──
+    { name:'AI Foundations Workshop',        track:'ai',       space:'greathall', start:'12:00', dur:120 },
+    { name:'Entrepreneurship 101',           track:'founder',  space:'cavern',    start:'12:00', dur:120 },
+    { name:'Open Cowork',                    track:'open',     space:'penthouse', start:'12:00', dur:360 },
+    { name:'Python for AI Beginners',        track:'ai',       space:'greathall', start:'14:00', dur:120 },
+    { name:'AI Business Model Playbook',     track:'founder',  space:'parlour',   start:'14:00', dur:120 },
+    { name:'Kids Coding Club (Ages 8–14)',   track:'ai',       space:'showroom',  start:'15:30', dur:90  },
+    { name:'No-Code App Builder',            track:'ai',       space:'greathall', start:'16:30', dur:90  },
+    { name:'Freelancing with AI',            track:'founder',  space:'cavern',    start:'16:00', dur:120 },
+    // ── Creative · 6pm–10pm ──
+    { name:'Community Happy Hour',           track:'community',space:'parlour',   start:'18:00', dur:120 },
+    { name:'Podcast Studio Sessions',        track:'community',space:'showroom',  start:'18:00', dur:120 },
+    { name:'Evening Social & Lounge',        track:'community',space:'patio',     start:'18:00', dur:120 },
+    { name:'Open Mic Night',                 track:'community',space:'greathall', start:'20:00', dur:120 },
+    { name:'DJ Night & Dance Floor',         track:'community',space:'patio',     start:'20:00', dur:120 },
   ],
 
   tue: [
-    // Wellness
-    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
-    { name:'Pilates Class',                track:'wellness', space:'patio',     start:'08:00', dur:60  },
-    { name:'Guided Meditation',            track:'wellness', space:'cavern',    start:'09:00', dur:45  },
-    { name:'Recovery & Coffee',            track:'wellness', space:'patio',     start:'09:30', dur:90  },
-    // AI Learning
-    { name:'Prompt Engineering Masterclass', track:'ai',     space:'greathall', start:'10:00', dur:180 },
-    { name:'Build Your First Chatbot — Day 1', track:'ai',   space:'greathall', start:'13:00', dur:180 },
-    // Founder
-    { name:'Freelancing with AI: Earn Now',track:'founder',  space:'parlour',   start:'10:00', dur:120 },
-    { name:'AI Marketing & Growth Hacking',track:'founder',  space:'parlour',   start:'13:00', dur:120 },
-    { name:'Founder Roundtable',           track:'founder',  space:'cavern',    start:'17:00', dur:120 },
-    { name:'Podcast Studio — Open Sessions',track:'founder', space:'showroom',  start:'18:00', dur:120 },
-    // Open
-    { name:'Deep Work & Studio Time',      track:'open',     space:'penthouse', start:'15:00', dur:180 },
+    // ── Wellness · 6am–12pm ──
+    { name:'Sauna & Cold Plunge',            track:'wellness', space:'cavern',    start:'06:00', dur:60  },
+    { name:'Pilates Class',                  track:'wellness', space:'patio',     start:'07:00', dur:60  },
+    { name:'Guided Meditation',              track:'wellness', space:'cavern',    start:'08:00', dur:45  },
+    { name:'Recovery & Open Wellness',       track:'wellness', space:'patio',     start:'09:00', dur:90  },
+    { name:'Morning Coffee & Connection',    track:'wellness', space:'parlour',   start:'09:00', dur:180 },
+    // ── Learning · 12pm–6pm ──
+    { name:'Prompt Engineering Masterclass', track:'ai',       space:'greathall', start:'12:00', dur:180 },
+    { name:'AI Marketing & Growth Hacking',  track:'founder',  space:'cavern',    start:'12:00', dur:120 },
+    { name:'Open Cowork',                    track:'open',     space:'penthouse', start:'12:00', dur:360 },
+    { name:'Build Your First Chatbot',       track:'ai',       space:'greathall', start:'15:00', dur:120 },
+    { name:'Founder Roundtable',             track:'founder',  space:'parlour',   start:'14:00', dur:120 },
+    { name:'Kids Creative Tech (Ages 8–12)', track:'ai',       space:'showroom',  start:'15:30', dur:90  },
+    { name:'Freelancing with AI: Earn Now',  track:'founder',  space:'cavern',    start:'14:00', dur:120 },
+    { name:'AI Tools Deep Dive',             track:'ai',       space:'greathall', start:'15:30', dur:90  },
+    // ── Creative · 6pm–10pm ──
+    { name:'Music Production Workshop',      track:'community',space:'greathall', start:'18:00', dur:120 },
+    { name:'Podcast Recording Sessions',     track:'community',space:'showroom',  start:'18:00', dur:120 },
+    { name:'Creative Writing Circle',        track:'community',space:'parlour',   start:'18:00', dur:120 },
+    { name:'Songwriter's Workshop',          track:'community',space:'cavern',    start:'20:00', dur:120 },
+    { name:'DJ Night & Dance Floor',         track:'community',space:'patio',     start:'20:00', dur:120 },
   ],
 
   wed: [
-    // Wellness
-    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
-    { name:'Mobility Flow',                track:'wellness', space:'patio',     start:'08:00', dur:60  },
-    { name:'Breathwork Session',           track:'wellness', space:'cavern',    start:'09:00', dur:45  },
-    { name:'Open Wellness & Nature Time',  track:'wellness', space:'patio',     start:'09:30', dur:90  },
-    // AI Learning
-    { name:'AI Image & Video Creation',    track:'ai',       space:'greathall', start:'10:00', dur:120 },
-    { name:'Machine Learning Without Math Fear', track:'ai', space:'greathall', start:'13:00', dur:120 },
-    { name:'Computer Vision & Robotics',   track:'ai',       space:'greathall', start:'15:30', dur:120 },
-    // Founder
-    { name:'Product Thinking: Build What People Want', track:'founder', space:'parlour', start:'10:00', dur:120 },
-    { name:'Legal & Finance Basics',       track:'founder',  space:'cavern',    start:'13:00', dur:120 },
-    { name:'Future Work & Career Workshop',track:'founder',  space:'parlour',   start:'15:00', dur:120 },
-    // Community
-    { name:'Community Lunch',              track:'community',space:'greathall', start:'12:00', dur:60  },
-    // Open
-    { name:'Mentor Matching Sessions',     track:'founder',  space:'penthouse', start:'17:00', dur:120 },
-    { name:'Private Event / Booking',      track:'open',     space:'showroom',  start:'10:00', dur:480 },
+    // ── Wellness · 6am–12pm ──
+    { name:'Sauna & Cold Plunge',            track:'wellness', space:'cavern',    start:'06:00', dur:60  },
+    { name:'Mobility Flow',                  track:'wellness', space:'patio',     start:'07:00', dur:60  },
+    { name:'Breathwork Session',             track:'wellness', space:'cavern',    start:'08:00', dur:45  },
+    { name:'Nature Walk & Recovery',         track:'wellness', space:'patio',     start:'09:00', dur:180 },
+    { name:'Recovery Lounge & Coffee',       track:'wellness', space:'parlour',   start:'09:00', dur:180 },
+    // ── Learning · 12pm–6pm ──
+    { name:'AI Image & Video Creation',      track:'ai',       space:'greathall', start:'12:00', dur:120 },
+    { name:'Legal & Finance Basics',         track:'founder',  space:'cavern',    start:'12:00', dur:120 },
+    { name:'Product Thinking Workshop',      track:'founder',  space:'parlour',   start:'12:00', dur:120 },
+    { name:'Open Cowork',                    track:'open',     space:'penthouse', start:'12:00', dur:360 },
+    { name:'Machine Learning Without Math',  track:'ai',       space:'greathall', start:'14:00', dur:120 },
+    { name:'Future Work & Career Workshop',  track:'founder',  space:'parlour',   start:'14:00', dur:120 },
+    { name:'Kids Robotics Club (Ages 8–14)', track:'ai',       space:'showroom',  start:'15:30', dur:90  },
+    { name:'Computer Vision & AI',           track:'ai',       space:'greathall', start:'16:00', dur:120 },
+    { name:'Mentor Matching Sessions',       track:'founder',  space:'cavern',    start:'16:00', dur:120 },
+    // ── Creative · 6pm–10pm ──
+    { name:'Community Dinner',               track:'community',space:'greathall', start:'18:00', dur:120 },
+    { name:'Spoken Word & Poetry Night',     track:'community',space:'showroom',  start:'18:00', dur:120 },
+    { name:'Art & Collage Workshop',         track:'community',space:'parlour',   start:'18:00', dur:120 },
+    { name:'Evening Social',                 track:'community',space:'patio',     start:'18:00', dur:120 },
+    { name:'Improv Theatre Workshop',        track:'community',space:'cavern',    start:'20:00', dur:120 },
+    { name:'Live Performance Night',         track:'community',space:'greathall', start:'20:00', dur:120 },
   ],
 
   thu: [
-    // Wellness
-    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
-    { name:'Morning Yoga',                 track:'wellness', space:'patio',     start:'08:00', dur:60  },
-    { name:'Guided Meditation',            track:'wellness', space:'cavern',    start:'09:00', dur:45  },
-    { name:'Burnout Prevention Workshop',  track:'wellness', space:'cavern',    start:'09:45', dur:75  },
-    // AI Learning
-    { name:'Data Literacy for the AI Age', track:'ai',       space:'greathall', start:'10:00', dur:120 },
-    { name:'APIs & AI Integration',        track:'ai',       space:'greathall', start:'13:00', dur:120 },
-    { name:'Cybersecurity in the AI Era',  track:'ai',       space:'greathall', start:'15:30', dur:120 },
-    // Founder
-    { name:'AI Tools for Small Business',  track:'founder',  space:'parlour',   start:'10:00', dur:120 },
-    { name:'Raise Money: Grants & Angels', track:'founder',  space:'parlour',   start:'13:00', dur:120 },
-    { name:'1:1 Advisor Sessions',         track:'founder',  space:'penthouse', start:'15:00', dur:180 },
-    // Open
-    { name:'Open Cowork',                  track:'open',     space:'patio',     start:'12:00', dur:300 },
-    { name:'Private Event / Booking',      track:'open',     space:'showroom',  start:'10:00', dur:480 },
+    // ── Wellness · 6am–12pm ──
+    { name:'Sauna & Cold Plunge',            track:'wellness', space:'cavern',    start:'06:00', dur:60  },
+    { name:'Morning Yoga',                   track:'wellness', space:'patio',     start:'07:00', dur:60  },
+    { name:'Guided Meditation',              track:'wellness', space:'cavern',    start:'08:00', dur:45  },
+    { name:'Burnout Prevention Workshop',    track:'wellness', space:'cavern',    start:'09:00', dur:120 },
+    { name:'Recovery Lounge & Coffee',       track:'wellness', space:'parlour',   start:'09:00', dur:180 },
+    // ── Learning · 12pm–6pm ──
+    { name:'Data Literacy for the AI Age',   track:'ai',       space:'greathall', start:'12:00', dur:120 },
+    { name:'AI Tools for Small Business',    track:'founder',  space:'parlour',   start:'12:00', dur:120 },
+    { name:'Open Cowork',                    track:'open',     space:'penthouse', start:'12:00', dur:360 },
+    { name:'APIs & AI Integration',          track:'ai',       space:'greathall', start:'14:00', dur:120 },
+    { name:'Raise Money: Grants & Angels',   track:'founder',  space:'parlour',   start:'14:00', dur:120 },
+    { name:'1:1 Advisor Sessions',           track:'founder',  space:'cavern',    start:'15:00', dur:180 },
+    { name:'Kids AI Innovators (Ages 8–14)', track:'ai',       space:'showroom',  start:'15:30', dur:90  },
+    { name:'Cybersecurity in the AI Era',    track:'ai',       space:'greathall', start:'16:00', dur:120 },
+    // ── Creative · 6pm–10pm ──
+    { name:'Podcast Recording Sessions',     track:'community',space:'showroom',  start:'18:00', dur:120 },
+    { name:'Community Social Hour',          track:'community',space:'parlour',   start:'18:00', dur:120 },
+    { name:'Live Acoustic Performances',     track:'community',space:'greathall', start:'18:00', dur:120 },
+    { name:'Dance Class — Salsa & Social',   track:'community',space:'patio',     start:'19:00', dur:90  },
+    { name:'Film & Documentary Night',       track:'community',space:'cavern',    start:'20:00', dur:120 },
+    { name:'Jazz & Improvisation Night',     track:'community',space:'greathall', start:'20:00', dur:120 },
   ],
 
   fri: [
-    // Wellness
-    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
-    { name:'Pilates Class',                track:'wellness', space:'patio',     start:'08:00', dur:60  },
-    { name:'Breathwork Session',           track:'wellness', space:'cavern',    start:'09:00', dur:45  },
-    { name:'Recovery & Open Wellness',     track:'wellness', space:'patio',     start:'09:30', dur:90  },
-    // AI Learning — Kids Day + Adult workshops
-    { name:'Kids: AI Explorers (Ages 8–12)', track:'ai',     space:'greathall', start:'10:00', dur:120 },
-    { name:'AI Workflows with n8n & Zapier', track:'ai',     space:'parlour',   start:'10:00', dur:120 },
-    { name:'Robotics Club (Ages 8–14)',    track:'ai',       space:'greathall', start:'13:00', dur:120 },
-    { name:'Teen AI Innovators (Ages 13–17)', track:'ai',    space:'greathall', start:'15:00', dur:120 },
-    { name:'Project Office Hours',         track:'ai',       space:'penthouse', start:'17:00', dur:60  },
-    // Founder
-    { name:'Building a Personal Brand with AI', track:'founder', space:'parlour', start:'13:00', dur:120 },
-    { name:'Raise Money / Crowdfunding',   track:'founder',  space:'cavern',    start:'15:00', dur:120 },
-    // Community — Showcase Night
-    { name:'Community Showcase & Pitch Practice', track:'community', space:'showroom', start:'18:00', dur:120 },
+    // ── Wellness · 6am–12pm ──
+    { name:'Sauna & Cold Plunge',            track:'wellness', space:'cavern',    start:'06:00', dur:60  },
+    { name:'Pilates Class',                  track:'wellness', space:'patio',     start:'07:00', dur:60  },
+    { name:'Breathwork Session',             track:'wellness', space:'cavern',    start:'08:00', dur:45  },
+    { name:'Recovery & Open Wellness',       track:'wellness', space:'patio',     start:'09:00', dur:180 },
+    { name:'Morning Coffee & Cowork',        track:'wellness', space:'parlour',   start:'09:00', dur:180 },
+    // ── Learning · 12pm–6pm ──
+    { name:'AI Workflows with n8n & Zapier', track:'ai',       space:'greathall', start:'12:00', dur:120 },
+    { name:'Building a Personal Brand',      track:'founder',  space:'cavern',    start:'12:00', dur:120 },
+    { name:'Open Cowork & Studio Time',      track:'open',     space:'penthouse', start:'12:00', dur:360 },
+    { name:'Project Office Hours',           track:'ai',       space:'greathall', start:'14:00', dur:120 },
+    { name:'Raise Money / Crowdfunding',     track:'founder',  space:'parlour',   start:'14:00', dur:120 },
+    { name:'Kids AI Explorers (Ages 8–12)',  track:'ai',       space:'showroom',  start:'15:30', dur:90  },
+    { name:'Teen AI Innovators (Ages 13–17)',track:'ai',       space:'greathall', start:'15:30', dur:90  },
+    { name:'Founder Strategy Office Hours',  track:'founder',  space:'cavern',    start:'16:00', dur:120 },
+    // ── Creative · 6pm–10pm ──
+    { name:'Community Happy Hour',           track:'community',space:'parlour',   start:'18:00', dur:120 },
+    { name:'Community Showcase Night',       track:'community',space:'greathall', start:'18:00', dur:120 },
+    { name:'Podcast Studio — Open Sessions', track:'community',space:'showroom',  start:'18:00', dur:120 },
+    { name:'Live Music at the Parlour',      track:'community',space:'parlour',   start:'20:00', dur:120 },
+    { name:'DJ Night & Dance Floor',         track:'community',space:'patio',     start:'20:00', dur:120 },
+    { name:'Acoustic Performers Night',      track:'community',space:'cavern',    start:'20:00', dur:120 },
   ],
 
   sat: [
-    // Wellness
-    { name:'Sauna & Cold Plunge',          track:'wellness', space:'cavern',    start:'07:00', dur:60  },
-    { name:'Community Yoga (Open to All)', track:'wellness', space:'patio',     start:'08:00', dur:60  },
-    { name:'Guided Meditation',            track:'wellness', space:'cavern',    start:'09:00', dur:45  },
-    { name:'Nature Walk & Recovery',       track:'wellness', space:'patio',     start:'09:30', dur:90  },
-    // AI Learning
-    { name:'AI Music & Audio Production Workshop', track:'ai', space:'showroom', start:'10:00', dur:120 },
-    { name:'Kids Summer AI Camp',          track:'ai',       space:'parlour',   start:'13:00', dur:180 },
-    { name:'AI Art & Creative Studio',     track:'ai',       space:'showroom',  start:'13:00', dur:120 },
-    // Founder
-    { name:'Weekend Bootcamp: Launch in 90 Days — Part 1', track:'founder', space:'greathall', start:'10:00', dur:180 },
-    { name:'Young Entrepreneurs (Ages 12–17)', track:'founder', space:'parlour', start:'10:00', dur:120 },
-    { name:'Weekend Bootcamp — Part 2',    track:'founder',  space:'greathall', start:'13:00', dur:180 },
-    { name:'Demo Day Prep & Advisory',     track:'founder',  space:'penthouse', start:'16:00', dur:120 },
-    { name:'Demo Day Prep (Overflow)',     track:'founder',  space:'cavern',    start:'16:00', dur:120 },
-    // Community
-    { name:'Monthly Community Gathering',  track:'community',space:'showroom',  start:'18:00', dur:180 },
-    { name:'Evening at the Parlour',       track:'community',space:'parlour',   start:'18:00', dur:180 },
+    // ── Wellness · 6am–12pm ──
+    { name:'Sauna & Cold Plunge',              track:'wellness', space:'cavern',    start:'06:00', dur:60  },
+    { name:'Community Yoga (Open to All)',      track:'wellness', space:'patio',     start:'07:00', dur:60  },
+    { name:'Guided Meditation',                track:'wellness', space:'cavern',    start:'08:00', dur:45  },
+    { name:'Nature Walk & Recovery',           track:'wellness', space:'patio',     start:'09:00', dur:180 },
+    { name:'Brunch & Morning Connection',      track:'wellness', space:'parlour',   start:'09:00', dur:180 },
+    // Saturday: kids can come all day (no school)
+    { name:'Kids Summer AI Camp (Ages 8–14)',  track:'ai',       space:'showroom',  start:'10:00', dur:120 },
+    { name:'Young Entrepreneurs (Ages 12–17)', track:'founder',  space:'parlour',   start:'10:00', dur:120 },
+    // ── Learning · 12pm–6pm ──
+    { name:'Weekend Bootcamp: Part 1',         track:'founder',  space:'greathall', start:'12:00', dur:180 },
+    { name:'AI Art & Creative Studio',         track:'ai',       space:'showroom',  start:'12:00', dur:120 },
+    { name:'Open Cowork',                      track:'open',     space:'penthouse', start:'12:00', dur:360 },
+    { name:'AI Music & Audio Production',      track:'ai',       space:'cavern',    start:'14:00', dur:120 },
+    { name:'Weekend Bootcamp: Part 2',         track:'founder',  space:'greathall', start:'15:00', dur:180 },
+    { name:'Teen Robotics & AI Build Day',     track:'ai',       space:'showroom',  start:'14:00', dur:120 },
+    { name:'Demo Day Prep & Advisory',         track:'founder',  space:'parlour',   start:'16:00', dur:120 },
+    // ── Creative · 6pm–10pm ──
+    { name:'Monthly Community Gathering',      track:'community',space:'greathall', start:'18:00', dur:180 },
+    { name:'Evening Cocktails at the Parlour', track:'community',space:'parlour',   start:'18:00', dur:180 },
+    { name:'Live Music & Performances',        track:'community',space:'showroom',  start:'18:00', dur:120 },
+    { name:'Outdoor Dance Night',              track:'community',space:'patio',     start:'20:00', dur:120 },
+    { name:'DJ Set & Late Night Social',       track:'community',space:'cavern',    start:'20:00', dur:120 },
   ],
 };
 
