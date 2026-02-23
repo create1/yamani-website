@@ -194,23 +194,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const tierButtons = document.querySelectorAll('.tier-button');
     
     tierButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
             const tierCard = this.closest('.tier-card');
-            const tierName = tierCard.querySelector('.tier-badge').textContent;
-            const tierPrice = tierCard.querySelector('.tier-price').textContent;
-            
-            // Scroll to contact section
-            const contactSection = document.getElementById('contact');
-            if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-                
-                // Pre-fill contact form with tier information
+            const tierBadge = tierCard ? tierCard.querySelector('.tier-badge') : null;
+            const tierName = tierBadge ? tierBadge.textContent.trim() : '';
+
+            // Scroll to waitlist section
+            const waitlistSection = document.getElementById('waitlist');
+            if (waitlistSection) {
+                const offsetTop = waitlistSection.offsetTop - 72;
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+
+                // Pre-select the matching tier in the waitlist dropdown
                 setTimeout(() => {
-                    const subjectField = document.querySelector('input[name="subject"]');
-                    if (subjectField) {
-                        subjectField.value = `Interested in ${tierName} Membership (${tierPrice})`;
+                    const tierSelect = document.querySelector('select[name="tier"]');
+                    if (tierSelect && tierName) {
+                        const option = [...tierSelect.options].find(o =>
+                            o.text.toLowerCase().includes(tierName.toLowerCase())
+                        );
+                        if (option) tierSelect.value = option.value;
                     }
-                }, 500);
+                }, 600);
             }
         });
     });
