@@ -12,12 +12,12 @@ export default function HomePage() {
         padding: '0 2rem',
         background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%)',
       }}>
-        <p className="eyebrow" style={{ marginBottom: '1.5rem' }}>The Living Campus</p>
+        <p className="eyebrow" style={{ marginBottom: '1.5rem' }}>Live Online Learning</p>
         <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 700, lineHeight: 1.05, maxWidth: '16ch' }}>
-          Where Builders <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Grow</em>
+          Learn, Build &amp; <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Grow</em>
         </h1>
-        <p style={{ color: 'var(--muted)', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', maxWidth: '50ch', margin: '2rem auto', lineHeight: 1.7 }}>
-          Apotheos is a curated community campus uniting AI education, founder mentorship, and holistic wellness — in-person and online.
+        <p style={{ color: 'var(--muted)', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', maxWidth: '52ch', margin: '2rem auto', lineHeight: 1.7 }}>
+          Apotheos delivers live AI education, founder mentorship, and holistic wellness classes online — from anywhere in the world. In-person at our Nevada City campus for local members.
         </p>
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '1rem' }}>
           <Link href="/courses" className="btn btn-gold btn-lg">Explore Courses</Link>
@@ -236,7 +236,7 @@ const MEMBERSHIP_TIERS = [
   },
   {
     name: 'Founder', price: '$399', featured: true,
-    perks: ['Full campus access — any day', 'Unlimited live classes & workshops', 'Full cowork at Stone House', 'AI lab & founder office hours', 'Priority scheduling'],
+    perks: ['Full campus access — any day', 'Unlimited live classes & workshops', 'Full cowork access (campus + online)', 'AI lab & founder office hours', 'Priority scheduling'],
   },
   {
     name: 'Visionary', price: '$899', featured: false,

@@ -4,11 +4,11 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Apotheos — The Living Campus',
-  description: 'A transformational community campus uniting AI learning, founder mentorship, and holistic wellness in a single, curated space.',
+  title: 'Apotheos — Live Online Learning | AI, Founders & Wellness',
+  description: 'Live online classes in AI, founder mentorship, and holistic wellness. Join from anywhere — or in-person at our Nevada City, CA campus.',
   openGraph: {
-    title: 'Apotheos — The Living Campus',
-    description: 'AI learning, founder ecosystem, and holistic wellness — all in one place.',
+    title: 'Apotheos — Live Online Learning',
+    description: 'AI learning, founder ecosystem, and holistic wellness — live online from anywhere.',
     type: 'website',
   },
 }
