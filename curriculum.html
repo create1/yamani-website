@@ -1228,6 +1228,24 @@
       div[style*="grid-template-columns:repeat(2,1fr)"] {
         grid-template-columns: 1fr !important;
       }
+
+      /* Schedule cards stack */
+      .schedule-cards { grid-template-columns: 1fr; }
+
+      /* Track header tidying */
+      .th-name { font-size: 1.5rem; }
+      .th-stats { flex-wrap: wrap; }
+    }
+
+    /* ── RESPONSIVE: SMALL PHONE (400px) ── */
+    @media (max-width: 400px) {
+      .hero { padding: 6rem 1rem 2.5rem; }
+      .hero-eyebrow { gap: 0.5rem; }
+      .hero-title { font-size: clamp(2rem, 11vw, 2.8rem); }
+      .hero-sub { font-size: 1rem; }
+      .section { padding: 3rem 1rem; }
+      .course-table td:nth-child(5),
+      .course-table td:nth-child(6) { margin-right: 0.75rem; }
     }
   </style>
 </head>
@@ -1238,7 +1256,7 @@
   <div class="nav-brand">
     <a href="index.html">
       <div class="nav-wordmark">Apotheos</div>
-      <div class="nav-tagline">Learning & Innovation Center</div>
+      <div class="nav-tagline">The Living Campus</div>
     </a>
   </div>
   <div class="nav-right">
