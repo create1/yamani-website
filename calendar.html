@@ -111,19 +111,26 @@
     .week-nav-btn {
       font-family: var(--font-mono); font-size: 1rem;
       background: none; border: 1px solid var(--border);
-      color: var(--gold); padding: 0.3rem 0.75rem;
-      border-radius: 0.35rem; cursor: pointer; transition: background 0.2s; line-height: 1;
+      color: var(--gold); padding: 0; line-height: 1;
+      width: 2.25rem; height: 2.25rem;
+      border-radius: 0.35rem; cursor: pointer; transition: background 0.2s;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
     }
     .week-nav-btn:hover { background: var(--gold-glow); }
     .week-nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
-    .week-nav-info { display: flex; flex-direction: column; gap: 0.15rem; }
+    .week-nav-info {
+      display: flex; flex-direction: column; gap: 0.15rem;
+      width: 22rem; text-align: center; flex-shrink: 0;
+    }
     .week-nav-label {
       font-family: var(--font-mono); font-size: 0.68rem;
       color: var(--text); letter-spacing: 0.1em; text-transform: uppercase;
+      white-space: nowrap;
     }
     .week-rotation-badge {
       font-family: var(--font-mono); font-size: 0.58rem;
-      color: var(--gold); letter-spacing: 0.1em; opacity: 0.75;
+      color: var(--gold); letter-spacing: 0.08em; opacity: 0.75;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     /* Day tabs */
