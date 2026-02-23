@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════════════════
+   APOTHEOS DESIGN SYSTEM — ported from styles.css
+   Dark / Gold aesthetic with Cormorant Garamond + DM Mono
+═══════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap');
+
+:root {
+  --gold:        #C9A84C;
+  --gold-lt:     #E2C97E;
+  --gold-glow:   rgba(201,168,76,0.12);
+  --ink:         #0D0C09;
+  --surface:     #141310;
+  --surface2:    #1A1916;
+  --border:      rgba(201,168,76,0.18);
+  --border2:     rgba(201,168,76,0.08);
+  --text:        #E8E4D9;
+  --muted:       rgba(232,228,217,0.5);
+  --teal-lt:     #7BB3BE;
+  --rust-lt:     #D4856A;
+  --sage-lt:     #8DA88F;
+
+  --font-serif:  'Cormorant Garamond', Georgia, serif;
+  --font-sans:   'Outfit', system-ui, sans-serif;
+  --font-mono:   'DM Mono', 'Courier New', monospace;
+
+  --radius:      0.5rem;
+  --radius-lg:   1rem;
+  --nav-h:       72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; font-family: inherit; }
+
+/* ─── LAYOUT ─────────────────────────────────── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.page-wrap { padding-top: var(--nav-h); min-height: 100vh; }
+
+/* ─── NAV ────────────────────────────────────── */
+nav.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 1.25rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(13,12,9,0.92);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand a { text-decoration: none; }
+.nav-wordmark {
+  font-family: var(--font-serif); font-size: 1.6rem; font-weight: 600;
+  color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase;
+}
+.nav-tagline {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase;
+}
+.nav-right { display: flex; align-items: center; gap: 2.5rem; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+.nav-pill {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  padding: 0.4rem 1rem; border: 1px solid var(--border);
+  border-radius: 2rem; color: var(--gold);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background 0.2s; white-space: nowrap;
+}
+.nav-pill:hover { background: var(--gold-glow); }
+.nav-user-btn {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.65rem;
+  color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+  background: none; border: 1px solid var(--border2);
+  padding: 0.35rem 0.85rem; border-radius: 2rem;
+  transition: all 0.2s;
+}
+.nav-user-btn:hover { color: var(--gold); border-color: var(--border); }
+
+/* ─── BUTTONS ────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.65rem 1.5rem; border-radius: var(--radius);
+  border: 1px solid transparent; transition: all 0.2s;
+  cursor: pointer; white-space: nowrap;
+}
+.btn-gold {
+  background: var(--gold); color: var(--ink);
+  border-color: var(--gold); font-weight: 600;
+}
+.btn-gold:hover { background: var(--gold-lt); border-color: var(--gold-lt); }
+.btn-outline {
+  background: transparent; color: var(--gold);
+  border-color: var(--border);
+}
+.btn-outline:hover { background: var(--gold-glow); }
+.btn-ghost {
+  background: transparent; color: var(--muted);
+  border-color: var(--border2);
+}
+.btn-ghost:hover { color: var(--text); border-color: var(--border); }
+.btn-danger {
+  background: rgba(196,97,58,0.15); color: var(--rust-lt);
+  border-color: rgba(196,97,58,0.3);
+}
+.btn-danger:hover { background: rgba(196,97,58,0.25); }
+.btn-sm { padding: 0.4rem 1rem; font-size: 0.62rem; }
+.btn-lg { padding: 0.85rem 2rem; font-size: 0.75rem; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ─── SECTION BASE ───────────────────────────── */
+.section { padding: 5rem 0; }
+.section-dark { background: var(--surface); }
+.section-title {
+  font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+}
+.section-title::before {
+  content: ''; display: block; width: 2.5rem; height: 1px;
+  background: var(--gold); margin-bottom: 1rem;
+}
+.section-subtitle { color: var(--muted); font-size: 1.05rem; font-weight: 300; }
+
+/* ─── CARDS ──────────────────────────────────── */
+.card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.card:hover { border-color: var(--border); }
+
+/* ─── TRACK BADGES ───────────────────────────── */
+.track-badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--font-mono); font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.25rem 0.65rem; border-radius: 2rem;
+}
+.track-wellness  { background: rgba(201,168,76,0.12);  color: var(--gold);     border: 1px solid rgba(201,168,76,0.2);  }
+.track-ai        { background: rgba(80,128,142,0.12);  color: var(--teal-lt);  border: 1px solid rgba(80,128,142,0.2);  }
+.track-founder   { background: rgba(196,97,58,0.12);   color: var(--rust-lt);  border: 1px solid rgba(196,97,58,0.2);   }
+.track-community { background: rgba(122,158,126,0.12); color: var(--sage-lt);  border: 1px solid rgba(122,158,126,0.2); }
+
+/* ─── FORMS ──────────────────────────────────── */
+.form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-label {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.form-input, .form-select, .form-textarea {
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: var(--radius); color: var(--text);
+  font-family: var(--font-sans); font-size: 0.9rem;
+  padding: 0.65rem 1rem; transition: border-color 0.2s; width: 100%;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none; border-color: var(--gold);
+  background: var(--surface);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
+.form-error {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  color: var(--rust-lt); letter-spacing: 0.06em;
+}
+
+/* ─── DIVIDER ────────────────────────────────── */
+.gold-rule { border: none; border-top: 1px solid var(--border2); margin: 2rem 0; }
+
+/* ─── EYEBROW ────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+/* ─── EMPTY STATE ────────────────────────────── */
+.empty-state {
+  text-align: center; padding: 4rem 2rem;
+  color: var(--muted); font-family: var(--font-mono);
+  font-size: 0.75rem; letter-spacing: 0.08em;
+}
+
+/* ─── AVATAR ─────────────────────────────────── */
+.avatar {
+  width: 2rem; height: 2rem; border-radius: 50%;
+  background: var(--gold-glow); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.65rem;
+  color: var(--gold); text-transform: uppercase; flex-shrink: 0;
+}
+
+/* ─── FOOTER ─────────────────────────────────── */
+footer.site-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border2);
+  padding: 2.5rem 3rem;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 1rem;
+  flex-wrap: wrap;
+}
+.footer-brand { font-family: var(--font-serif); font-size: 1.1rem; color: var(--gold); }
+.footer-copy {
+  font-family: var(--font-mono); font-size: 0.58rem;
+  color: var(--muted); letter-spacing: 0.1em;
+}
+
+/* ─── UTILITIES ──────────────────────────────── */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+.text-gold { color: var(--gold); }
+.text-muted { color: var(--muted); }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+/* ─── LOADING SPINNER ────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 1.5rem; height: 1.5rem;
+  border: 2px solid var(--border2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 1100px) {
+  nav.site-nav { padding: 1rem 1.5rem; }
+  .nav-links, .nav-pill { display: none; }
+}
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .section { padding: 3rem 0; }
+  footer.site-footer { flex-direction: column; text-align: center; }
+}
