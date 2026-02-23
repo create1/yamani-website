@@ -1,118 +1,195 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase, supabaseReady } from '@/lib/supabase'
 
 export default function SignInPage() {
+  return (
+    <Suspense>
+      <SignInForm />
+    </Suspense>
+  )
+}
+
+function SignInForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [info, setInfo] = useState('')
   const [magicSent, setMagicSent] = useState(false)
   const [mode, setMode] = useState<'password' | 'magic'>('password')
 
+  const configured = supabaseReady()
+
+  useEffect(() => {
+    const urlError = searchParams.get('error')
+    if (urlError) setError(decodeURIComponent(urlError))
+  }, [searchParams])
+
+  const friendlyError = (msg: string): string => {
+    if (msg.includes('Invalid login credentials')) return 'Incorrect email or password. Try again or use a magic link.'
+    if (msg.includes('Email not confirmed')) return 'Please check your email and click the confirmation link first.'
+    if (msg.includes('rate limit')) return 'Too many attempts. Please wait a minute and try again.'
+    if (msg.includes('fetch') || msg.includes('network')) return 'Connection error — check your internet and try again.'
+    return msg
+  }
+
   const handlePasswordSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true); setError('')
+    if (!configured) return
+    setLoading(true); setError(''); setInfo('')
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) { setError(error.message); setLoading(false); return }
+    if (error) { setError(friendlyError(error.message)); setLoading(false); return }
     router.push('/dashboard')
   }
 
   const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true); setError('')
-    const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/dashboard` } })
-    if (error) { setError(error.message); setLoading(false); return }
+    if (!configured) return
+    setLoading(true); setError(''); setInfo('')
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+    })
+    if (error) { setError(friendlyError(error.message)); setLoading(false); return }
     setMagicSent(true); setLoading(false)
   }
 
   const handleGoogleSignIn = async () => {
+    if (!configured) return
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/dashboard` },
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
     })
   }
 
-  const configured = supabaseReady()
-
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-      <div style={{ width: '100%', maxWidth: '420px' }}>
+      <div style={{ width: '100%', maxWidth: '440px' }}>
+
         {!configured && (
-          <div style={{ background: 'rgba(196,97,58,0.12)', border: '1px solid rgba(196,97,58,0.4)', borderRadius: 'var(--radius)', padding: '1rem 1.25rem', marginBottom: '1.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', lineHeight: 1.7, color: 'var(--text)' }}>
-            <strong style={{ color: '#e07a5a' }}>⚠ Supabase not connected</strong><br />
-            Auth is not yet configured. Add your Supabase credentials to <code style={{ color: 'var(--gold)' }}>.env.local</code> on Vercel to enable sign-in.
+          <div style={{ background: 'rgba(196,97,58,0.12)', border: '1px solid rgba(196,97,58,0.35)', borderRadius: 'var(--radius)', padding: '1rem 1.25rem', marginBottom: '1.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', lineHeight: 1.7 }}>
+            <strong style={{ color: '#e07a5a' }}>⚠ Auth not configured</strong><br />
+            <span style={{ color: 'var(--muted)' }}>Supabase credentials need to be added to Vercel.</span>
           </div>
         )}
+
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <p className="eyebrow">Welcome Back</p>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem' }}>Sign In</h1>
-          <p style={{ color: 'var(--muted)', marginTop: '0.5rem', fontSize: '0.9rem' }}>
-            Access your courses, dashboard, and live sessions.
-          </p>
+          <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--gold)', textDecoration: 'none' }}>Apotheos</Link>
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.25rem', marginTop: '0.75rem' }}>Welcome back</h1>
+          <p style={{ color: 'var(--muted)', marginTop: '0.4rem', fontSize: '0.9rem' }}>Sign in to access your courses and dashboard.</p>
         </div>
 
-        <div className="card" style={{ gap: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {/* Google */}
-          <button onClick={handleGoogleSignIn} className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', gap: '0.75rem' }}>
+          <button onClick={handleGoogleSignIn} disabled={!configured} className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', gap: '0.75rem' }}>
             <GoogleIcon /> Continue with Google
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <hr className="gold-rule" style={{ flex: 1, margin: 0 }} />
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--muted)', letterSpacing: '0.08em' }}>OR</span>
-            <hr className="gold-rule" style={{ flex: 1, margin: 0 }} />
-          </div>
+          <Divider />
 
-          {/* Mode toggle */}
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button className={`btn btn-sm ${mode === 'password' ? 'btn-gold' : 'btn-ghost'}`} onClick={() => setMode('password')} style={{ flex: 1, justifyContent: 'center' }}>Password</button>
-            <button className={`btn btn-sm ${mode === 'magic' ? 'btn-gold' : 'btn-ghost'}`} onClick={() => setMode('magic')} style={{ flex: 1, justifyContent: 'center' }}>Magic Link</button>
+          {/* Mode tabs */}
+          <div style={{ display: 'flex', background: 'var(--surface2)', borderRadius: 'var(--radius)', padding: '3px', gap: '3px' }}>
+            {(['password', 'magic'] as const).map(m => (
+              <button
+                key={m}
+                onClick={() => { setMode(m); setError(''); setInfo('') }}
+                style={{
+                  flex: 1, padding: '0.5rem', border: 'none', cursor: 'pointer',
+                  borderRadius: 'calc(var(--radius) - 2px)',
+                  background: mode === m ? 'var(--surface)' : 'transparent',
+                  color: mode === m ? 'var(--text)' : 'var(--muted)',
+                  fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.06em',
+                  transition: 'all 0.15s',
+                }}
+              >
+                {m === 'password' ? 'Password' : 'Magic Link'}
+              </button>
+            ))}
           </div>
 
           {magicSent ? (
             <div style={{ textAlign: 'center', padding: '1.5rem', background: 'var(--gold-glow)', border: '1px solid var(--border)', borderRadius: 'var(--radius)' }}>
-              <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>✉️</div>
-              <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', marginBottom: '0.5rem' }}>Check your inbox</p>
-              <p style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>We sent a sign-in link to <strong>{email}</strong></p>
+              <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>✉️</div>
+              <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', marginBottom: '0.4rem' }}>Check your inbox</p>
+              <p style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>We sent a sign-in link to <strong style={{ color: 'var(--text)' }}>{email}</strong></p>
+              <button onClick={() => { setMagicSent(false); setEmail('') }} style={{ marginTop: '1rem', fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--gold)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                Use a different email
+              </button>
             </div>
           ) : mode === 'password' ? (
             <form onSubmit={handlePasswordSignIn} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div className="form-field">
                 <label className="form-label">Email</label>
-                <input className="form-input" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com" />
+                <input className="form-input" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com" autoComplete="email" />
               </div>
               <div className="form-field">
-                <label className="form-label">Password</label>
-                <input className="form-input" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" />
+                <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  Password
+                  <button type="button" onClick={() => setMode('magic')} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--gold)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                    Forgot password?
+                  </button>
+                </label>
+                <input className="form-input" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" autoComplete="current-password" />
               </div>
-              {error && <p className="form-error">{error}</p>}
-              <button type="submit" className="btn btn-gold" disabled={loading} style={{ justifyContent: 'center' }}>
+              {error && <ErrorBox message={error} />}
+              {info && <InfoBox message={info} />}
+              <button type="submit" className="btn btn-gold" disabled={loading || !configured} style={{ justifyContent: 'center', padding: '0.85rem' }}>
                 {loading ? 'Signing in…' : 'Sign In →'}
               </button>
             </form>
           ) : (
             <form onSubmit={handleMagicLink} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', lineHeight: 1.6 }}>
+                Enter your email and we&apos;ll send a one-click sign-in link — no password needed.
+              </p>
               <div className="form-field">
                 <label className="form-label">Email</label>
-                <input className="form-input" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com" />
+                <input className="form-input" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com" autoComplete="email" />
               </div>
-              {error && <p className="form-error">{error}</p>}
-              <button type="submit" className="btn btn-gold" disabled={loading} style={{ justifyContent: 'center' }}>
+              {error && <ErrorBox message={error} />}
+              <button type="submit" className="btn btn-gold" disabled={loading || !configured} style={{ justifyContent: 'center', padding: '0.85rem' }}>
                 {loading ? 'Sending…' : 'Send Magic Link →'}
               </button>
             </form>
           )}
-
-          <p style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--muted)' }}>
-            Don&apos;t have an account?{' '}
-            <Link href="/auth/signup" style={{ color: 'var(--gold)' }}>Sign up →</Link>
-          </p>
         </div>
+
+        <p style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', marginTop: '1.5rem' }}>
+          Don&apos;t have an account?{' '}
+          <Link href="/auth/signup" style={{ color: 'var(--gold)' }}>Create one →</Link>
+        </p>
       </div>
+    </div>
+  )
+}
+
+function ErrorBox({ message }: { message: string }) {
+  return (
+    <div style={{ background: 'rgba(196,97,58,0.12)', border: '1px solid rgba(196,97,58,0.3)', borderRadius: 'var(--radius)', padding: '0.75rem 1rem', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: '#e07a5a', lineHeight: 1.5 }}>
+      {message}
+    </div>
+  )
+}
+
+function InfoBox({ message }: { message: string }) {
+  return (
+    <div style={{ background: 'var(--gold-glow)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '0.75rem 1rem', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--gold)', lineHeight: 1.5 }}>
+      {message}
+    </div>
+  )
+}
+
+function Divider() {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+      <div style={{ flex: 1, height: '1px', background: 'var(--border2)' }} />
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', color: 'var(--muted)', letterSpacing: '0.1em' }}>OR</span>
+      <div style={{ flex: 1, height: '1px', background: 'var(--border2)' }} />
     </div>
   )
 }

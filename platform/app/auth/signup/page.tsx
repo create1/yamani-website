@@ -11,112 +11,153 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [verifyEmailSent, setVerifyEmailSent] = useState(false)
+  const [done, setDone] = useState(false)
+  const [autoSignedIn, setAutoSignedIn] = useState(false)
+
+  const configured = supabaseReady()
+
+  const friendlyError = (msg: string): string => {
+    if (msg.includes('already registered') || msg.includes('already been registered')) return 'An account with this email already exists. Sign in instead.'
+    if (msg.includes('Password should be')) return 'Password must be at least 8 characters.'
+    if (msg.includes('rate limit')) return 'Too many attempts. Please wait a minute and try again.'
+    return msg
+  }
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!configured) return
     if (password.length < 8) { setError('Password must be at least 8 characters'); return }
     setLoading(true); setError('')
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: { full_name: name },
-        emailRedirectTo: `${window.location.origin}/dashboard`,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     })
 
-    if (error) { setError(error.message); setLoading(false); return }
-    setVerifyEmailSent(true)
+    if (error) { setError(friendlyError(error.message)); setLoading(false); return }
+
+    // If auto-confirmed (email confirmation disabled in Supabase), go straight to dashboard
+    if (data.session) {
+      setAutoSignedIn(true)
+      setTimeout(() => router.push('/dashboard'), 1500)
+    } else {
+      setDone(true)
+    }
     setLoading(false)
   }
 
   const handleGoogleSignUp = async () => {
+    if (!configured) return
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/dashboard` },
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
     })
   }
 
-  if (verifyEmailSent) {
+  if (autoSignedIn) {
     return (
       <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-        <div style={{ textAlign: 'center', maxWidth: '420px' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>✉️</div>
-          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', marginBottom: '1rem' }}>Verify Your Email</h2>
-          <p style={{ color: 'var(--muted)', lineHeight: 1.7 }}>
-            We sent a verification link to <strong style={{ color: 'var(--text)' }}>{email}</strong>. Click the link to activate your account and access your dashboard.
-          </p>
-          <Link href="/auth/signin" className="btn btn-outline" style={{ marginTop: '2rem', justifyContent: 'center' }}>
-            Back to Sign In
-          </Link>
+        <div style={{ textAlign: 'center', maxWidth: '400px' }}>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✓</div>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>Account created!</h2>
+          <p style={{ color: 'var(--muted)', marginTop: '0.5rem' }}>Taking you to your dashboard…</p>
         </div>
       </div>
     )
   }
 
-  const configured = supabaseReady()
+  if (done) {
+    return (
+      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+        <div style={{ textAlign: 'center', maxWidth: '440px' }}>
+          <div style={{ fontSize: '3rem', marginBottom: '1.25rem' }}>✉️</div>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', marginBottom: '1rem' }}>Check your email</h2>
+          <p style={{ color: 'var(--muted)', lineHeight: 1.7, marginBottom: '0.5rem' }}>
+            We sent a confirmation link to <strong style={{ color: 'var(--text)' }}>{email}</strong>.
+          </p>
+          <p style={{ color: 'var(--muted)', lineHeight: 1.7, fontSize: '0.88rem' }}>
+            Click the link in the email to activate your account, then come back here to sign in.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
+            <Link href="/auth/signin" className="btn btn-gold">Go to Sign In →</Link>
+            <button onClick={() => { setDone(false); setPassword('') }} className="btn btn-ghost btn-sm">
+              Try again
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-      <div style={{ width: '100%', maxWidth: '420px' }}>
+      <div style={{ width: '100%', maxWidth: '440px' }}>
+
         {!configured && (
-          <div style={{ background: 'rgba(196,97,58,0.12)', border: '1px solid rgba(196,97,58,0.4)', borderRadius: 'var(--radius)', padding: '1rem 1.25rem', marginBottom: '1.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', lineHeight: 1.7, color: 'var(--text)' }}>
-            <strong style={{ color: '#e07a5a' }}>⚠ Supabase not connected</strong><br />
-            Auth is not yet configured. Add your Supabase credentials to enable account creation.
+          <div style={{ background: 'rgba(196,97,58,0.12)', border: '1px solid rgba(196,97,58,0.35)', borderRadius: 'var(--radius)', padding: '1rem 1.25rem', marginBottom: '1.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', lineHeight: 1.7 }}>
+            <strong style={{ color: '#e07a5a' }}>⚠ Auth not configured</strong><br />
+            <span style={{ color: 'var(--muted)' }}>Supabase credentials need to be added to Vercel.</span>
           </div>
         )}
+
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <p className="eyebrow">Join Apotheos</p>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem' }}>Create Account</h1>
-          <p style={{ color: 'var(--muted)', marginTop: '0.5rem', fontSize: '0.9rem' }}>
-            Access courses, live sessions, and the Apotheos community.
-          </p>
+          <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--gold)', textDecoration: 'none' }}>Apotheos</Link>
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.25rem', marginTop: '0.75rem' }}>Create your account</h1>
+          <p style={{ color: 'var(--muted)', marginTop: '0.4rem', fontSize: '0.9rem' }}>Join Apotheos — access courses, live sessions, and community.</p>
         </div>
 
-        <div className="card" style={{ gap: '1.5rem', display: 'flex', flexDirection: 'column' }}>
-          {/* Google */}
-          <button onClick={handleGoogleSignUp} className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', gap: '0.75rem' }}>
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <button onClick={handleGoogleSignUp} disabled={!configured} className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', gap: '0.75rem' }}>
             <GoogleIcon /> Continue with Google
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <hr className="gold-rule" style={{ flex: 1, margin: 0 }} />
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--muted)', letterSpacing: '0.08em' }}>OR</span>
-            <hr className="gold-rule" style={{ flex: 1, margin: 0 }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ flex: 1, height: '1px', background: 'var(--border2)' }} />
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', color: 'var(--muted)', letterSpacing: '0.1em' }}>OR</span>
+            <div style={{ flex: 1, height: '1px', background: 'var(--border2)' }} />
           </div>
 
           <form onSubmit={handleSignUp} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div className="form-field">
               <label className="form-label">Full Name</label>
-              <input className="form-input" type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Your name" />
+              <input className="form-input" type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Your name" autoComplete="name" />
             </div>
             <div className="form-field">
               <label className="form-label">Email</label>
-              <input className="form-input" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com" />
+              <input className="form-input" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com" autoComplete="email" />
             </div>
             <div className="form-field">
               <label className="form-label">Password</label>
-              <input className="form-input" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Min 8 characters" />
+              <input className="form-input" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Min 8 characters" autoComplete="new-password" />
             </div>
 
-            {error && <p className="form-error">{error}</p>}
+            {error && (
+              <div style={{ background: 'rgba(196,97,58,0.12)', border: '1px solid rgba(196,97,58,0.3)', borderRadius: 'var(--radius)', padding: '0.75rem 1rem', fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: '#e07a5a', lineHeight: 1.5 }}>
+                {error}
+                {error.includes('already exists') && (
+                  <> <Link href="/auth/signin" style={{ color: 'var(--gold)' }}>Sign in →</Link></>
+                )}
+              </div>
+            )}
 
-            <button type="submit" className="btn btn-gold" disabled={loading} style={{ justifyContent: 'center' }}>
+            <button type="submit" className="btn btn-gold" disabled={loading || !configured} style={{ justifyContent: 'center', padding: '0.85rem' }}>
               {loading ? 'Creating account…' : 'Create Account →'}
             </button>
 
             <p style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--muted)', lineHeight: 1.6 }}>
-              By creating an account you agree to our terms of service and privacy policy.
+              By creating an account you agree to our terms of service.
             </p>
           </form>
-
-          <p style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--muted)' }}>
-            Already have an account?{' '}
-            <Link href="/auth/signin" style={{ color: 'var(--gold)' }}>Sign in →</Link>
-          </p>
         </div>
+
+        <p style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', marginTop: '1.5rem' }}>
+          Already have an account?{' '}
+          <Link href="/auth/signin" style={{ color: 'var(--gold)' }}>Sign in →</Link>
+        </p>
       </div>
     </div>
   )
