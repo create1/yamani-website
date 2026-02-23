@@ -1036,32 +1036,198 @@
     .reveal-d2 { transition-delay: 0.2s; }
     .reveal-d3 { transition-delay: 0.3s; }
 
-    /* ─── RESPONSIVE ─── */
+    /* ─── HAMBURGER ─── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 58px; left: 0; right: 0;
+      background: rgba(13,12,9,0.98);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem 1.5rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border2);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; padding-top: 1rem; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--gold); }
+
+    /* ─── RESPONSIVE: TABLET (900px) ─── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
+      .nav-pill { display: none; }
+      .nav-hamburger { display: flex; }
+
       .hero { padding: 8rem 1.5rem 4rem; }
       .section { padding: 5rem 1.5rem; }
-      .schedule-cards { grid-template-columns: 1fr; }
-      .track-header { flex-direction: column; padding: 2rem; }
+
+      .schedule-cards { grid-template-columns: 1fr; gap: 0.75rem; }
+
+      .track-header { flex-direction: column; padding: 2rem 1.5rem; }
       .th-right { align-items: flex-start; }
+      .th-stats { gap: 1.25rem; }
+      .th-name { font-size: 2rem; }
+
+      .cs-heading { padding: 1.25rem 1.5rem 0.875rem; }
       .course-table thead th:first-child,
       .course-table td:first-child { padding-left: 1.5rem; }
       .course-table thead th:last-child,
       .course-table td:last-child { padding-right: 1.5rem; }
-      .cs-heading { padding: 1.25rem 1.5rem 0.875rem; }
-      .wellness-grid { grid-template-columns: 1fr; }
-      .tier-grid { grid-template-columns: 1fr; }
-      .bundles-grid { grid-template-columns: 1fr; }
-      .discounts-grid { grid-template-columns: 1fr; }
-      .cta-wrap { padding: 4rem 1.5rem; }
-      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
-      .footer-right { text-align: center; }
+
+      .wellness-grid { grid-template-columns: 1fr 1fr; }
       .morning-band { padding: 1.75rem; }
       .timeline { flex-direction: column; gap: 1.25rem; }
       .timeline::before { display: none; }
       .tl-slot { padding-top: 0; padding-left: 1.5rem; }
       .tl-dot { top: 4px; left: 0; }
+
+      .tier-grid { grid-template-columns: 1fr; }
+      .bundles-grid { grid-template-columns: 1fr 1fr; }
+      .discounts-grid { grid-template-columns: 1fr; }
+
+      .cta-wrap { padding: 4rem 1.5rem; }
+      .cta-btns { flex-wrap: wrap; justify-content: center; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+      .footer-right { text-align: center; }
+    }
+
+    /* ─── RESPONSIVE: PHONE (640px) ─── */
+    @media (max-width: 640px) {
+      nav { padding: 0.875rem 1.25rem; }
+      .mobile-menu { top: 52px; }
+
+      .hero { padding: 6.5rem 1.25rem 3rem; min-height: unset; }
+      .hero-sub { font-size: 1.1rem; }
+      .hero-desc { font-size: 0.9rem; }
+
+      .section { padding: 3.5rem 1.25rem; }
+      .section-p { margin-bottom: 2rem; }
+
+      .track-header { padding: 1.5rem 1.25rem; }
+      .th-name { font-size: 1.6rem; }
+      .th-icon { font-size: 1.75rem; }
+      .th-desc { font-size: 0.875rem; }
+      .th-schedule-badge { font-size: 0.6rem; padding: 0.4rem 0.875rem; }
+      .th-stat-num { font-size: 1.5rem; }
+
+      .cs-heading { padding: 1rem 1.25rem 0.75rem; flex-wrap: wrap; }
+      .cs-count { width: 100%; margin-left: 0; margin-top: 0.25rem; }
+      .course-table thead th:first-child,
+      .course-table td:first-child { padding-left: 1.25rem; }
+      .course-table thead th:last-child,
+      .course-table td:last-child { padding-right: 1.25rem; }
+
+      /* ── Course tables → stacked cards on mobile ── */
+      .course-table          { display: block; }
+      .course-table thead    { display: none; }
+      .course-table tbody    { display: block; }
+      .course-table tr       { display: block; padding: 1.1rem 1.25rem; }
+
+      /* Col 1: Course name + skills — full width block */
+      .course-table td:nth-child(1) {
+        display: block;
+        padding: 0 0 0.6rem 0;
+        border-bottom: 1px solid var(--border2);
+        margin-bottom: 0.6rem;
+      }
+      /* Col 2: Format badge — inline */
+      .course-table td:nth-child(2) {
+        display: inline-block;
+        padding: 0;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+      }
+      /* Col 3: Audience — hidden on phone */
+      .course-table td:nth-child(3) { display: none; }
+      /* Col 4: Level badge — inline */
+      .course-table td:nth-child(4) {
+        display: inline-block;
+        padding: 0;
+        vertical-align: middle;
+      }
+      /* Prices row */
+      .course-table td:nth-child(5),
+      .course-table td:nth-child(6) {
+        display: inline-block;
+        padding: 0.5rem 0 0 0;
+        text-align: left;
+        margin-right: 1.5rem;
+      }
+      .course-table td:nth-child(5)::before {
+        content: 'Online';
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.52rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .course-table td:nth-child(6)::before {
+        content: 'In-Person';
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.52rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .price-online { font-size: 0.95rem; }
+
+      .wellness-grid { grid-template-columns: 1fr; }
+      .morning-band { padding: 1.25rem; }
+
+      .bundles-grid { grid-template-columns: 1fr; }
+      .discounts-grid { grid-template-columns: 1fr; }
+      .discount-row { flex-direction: column; align-items: flex-start; gap: 0.3rem; padding: 0.875rem 1.25rem; }
+      .dr-value { font-size: 0.7rem; }
+
+      .cta-wrap { padding: 3rem 1.25rem; border-radius: 1.25rem; }
+      .cta-btns { flex-direction: column; align-items: stretch; }
+      .btn-gold, .btn-ghost { justify-content: center; }
+
+      footer { padding: 1.75rem 1.25rem; }
+
+      /* Bundles two-col special plans → 1 col */
+      div[style*="grid-template-columns:repeat(2,1fr)"] {
+        grid-template-columns: 1fr !important;
+      }
     }
   </style>
 </head>
@@ -1084,8 +1250,20 @@
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
     <a href="index.html#waitlist" class="nav-pill">Join Waitlist</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="curriculum.html" class="active">Curriculum</a>
+  <a href="calendar.html">Schedule</a>
+  <a href="index.html#membership">Membership</a>
+  <a href="index.html#contact">Contact</a>
+  <a href="index.html#waitlist" style="color:var(--gold);">Join Waitlist →</a>
+</div>
 
 <!-- HERO -->
 <div style="position:relative;overflow:hidden;">
@@ -2104,6 +2282,7 @@
 </footer>
 
 <script>
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -2114,6 +2293,25 @@
     });
   }, { threshold: 0.06 });
   reveals.forEach(r => observer.observe(r));
+
+  // Hamburger menu
+  const hamburger = document.getElementById('nav-hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
 </script>
 
 </body>
