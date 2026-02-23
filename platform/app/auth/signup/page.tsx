@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { supabase, supabaseReady } from '@/lib/supabase'
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -56,9 +56,17 @@ export default function SignUpPage() {
     )
   }
 
+  const configured = supabaseReady()
+
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
       <div style={{ width: '100%', maxWidth: '420px' }}>
+        {!configured && (
+          <div style={{ background: 'rgba(196,97,58,0.12)', border: '1px solid rgba(196,97,58,0.4)', borderRadius: 'var(--radius)', padding: '1rem 1.25rem', marginBottom: '1.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', lineHeight: 1.7, color: 'var(--text)' }}>
+            <strong style={{ color: '#e07a5a' }}>⚠ Supabase not connected</strong><br />
+            Auth is not yet configured. Add your Supabase credentials to enable account creation.
+          </div>
+        )}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <p className="eyebrow">Join Apotheos</p>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.5rem' }}>Create Account</h1>

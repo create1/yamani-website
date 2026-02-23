@@ -4,15 +4,25 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js'
 let _supabase: SupabaseClient | null = null
 let _supabaseAdmin: SupabaseClient | null = null
 
+function isConfigured(url: string | undefined, key: string | undefined): boolean {
+  return !!(url && key && !url.startsWith('your-') && !key.startsWith('your-'))
+}
+
+export function supabaseReady(): boolean {
+  return isConfigured(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  )
+}
+
 function getClient(): SupabaseClient {
   if (!_supabase) {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (!url || !key || url.startsWith('your-')) {
-      // Return a no-op stub so pages don't crash at build time
+    if (!isConfigured(url, key)) {
       return createClient('https://placeholder.supabase.co', 'placeholder-anon-key')
     }
-    _supabase = createClient(url, key)
+    _supabase = createClient(url!, key!)
   }
   return _supabase
 }
