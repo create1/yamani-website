@@ -18,12 +18,21 @@ const NAV_LINKS = [
 export default function Nav() {
   const pathname = usePathname()
   const [user, setUser] = useState<User | null>(null)
+  const [userRole, setUserRole] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))
+    supabase.auth.getSession().then(async ({ data }) => {
+      const u = data.session?.user ?? null
+      setUser(u)
+      if (u) {
+        const { data: prof } = await supabase.from('users').select('role').eq('id', u.id).single()
+        setUserRole(prof?.role ?? null)
+      }
+    })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
       setUser(session?.user ?? null)
+      if (!session?.user) setUserRole(null)
     })
     return () => subscription.unsubscribe()
   }, [])
@@ -58,6 +67,11 @@ export default function Nav() {
 
           {user ? (
             <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+              {(userRole === 'admin' || userRole === 'instructor') && (
+                <Link href="/admin" className="nav-user-btn" style={{ color: 'var(--gold)' }}>
+                  Admin
+                </Link>
+              )}
               <Link href="/dashboard" className="nav-user-btn">
                 <span>◎</span> Dashboard
               </Link>
@@ -66,7 +80,10 @@ export default function Nav() {
               </button>
             </div>
           ) : (
-            <Link href="/#waitlist" className="nav-pill">Join Waitlist</Link>
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+              <Link href="/auth/signin" className="nav-user-btn">Sign In</Link>
+              <Link href="/#waitlist" className="nav-pill">Join Waitlist</Link>
+            </div>
           )}
         </div>
 
@@ -120,10 +137,16 @@ export default function Nav() {
               </button>
             </>
           ) : (
-            <Link href="/#waitlist" onClick={() => setMenuOpen(false)}
-              style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--gold)' }}>
-              Join Waitlist →
-            </Link>
+            <>
+              <Link href="/auth/signin" onClick={() => setMenuOpen(false)}
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted)' }}>
+                Sign In
+              </Link>
+              <Link href="/#waitlist" onClick={() => setMenuOpen(false)}
+                style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--gold)' }}>
+                Join Waitlist →
+              </Link>
+            </>
           )}
         </div>
       )}
