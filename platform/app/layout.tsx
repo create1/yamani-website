@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Live online classes in AI, founder mentorship, and holistic wellness. Join from anywhere — or in-person at our Nevada City, CA campus.',
   openGraph: {
     title: 'Apotheos — Live Online Learning',
-    description: 'AI learning, founder ecosystem, and holistic wellness — live online from anywhere.',
+    description: 'AI & creative production, founder ecosystem, and holistic wellness — live online from anywhere.',
     type: 'website',
   },
 }

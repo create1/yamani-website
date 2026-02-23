@@ -1162,7 +1162,7 @@ export const TRACK_META: Record<TrackName, { label: string; icon: string; descri
     color: 'var(--gold)',
   },
   ai: {
-    label: 'AI Learning',
+    label: 'AI / Creative Production',
     icon: '⬡',
     description: 'Practical AI literacy and technical skills for builders, leaders and founders.',
     color: 'var(--teal-lt)',

@@ -17,7 +17,7 @@ export default function HomePage() {
           Learn, Build &amp; <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Grow</em>
         </h1>
         <p style={{ color: 'var(--muted)', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', maxWidth: '52ch', margin: '2rem auto', lineHeight: 1.7 }}>
-          Apotheos delivers live AI education, founder mentorship, and holistic wellness classes online — from anywhere in the world. In-person at our Nevada City campus for local members.
+          Apotheos delivers live AI & creative production, founder mentorship, and holistic wellness classes online — from anywhere in the world. In-person at our Nevada City campus for local members.
         </p>
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '1rem' }}>
           <Link href="/courses" className="btn btn-gold btn-lg">Explore Courses</Link>
