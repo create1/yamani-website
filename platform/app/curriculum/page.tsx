@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ALL_COURSES, COURSES_BY_TRACK, TRACK_META } from '@/lib/courses'
 import type { TrackName, CourseData } from '@/lib/courses'
@@ -138,7 +137,6 @@ function CourseGrid({ courses, color }: { courses: CourseData[]; color: string }
 }
 
 function CourseTile({ course, color }: { course: CourseData; color: string }) {
-  const router = useRouter()
   const durHrs = Math.floor(course.duration_min / 60)
   const durMins = course.duration_min % 60
   const dur = durMins > 0 ? `${durHrs}h ${durMins}m` : `${durHrs}h`
@@ -146,31 +144,28 @@ function CourseTile({ course, color }: { course: CourseData; color: string }) {
   const end = endTime(course.start_time, course.duration_min)
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => router.push(`/courses/${course.slug}`)}
-      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') router.push(`/courses/${course.slug}`) }}
+    <a
+      href={`/courses/${course.slug}`}
       style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.5rem',
+        textDecoration: 'none',
         background: 'var(--surface)',
         border: '1px solid var(--border2)',
         borderLeft: `3px solid ${color}`,
         borderRadius: 'var(--radius)',
         padding: '1rem 1.1rem',
         cursor: 'pointer',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5rem',
-        userSelect: 'none',
         transition: 'border-color 0.15s, background 0.15s',
       }}
       onMouseEnter={e => {
-        const el = e.currentTarget as HTMLDivElement
+        const el = e.currentTarget as HTMLAnchorElement
         el.style.background = `${color}12`
         el.style.borderColor = color
       }}
       onMouseLeave={e => {
-        const el = e.currentTarget as HTMLDivElement
+        const el = e.currentTarget as HTMLAnchorElement
         el.style.background = 'var(--surface)'
         el.style.borderColor = 'var(--border2)'
       }}
@@ -196,6 +191,6 @@ function CourseTile({ course, color }: { course: CourseData; color: string }) {
         </span>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color }}>→</span>
       </div>
-    </div>
+    </a>
   )
 }

@@ -1,6 +1,5 @@
 'use client'
 import { useState, useMemo } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ALL_COURSES, TRACK_META } from '@/lib/courses'
 import type { TrackName, CourseData } from '@/lib/courses'
@@ -232,32 +231,30 @@ const navBtnStyle: React.CSSProperties = {
 }
 
 function EventTile({ course }: { course: CourseData }) {
-  const router = useRouter()
   const color = COLORS[course.track]
   const end = endTime(course.start_time, course.duration_min)
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => router.push(`/courses/${course.slug}`)}
-      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') router.push(`/courses/${course.slug}`) }}
+    <a
+      href={`/courses/${course.slug}`}
       style={{
+        display: 'block',
+        textDecoration: 'none',
         background: 'var(--surface)',
         border: '1px solid var(--border2)',
         borderLeft: `3px solid ${color}`,
         borderRadius: '4px',
         padding: '0.4rem 0.5rem',
         cursor: 'pointer',
-        userSelect: 'none',
+        transition: 'background 0.15s, border-color 0.15s',
       }}
       onMouseEnter={e => {
-        const el = e.currentTarget as HTMLDivElement
+        const el = e.currentTarget as HTMLAnchorElement
         el.style.background = `${color}18`
         el.style.borderColor = color
       }}
       onMouseLeave={e => {
-        const el = e.currentTarget as HTMLDivElement
+        const el = e.currentTarget as HTMLAnchorElement
         el.style.background = 'var(--surface)'
         el.style.borderColor = 'var(--border2)'
       }}
@@ -268,6 +265,6 @@ function EventTile({ course }: { course: CourseData }) {
       <div style={{ fontFamily: 'var(--font-serif)', fontSize: '0.72rem', color: 'var(--text)', lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
         {course.name}
       </div>
-    </div>
+    </a>
   )
 }
