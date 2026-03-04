@@ -7,8 +7,8 @@ import type { User } from '@supabase/supabase-js'
 
 const NAV_LINKS = [
   { href: '/#mission',    label: 'Mission'        },
-  { href: '/courses',     label: 'Online Courses' },
   { href: '/journeys',    label: 'Journey'        },
+  { href: '/courses',     label: 'Online Courses' },
   { href: '/curriculum',  label: 'Curriculum'     },
   { href: '/locations',   label: 'Locations'      },
   { href: '/#membership', label: 'Membership'     },
