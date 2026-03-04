@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
@@ -11,7 +12,6 @@ export async function GET(request: NextRequest) {
   const error = searchParams.get('error')
   const error_description = searchParams.get('error_description')
 
-  // Handle error from Supabase
   if (error) {
     const msg = error_description ?? error
     return NextResponse.redirect(`${origin}/auth/signin?error=${encodeURIComponent(msg)}`)
@@ -24,18 +24,35 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/auth/signin?error=not-configured`)
   }
 
-  const supabase = createClient(supabaseUrl, supabaseKey)
+  const cookieStore = await cookies()
+  const supabase = createServerClient(supabaseUrl, supabaseKey, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll()
+      },
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          )
+        } catch {
+          // Ignored when called from Server Component / middleware
+        }
+      },
+    },
+  })
 
-  // Handle magic link / email OTP
   if (token_hash && type) {
-    const { error } = await supabase.auth.verifyOtp({ token_hash, type: type as 'email' | 'signup' | 'magiclink' | 'recovery' })
-    if (!error) return NextResponse.redirect(`${origin}${next}`)
+    const { error: otpError } = await supabase.auth.verifyOtp({
+      token_hash,
+      type: type as 'email' | 'signup' | 'magiclink' | 'recovery',
+    })
+    if (!otpError) return NextResponse.redirect(`${origin}${next}`)
   }
 
-  // Handle OAuth / PKCE code exchange
   if (code) {
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) return NextResponse.redirect(`${origin}${next}`)
+    const { error: codeError } = await supabase.auth.exchangeCodeForSession(code)
+    if (!codeError) return NextResponse.redirect(`${origin}${next}`)
   }
 
   return NextResponse.redirect(`${origin}/auth/signin?error=Could not sign in. Try again.`)

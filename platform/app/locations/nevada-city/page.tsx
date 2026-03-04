@@ -335,7 +335,7 @@ export default function NevadaCityPage() {
               </div>
             ))}
           </div>
-          <Link href="/#waitlist" className="btn btn-gold">Join the Waitlist →</Link>
+          <Link href="/membership#waitlist" className="btn btn-gold">Join the Waitlist →</Link>
         </div>
       )}
 

@@ -259,7 +259,7 @@ export default function DashboardPage() {
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Membership</div>
               <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', marginBottom: '0.25rem' }}>{tierInfo.label}</div>
               <p style={{ color: 'var(--muted)', fontSize: '0.8rem', marginBottom: '1rem', lineHeight: 1.5 }}>{tierInfo.description}</p>
-              <a href="/#membership" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--gold)', textDecoration: 'none' }}>Upgrade →</a>
+              <Link href="/membership" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--gold)', textDecoration: 'none' }}>Upgrade →</Link>
             </div>
             <div className="card" style={{ padding: '1.25rem' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Quick links</div>

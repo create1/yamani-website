@@ -197,7 +197,7 @@ export default function LocationsPage() {
           <p className="eyebrow" style={{ marginBottom: '0.5rem' }}>Expanding</p>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.75rem,4vw,2.5rem)', marginBottom: '0.5rem' }}>Coming Soon</h2>
           <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: '2rem' }}>
-            New campuses in development. <Link href="/#waitlist" style={{ color: 'var(--gold)' }}>Join the waitlist →</Link>
+            New campuses in development. <Link href="/membership#waitlist" style={{ color: 'var(--gold)' }}>Join the waitlist →</Link>
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%,240px), 1fr))', gap: '1rem' }}>
             {COMING_SOON.map(loc => (
