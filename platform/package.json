@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:migrate:journey": "node scripts/run-journey-migrations.js",
+    "db:migrate:journey:production": "DB_TARGET=production node scripts/run-journey-migrations.js",
+    "db:push": "supabase db push"
   },
   "dependencies": {
     "@daily-co/daily-js": "^0.87.0",
@@ -17,6 +20,8 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
+    "pg": "^8.13.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

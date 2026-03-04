@@ -31,18 +31,24 @@ export default function DashboardPage() {
   useEffect(() => {
     async function loadUser(u: User) {
       setUser(u)
-      const [profRes, enrRes, journeysRes] = await Promise.all([
-        supabase.from('users').select('name, membership_tier, role').eq('id', u.id).single(),
-        supabase.from('enrollments').select('course:courses(slug)').eq('user_id', u.id),
-        supabase.from('journeys').select('id, title, type, status, start_at, end_at, created_at, location:locations(id, name, slug)').eq('host_id', u.id).order('created_at', { ascending: false }).limit(5),
-      ])
-      setProfile(profRes.data ?? null)
-      if (enrRes.data) {
-        const slugs = enrRes.data.map((e: unknown) => (e as { course?: { slug?: string } }).course?.slug).filter(Boolean) as string[]
-        setEnrolledSlugs(slugs)
+      try {
+        const [profRes, enrRes, journeysRes] = await Promise.all([
+          supabase.from('users').select('name, membership_tier, role').eq('id', u.id).single(),
+          supabase.from('enrollments').select('course:courses(slug)').eq('user_id', u.id),
+          supabase.from('journeys').select('id, title, type, status, start_at, end_at, created_at, location:locations(id, name, slug)').eq('host_id', u.id).order('created_at', { ascending: false }).limit(5),
+        ])
+        setProfile(profRes.error ? null : (profRes.data ?? null))
+        if (enrRes.data && !enrRes.error) {
+          const slugs = enrRes.data.map((e: unknown) => (e as { course?: { slug?: string } }).course?.slug).filter(Boolean) as string[]
+          setEnrolledSlugs(slugs)
+        } else {
+          setEnrolledSlugs([])
+        }
+        if (journeysRes.data && !journeysRes.error) setJourneys(journeysRes.data as unknown as Journey[])
+        else setJourneys([])
+      } finally {
+        setLoading(false)
       }
-      if (journeysRes.data) setJourneys(journeysRes.data as unknown as Journey[])
-      setLoading(false)
     }
 
     supabase.auth.getSession().then(({ data }) => {
@@ -51,7 +57,10 @@ export default function DashboardPage() {
         const t = setTimeout(() => {
           supabase.auth.getSession().then(({ data: d2 }) => {
             if (d2.session?.user) loadUser(d2.session.user)
-            else router.push('/auth/signin')
+            else {
+              setLoading(false)
+              router.push('/auth/signin')
+            }
           })
         }, 800)
         return () => clearTimeout(t)

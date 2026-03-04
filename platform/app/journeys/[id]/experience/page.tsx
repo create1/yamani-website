@@ -20,15 +20,13 @@ export default function JourneyExperiencePage() {
     if (!journeyId) return
     async function load(u: User) {
       setUser(u)
-      const { data: j } = await supabase
+      try {
+      const { data: j, error: jErr } = await supabase
         .from('journeys')
         .select('id, title, host_id')
         .eq('id', journeyId)
         .single()
-      if (!j) {
-        setLoading(false)
-        return
-      }
+      if (jErr || !j) return
       const isHost = (j as { host_id: string }).host_id === u.id
       if (!isHost) {
         const { data: part } = await supabase
@@ -39,7 +37,6 @@ export default function JourneyExperiencePage() {
           .maybeSingle()
         if (!part) {
           router.push('/journeys')
-          setLoading(false)
           return
         }
       }
@@ -54,7 +51,9 @@ export default function JourneyExperiencePage() {
         .maybeSingle()
 
       if (!error && out) setOutput(out as JourneyOutput)
-      setLoading(false)
+      } finally {
+        setLoading(false)
+      }
     }
 
     supabase.auth.getSession().then(({ data }) => {
