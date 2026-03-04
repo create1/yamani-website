@@ -6,6 +6,7 @@ import { COURSES_BY_SLUG, TRACK_META } from '@/lib/courses'
 import { supabase } from '@/lib/supabase'
 import type { Session } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
+import InterestButton from '@/components/InterestButton'
 
 interface PageProps { params: Promise<{ slug: string }> }
 
@@ -87,13 +88,19 @@ export default function CourseDetailPage({ params }: PageProps) {
       </div>
 
       {/* Hero */}
-      <div style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border2)', padding: '3rem 0', marginBottom: '3rem' }}>
+      <div style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border2)', padding: 'clamp(1.5rem,4vw,3rem) 0', marginBottom: 'clamp(1.5rem,4vw,3rem)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '3rem', alignItems: 'start' }}>
+          <div className="course-hero-grid">
             <div>
-              <span className={`track-badge track-${course.track}`} style={{ marginBottom: '1.25rem', display: 'inline-flex' }}>
-                {meta.icon} {meta.label}
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
+                <span className={`track-badge track-${course.track}`}>
+                  {meta.icon} {meta.label}
+                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <InterestButton slug={slug} size="md" />
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)' }}>Add to my schedule</span>
+                </div>
+              </div>
               <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.75rem, 4vw, 2.75rem)', marginBottom: '1.25rem', lineHeight: 1.2 }}>
                 {course.name}
               </h1>
@@ -111,7 +118,7 @@ export default function CourseDetailPage({ params }: PageProps) {
             </div>
 
             {/* Enroll card */}
-            <div className="card" style={{ position: 'sticky', top: 'calc(var(--nav-h) + 1rem)' }}>
+            <div className="card course-enroll-card" style={{ position: 'sticky', top: 'calc(var(--nav-h) + 1rem)' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--muted)', letterSpacing: '0.08em', marginBottom: '1rem' }}>
                 {course.day_of_week.toUpperCase()} · {course.start_time} · {durStr}
               </div>
@@ -165,7 +172,7 @@ export default function CourseDetailPage({ params }: PageProps) {
       </div>
 
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '3rem', alignItems: 'start' }}>
+        <div className="course-body-grid">
           <div>
             {/* Objectives */}
             <section style={{ marginBottom: '3rem' }}>
@@ -229,6 +236,29 @@ export default function CourseDetailPage({ params }: PageProps) {
           </div>
         </div>
       </div>
+
+      <style>{`
+        .course-hero-grid {
+          display: grid;
+          grid-template-columns: 2fr 1fr;
+          gap: 3rem;
+          align-items: start;
+        }
+        .course-body-grid {
+          display: grid;
+          grid-template-columns: 2fr 1fr;
+          gap: 3rem;
+          align-items: start;
+        }
+        @media (max-width: 768px) {
+          .course-hero-grid,
+          .course-body-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+          .course-enroll-card { position: static !important; }
+        }
+      `}</style>
     </div>
   )
 }

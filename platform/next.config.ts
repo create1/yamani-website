@@ -1,17 +1,8 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Serve the original static home page at / while the Next.js app handles everything else
-  async rewrites() {
-    return {
-      // beforeFiles runs before Next.js pages, so this overrides app/page.tsx for /
-      beforeFiles: [
-        { source: '/', destination: '/home.html' },
-      ],
-      afterFiles: [],
-      fallback: [],
-    }
-  },
+  // Root (/) now serves the Next.js app (app/page.tsx) so nav, Journey, and dashboard work
+  // To use the static home.html again, add: beforeFiles: [ { source: '/', destination: '/home.html' } ],
   // Allow Daily.co iframes
   async headers() {
     return [

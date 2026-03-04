@@ -25,12 +25,13 @@ export default function CoursesPage() {
       </div>
 
       {/* Filters */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', marginBottom: '2.5rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '2rem' }}>
         {/* Track filter pills */}
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '0.4rem', overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', paddingBottom: '2px' }}>
           <button
             className={`btn btn-sm ${activeTrack === 'all' ? 'btn-gold' : 'btn-ghost'}`}
             onClick={() => setActiveTrack('all')}
+            style={{ flexShrink: 0 }}
           >
             All ({ALL_COURSES.length})
           </button>
@@ -39,12 +40,12 @@ export default function CoursesPage() {
               key={track}
               className={`btn btn-sm ${activeTrack === track ? 'btn-gold' : 'btn-ghost'}`}
               onClick={() => setActiveTrack(track)}
+              style={{ flexShrink: 0 }}
             >
               {TRACK_META[track].icon} {TRACK_META[track].label} ({COURSES_BY_TRACK[track].length})
             </button>
           ))}
         </div>
-
         {/* Search */}
         <input
           className="form-input"
@@ -52,7 +53,7 @@ export default function CoursesPage() {
           placeholder="Search courses…"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          style={{ maxWidth: '260px', marginLeft: 'auto' }}
+          style={{ maxWidth: '360px' }}
         />
       </div>
 
@@ -67,7 +68,7 @@ export default function CoursesPage() {
       {filtered.length === 0 ? (
         <div className="empty-state">No courses match your search.</div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '1.25rem' }}>
           {filtered.map(course => (
             <CourseCard key={course.slug} course={course} />
           ))}

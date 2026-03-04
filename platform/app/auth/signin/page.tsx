@@ -44,7 +44,8 @@ function SignInForm() {
     setLoading(true); setError(''); setInfo('')
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) { setError(friendlyError(error.message)); setLoading(false); return }
-    router.push('/dashboard')
+    setLoading(false)
+    window.location.replace('/dashboard')
   }
 
   const handleMagicLink = async (e: React.FormEvent) => {
@@ -53,7 +54,7 @@ function SignInForm() {
     setLoading(true); setError(''); setInfo('')
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard` },
     })
     if (error) { setError(friendlyError(error.message)); setLoading(false); return }
     setMagicSent(true); setLoading(false)
@@ -63,12 +64,12 @@ function SignInForm() {
     if (!configured) return
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=/dashboard` },
     })
   }
 
   return (
-    <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+    <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(1rem, 4vw, 2rem)' }}>
       <div style={{ width: '100%', maxWidth: '440px' }}>
 
         {!configured && (

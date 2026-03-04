@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ALL_COURSES, COURSES_BY_TRACK, TRACK_META } from '@/lib/courses'
 import type { TrackName, CourseData } from '@/lib/courses'
+import InterestButton from '@/components/InterestButton'
 
 const TRACKS: TrackName[] = ['wellness', 'ai', 'founder', 'community']
 
@@ -29,20 +30,20 @@ export default function CurriculumPage() {
 
       {/* Hero */}
       <section style={{
-        padding: '4rem 0 3rem',
+        padding: 'clamp(2rem, 5vw, 4rem) 0 clamp(1.5rem, 4vw, 3rem)',
         background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 70%)',
         borderBottom: '1px solid var(--border2)',
         textAlign: 'center',
       }}>
         <div className="container">
           <p className="eyebrow">The Curriculum</p>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 6vw, 4rem)', margin: '0 auto', lineHeight: 1.1 }}>
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 6vw, 4rem)', margin: '0 auto', lineHeight: 1.1 }}>
             {ALL_COURSES.length} Courses · Three Tracks
           </h1>
-          <p style={{ color: 'var(--muted)', fontSize: '1rem', maxWidth: '50ch', margin: '1.25rem auto', lineHeight: 1.7 }}>
+          <p style={{ color: 'var(--muted)', fontSize: '0.95rem', maxWidth: '50ch', margin: '1rem auto', lineHeight: 1.7 }}>
             Click any class to see the full curriculum, schedule, and enrollment options.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem', flexWrap: 'wrap' }}>
             <Link href="/schedule" className="btn btn-outline">View Weekly Schedule →</Link>
           </div>
         </div>
@@ -50,17 +51,17 @@ export default function CurriculumPage() {
 
       {/* Track filter */}
       <div style={{ position: 'sticky', top: 'var(--nav-h)', zIndex: 50, background: 'var(--surface)', borderBottom: '1px solid var(--border2)' }}>
-        <div className="container" style={{ padding: '0.75rem 2rem' }}>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            <button onClick={() => setActiveTrack('all')} className={`btn btn-sm ${activeTrack === 'all' ? 'btn-gold' : 'btn-ghost'}`}>
-              All Tracks
+        <div className="container" style={{ padding: '0.6rem 1rem' }}>
+          <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+            <button onClick={() => setActiveTrack('all')} className={`btn btn-sm ${activeTrack === 'all' ? 'btn-gold' : 'btn-ghost'}`} style={{ flexShrink: 0 }}>
+              All
             </button>
             {TRACKS.map(track => (
-              <button key={track} onClick={() => setActiveTrack(track)} className={`btn btn-sm ${activeTrack === track ? 'btn-gold' : 'btn-ghost'}`}>
+              <button key={track} onClick={() => setActiveTrack(track)} className={`btn btn-sm ${activeTrack === track ? 'btn-gold' : 'btn-ghost'}`} style={{ flexShrink: 0 }}>
                 {TRACK_META[track].icon} {TRACK_META[track].label}
               </button>
             ))}
-            <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)' }}>
+            <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--muted)', flexShrink: 0, paddingLeft: '0.5rem' }}>
               {count} courses
             </span>
           </div>
@@ -130,7 +131,7 @@ function GroupLabel({ color, children }: { color: string; children: React.ReactN
 
 function CourseGrid({ courses, color }: { courses: CourseData[]; color: string }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '0.75rem' }}>
       {courses.map(course => <CourseTile key={course.slug} course={course} color={color} />)}
     </div>
   )
@@ -174,11 +175,14 @@ function CourseTile({ course, color }: { course: CourseData; color: string }) {
         <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', lineHeight: 1.3, color: 'var(--text)', flex: 1 }}>
           {course.name}
         </h3>
-        {course.rotation_week !== null && (
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', color, background: `${color}18`, border: `1px solid ${color}40`, borderRadius: '2rem', padding: '0.15rem 0.4rem', whiteSpace: 'nowrap', flexShrink: 0 }}>
-            W{course.rotation_week + 1}
-          </span>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0 }}>
+          {course.rotation_week !== null && (
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', color, background: `${color}18`, border: `1px solid ${color}40`, borderRadius: '2rem', padding: '0.15rem 0.4rem', whiteSpace: 'nowrap' }}>
+              W{course.rotation_week + 1}
+            </span>
+          )}
+          <InterestButton slug={course.slug} size="sm" />
+        </div>
       </div>
 
       <p style={{ color: 'var(--muted)', fontSize: '0.78rem', lineHeight: 1.5 }}>

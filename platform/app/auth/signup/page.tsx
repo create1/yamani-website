@@ -34,7 +34,7 @@ export default function SignUpPage() {
       password,
       options: {
         data: { full_name: name },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
       },
     })
 
@@ -43,7 +43,7 @@ export default function SignUpPage() {
     // If auto-confirmed (email confirmation disabled in Supabase), go straight to dashboard
     if (data.session) {
       setAutoSignedIn(true)
-      setTimeout(() => router.push('/dashboard'), 1500)
+      setTimeout(() => { window.location.href = '/dashboard' }, 1500)
     } else {
       setDone(true)
     }
@@ -54,13 +54,13 @@ export default function SignUpPage() {
     if (!configured) return
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=/dashboard` },
     })
   }
 
   if (autoSignedIn) {
     return (
-      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(1rem,4vw,2rem)' }}>
         <div style={{ textAlign: 'center', maxWidth: '400px' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✓</div>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>Account created!</h2>
@@ -72,7 +72,7 @@ export default function SignUpPage() {
 
   if (done) {
     return (
-      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(1rem,4vw,2rem)' }}>
         <div style={{ textAlign: 'center', maxWidth: '440px' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1.25rem' }}>✉️</div>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', marginBottom: '1rem' }}>Check your email</h2>
@@ -94,7 +94,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+    <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(1rem,4vw,2rem)' }}>
       <div style={{ width: '100%', maxWidth: '440px' }}>
 
         {!configured && (

@@ -264,12 +264,40 @@ footer.site-footer {
 }
 
 /* ─── RESPONSIVE ─────────────────────────────── */
+
+/* Tablet ≤ 1100px */
 @media (max-width: 1100px) {
-  nav.site-nav { padding: 1rem 1.5rem; }
-  .nav-links, .nav-pill { display: none; }
+  nav.site-nav     { padding: 1rem 1.5rem; }
+  .nav-links       { display: none; }
+  .nav-pill        { display: none; }
+  .nav-right-auth  { display: none !important; }
+  .nav-hamburger   { display: flex !important; }
 }
+
+/* Mobile ≤ 768px */
 @media (max-width: 768px) {
+  :root { --nav-h: 60px; }
+
+  .container { padding: 0 1rem; }
+  .section   { padding: 2.5rem 0; }
+
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  .section { padding: 3rem 0; }
-  footer.site-footer { flex-direction: column; text-align: center; }
+
+  footer.site-footer {
+    flex-direction: column; text-align: center; padding: 2rem 1rem;
+  }
+
+  .card { padding: 1.1rem; }
+
+  .btn    { font-size: 0.65rem; padding: 0.6rem 1.1rem; }
+  .btn-sm { font-size: 0.58rem; padding: 0.38rem 0.85rem; }
+
+  .section-title    { font-size: clamp(1.75rem, 6vw, 2.5rem); }
+  .section-subtitle { font-size: 0.95rem; }
+}
+
+/* Small mobile ≤ 480px */
+@media (max-width: 480px) {
+  .container   { padding: 0 0.85rem; }
+  nav.site-nav { padding: 0.75rem 1rem; }
 }

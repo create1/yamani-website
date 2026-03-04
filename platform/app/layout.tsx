@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import Providers from '@/components/Providers'
 
 export const metadata: Metadata = {
   title: 'Apotheos — Live Online Learning | AI, Founders & Wellness',
@@ -17,11 +18,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Nav />
-        <main className="page-wrap">
-          {children}
-        </main>
-        <Footer />
+        <Providers>
+          <Nav />
+          <main className="page-wrap">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

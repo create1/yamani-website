@@ -1,6 +1,8 @@
+'use client'
 import Link from 'next/link'
 import type { CourseData } from '@/lib/courses'
 import { TRACK_META } from '@/lib/courses'
+import InterestButton from '@/components/InterestButton'
 
 interface CourseCardProps {
   course: CourseData
@@ -12,23 +14,24 @@ export default function CourseCard({ course, enrolled = false, showEnroll = true
   const meta = TRACK_META[course.track]
   const durationHrs = Math.floor(course.duration_min / 60)
   const durationMins = course.duration_min % 60
-  const durStr = durationMins > 0
-    ? `${durationHrs}h ${durationMins}m`
-    : `${durationHrs}h`
+  const durStr = durationMins > 0 ? `${durationHrs}h ${durationMins}m` : `${durationHrs}h`
 
   return (
     <Link href={`/courses/${course.slug}`} style={{ textDecoration: 'none' }}>
       <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '1rem', cursor: 'pointer' }}>
-        {/* Track badge */}
+        {/* Track badge + interest button */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span className={`track-badge track-${course.track}`}>
             {meta.icon} {meta.label}
           </span>
-          {enrolled && (
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--gold)', letterSpacing: '0.08em' }}>
-              ✓ Enrolled
-            </span>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {enrolled && (
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--gold)', letterSpacing: '0.08em' }}>
+                ✓ Enrolled
+              </span>
+            )}
+            <InterestButton slug={course.slug} size="sm" />
+          </div>
         </div>
 
         {/* Name */}
