@@ -6,13 +6,9 @@ import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 
 const NAV_LINKS_BASE = [
-  { href: '/mission',     label: 'Mission'        },
-  { href: '/about',       label: 'About'         },
-  { href: '/journeys',    label: 'Journey'       },
-  { href: '/courses',     label: 'Online Courses' },
-  { href: '/curriculum',  label: 'Curriculum'    },
-  { href: '/locations',   label: 'Locations'     },
-  { href: '/membership',  label: 'Membership'    },
+  { href: '/mission',     label: 'Mission'  },
+  { href: '/about',       label: 'About'    },
+  { href: '/journeys',    label: 'Journey'  },
 ]
 const NAV_LINK_SIGN_IN = { href: '/auth/signin', label: 'Sign In' }
 

@@ -1,0 +1,4 @@
+{
+  "version": 2,
+  "description": "Marketing site (static). Deploy with Vercel Root Directory = . (repo root). Use a separate project for the app (Root Directory = platform)."
+}

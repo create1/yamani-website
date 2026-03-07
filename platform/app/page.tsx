@@ -11,16 +11,16 @@ export default function HomePage() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
-        router.replace('/dashboard')
+        window.location.replace('/dashboard')
         return
       }
       setCheckingAuth(false)
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session?.user) router.replace('/dashboard')
+      if (session?.user) window.location.replace('/dashboard')
     })
     return () => subscription.unsubscribe()
-  }, [router])
+  }, [])
 
   if (checkingAuth) {
     return (
@@ -59,11 +59,7 @@ export default function HomePage() {
           <span style={{ width: '1px', height: '0.8rem', background: 'var(--border2)', display: 'inline-block' }} />
           <Link href="/about" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.08em', textDecoration: 'none' }}>About</Link>
           <span style={{ width: '1px', height: '0.8rem', background: 'var(--border2)', display: 'inline-block' }} />
-          <Link href="/courses" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.08em', textDecoration: 'none' }}>Courses</Link>
-          <span style={{ width: '1px', height: '0.8rem', background: 'var(--border2)', display: 'inline-block' }} />
-          <Link href="/membership" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.08em', textDecoration: 'none' }}>Membership</Link>
-          <span style={{ width: '1px', height: '0.8rem', background: 'var(--border2)', display: 'inline-block' }} />
-          <Link href="/locations" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.08em', textDecoration: 'none' }}>Locations</Link>
+          <Link href="/journeys" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.08em', textDecoration: 'none' }}>Journey</Link>
         </div>
 
         {/* Trust line */}

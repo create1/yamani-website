@@ -38,6 +38,11 @@ function SignInForm() {
     return msg
   }
 
+  const nextPath = (() => {
+    const raw = searchParams.get('next')
+    return raw && raw.startsWith('/') ? raw : '/dashboard'
+  })()
+
   const handlePasswordSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!configured) return
@@ -45,7 +50,7 @@ function SignInForm() {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) { setError(friendlyError(error.message)); setLoading(false); return }
     setLoading(false)
-    window.location.replace('/dashboard')
+    window.location.href = '/dashboard'
   }
 
   const handleMagicLink = async (e: React.FormEvent) => {
@@ -54,7 +59,7 @@ function SignInForm() {
     setLoading(true); setError(''); setInfo('')
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard` },
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}` },
     })
     if (error) { setError(friendlyError(error.message)); setLoading(false); return }
     setMagicSent(true); setLoading(false)
@@ -64,7 +69,7 @@ function SignInForm() {
     if (!configured) return
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=/dashboard` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}` },
     })
   }
 

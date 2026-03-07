@@ -4,14 +4,10 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { ALL_COURSES, TRACK_META } from '@/lib/courses'
-import type { TrackName } from '@/lib/courses'
+import { ALL_COURSES } from '@/lib/courses'
 import type { User } from '@supabase/supabase-js'
 import type { Journey } from '@/lib/journeys'
 import { JOURNEY_STATUS_LABELS, formatJourneyDateRange } from '@/lib/journeys'
-import PersonalCalendar from '@/components/PersonalCalendar'
-
-const DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 
 const TIER_INFO: Record<string, { label: string; color: string; description: string; perks: string[] }> = {
   community: { label: 'Community', color: '#C9A84C', description: 'Online access', perks: ['Full online course library', 'Community chat', 'Monthly events'] },
@@ -32,6 +28,7 @@ export default function DashboardPage() {
     async function loadUser(u: User) {
       setUser(u)
       try {
+        await fetch('/api/user/ensure', { method: 'POST' }).catch(() => {})
         const [profRes, enrRes, journeysRes] = await Promise.all([
           supabase.from('users').select('name, membership_tier, role').eq('id', u.id).single(),
           supabase.from('enrollments').select('course:courses(slug)').eq('user_id', u.id),
@@ -85,53 +82,28 @@ export default function DashboardPage() {
   const tier = profile?.membership_tier ?? 'community'
   const tierInfo = TIER_INFO[tier] ?? TIER_INFO.community
   const isInstructor = profile?.role === 'instructor' || profile?.role === 'admin'
-
-  const todayKey = DAYS[new Date().getDay()]
-  const todayClasses = ALL_COURSES
-    .filter(c => c.day_of_week === todayKey && c.rotation_week === null)
-    .sort((a, b) => a.start_time.localeCompare(b.start_time))
-    .slice(0, 5)
   const enrolledCourses = ALL_COURSES.filter(c => enrolledSlugs.includes(c.slug))
 
   return (
     <div style={{ background: 'var(--ink)', minHeight: '100vh' }}>
 
-      {/* Portal header — clear identity and primary actions */}
+      {/* Compact header: identity + sign out */}
       <header style={{
-        background: 'radial-gradient(ellipse 100% 80% at 50% -10%, rgba(201,168,76,0.12) 0%, transparent 55%)',
         borderBottom: '1px solid var(--border2)',
-        padding: '2rem 0 2.25rem',
+        padding: '1rem 0',
       }}>
         <div className="container">
           <div className="portal-header">
             <div className="portal-identity">
-              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--gold)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
-                Your portal
-              </p>
-              <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.85rem, 4vw, 2.75rem)', lineHeight: 1.15, marginBottom: '0.5rem' }}>
+              <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', fontWeight: 600 }}>
                 {displayName}
               </h1>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)' }}>{user?.email}</span>
-                <span style={{
-                  fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.08em',
-                  padding: '0.25rem 0.6rem', borderRadius: '2rem',
-                  background: `${tierInfo.color}18`, border: `1px solid ${tierInfo.color}50`,
-                  color: tierInfo.color,
-                }}>
-                  {tierInfo.label}
-                </span>
-                {isInstructor && <span className="track-badge track-ai" style={{ fontSize: '0.55rem' }}>Instructor</span>}
-              </div>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)' }}>{user?.email}</span>
             </div>
             <div className="portal-actions">
-              <Link href="/journeys/new" className="btn btn-gold">
-                Design a Journey →
-              </Link>
-              <Link href="/journeys" className="btn btn-outline">My Journeys</Link>
-              <Link href="/courses" className="btn btn-outline">Courses</Link>
+              <Link href="/journeys" className="btn btn-ghost btn-sm">My Journeys</Link>
               {isInstructor && <Link href="/admin" className="btn btn-ghost btn-sm">Admin</Link>}
-              <button onClick={async () => { await supabase.auth.signOut(); router.push('/') }} className="btn btn-ghost btn-sm">Sign out</button>
+              <button onClick={async () => { await supabase.auth.signOut(); window.location.href = '/' }} className="btn btn-ghost btn-sm">Sign out</button>
             </div>
           </div>
         </div>
@@ -140,21 +112,32 @@ export default function DashboardPage() {
       <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
         <div className="portal-grid">
 
-          {/* Left: Journey + Learning blocks */}
           <div className="portal-main">
 
-            {/* Journey block */}
+            {/* Hero: Design an experience — primary CTA */}
+            <section className="dashboard-hero">
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--gold)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+                Experience design
+              </p>
+              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', lineHeight: 1.2, marginBottom: '0.75rem' }}>
+                Design an immersive experience
+              </h2>
+              <p style={{ color: 'var(--muted)', fontSize: '1rem', lineHeight: 1.65, maxWidth: '42ch', marginBottom: '1.5rem' }}>
+                Create a mythopoetic journey for yourself or a group. Set intentions, choose modalities, pick a location and dates — then get a narrative arc, schedule, and rituals tailored to your goals.
+              </p>
+              <Link href="/journeys/new" className="btn btn-gold btn-lg dashboard-hero-cta">
+                Start designing an experience →
+              </Link>
+            </section>
+
+            {/* Your journeys */}
             <section className="portal-block">
               <div className="portal-block-head">
-                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem' }}>Journey</h2>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)' }}>In‑person experience design</span>
+                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem' }}>Your journeys</h2>
+                <Link href="/journeys/new" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--gold)', textDecoration: 'none' }}>New journey</Link>
               </div>
-              <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: '1.25rem', lineHeight: 1.6 }}>
-                Create mythopoetic journeys for yourself or a group. Set goals, choose modalities, and receive a narrative arc, schedule, and rituals.
-              </p>
-              <Link href="/journeys/new" className="btn btn-gold" style={{ marginBottom: '1.25rem' }}>Design a Journey →</Link>
               {journeys.length === 0 ? (
-                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)' }}>No journeys yet. Create your first above.</p>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)' }}>You haven’t designed any experiences yet. Start with the button above.</p>
               ) : (
                 <div className="portal-list">
                   {journeys.map(j => {
@@ -181,74 +164,21 @@ export default function DashboardPage() {
               )}
             </section>
 
-            {/* Learning block */}
+            {/* Learning — compact */}
             <section className="portal-block">
               <div className="portal-block-head">
-                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem' }}>Learning</h2>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)' }}>Courses & schedule</span>
+                <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem' }}>Learning</h2>
+                <Link href="/courses" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--gold)', textDecoration: 'none' }}>Browse courses</Link>
               </div>
-              <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: '1rem', lineHeight: 1.6 }}>
-                Enroll in courses across wellness, AI, founder, and community tracks. View your calendar and today’s classes.
-              </p>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
-                <Link href="/courses" className="btn btn-outline btn-sm">Browse courses</Link>
-                <Link href="/schedule" className="btn btn-ghost btn-sm">Weekly schedule</Link>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <Link href="/courses" className="btn btn-outline btn-sm">Courses</Link>
+                <Link href="/schedule" className="btn btn-ghost btn-sm">Schedule</Link>
                 <Link href="/curriculum" className="btn btn-ghost btn-sm">Curriculum</Link>
               </div>
-              <div style={{ marginBottom: '1rem' }}>
-                <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--muted)', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>My schedule</h3>
-                <PersonalCalendar />
-              </div>
-              <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--muted)', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
-                My courses {enrolledCourses.length > 0 && `(${enrolledCourses.length})`}
-              </h3>
-              {enrolledCourses.length === 0 ? (
-                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)' }}>Not enrolled yet. Browse courses to add.</p>
-              ) : (
-                <div className="portal-list">
-                  {enrolledCourses.slice(0, 5).map(c => {
-                    const meta = TRACK_META[c.track as TrackName]
-                    return (
-                      <Link key={c.slug} href={`/courses/${c.slug}`} className="portal-list-item">
-                        <span style={{ fontFamily: 'var(--font-serif)', fontSize: '0.9rem' }}>{c.name}</span>
-                        <span className={`track-badge track-${c.track}`} style={{ fontSize: '0.52rem' }}>{meta.icon}</span>
-                        <span style={{ color: 'var(--gold)', fontSize: '0.7rem' }}>→</span>
-                      </Link>
-                    )
-                  })}
-                  <Link href="/courses" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--gold)', padding: '0.5rem 0', display: 'block' }}>
-                    View all courses →
-                  </Link>
-                </div>
-              )}
-            </section>
-
-            {/* Today's classes */}
-            <section className="portal-block">
-              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', marginBottom: '0.75rem' }}>
-                Today’s classes
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)', fontWeight: 400, marginLeft: '0.5rem' }}>
-                  {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
-                </span>
-              </h3>
-              {todayClasses.length === 0 ? (
-                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)' }}>No classes scheduled today.</p>
-              ) : (
-                <div className="portal-list">
-                  {todayClasses.map(c => {
-                    const meta = TRACK_META[c.track as TrackName]
-                    const isEnrolled = enrolledSlugs.includes(c.slug)
-                    return (
-                      <Link key={c.slug} href={`/courses/${c.slug}`} className="portal-list-item">
-                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)', minWidth: '3.5rem' }}>{c.start_time}</span>
-                        <span style={{ fontFamily: 'var(--font-serif)', fontSize: '0.9rem' }}>{c.name}</span>
-                        <span className={`track-badge track-${c.track}`} style={{ fontSize: '0.5rem' }}>{meta.icon}</span>
-                        {isEnrolled && <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', color: 'var(--gold)' }}>Enrolled</span>}
-                        <span style={{ color: 'var(--gold)', fontSize: '0.7rem' }}>→</span>
-                      </Link>
-                    )
-                  })}
-                </div>
+              {enrolledCourses.length > 0 && (
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', marginTop: '0.75rem' }}>
+                  Enrolled in {enrolledCourses.length} course{enrolledCourses.length !== 1 ? 's' : ''}.
+                </p>
               )}
             </section>
           </div>
@@ -256,34 +186,22 @@ export default function DashboardPage() {
           {/* Right sidebar */}
           <aside className="portal-sidebar">
             <div className="card" style={{ padding: '1.25rem' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Membership</div>
-              <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', marginBottom: '0.25rem' }}>{tierInfo.label}</div>
-              <p style={{ color: 'var(--muted)', fontSize: '0.8rem', marginBottom: '1rem', lineHeight: 1.5 }}>{tierInfo.description}</p>
-              <Link href="/membership" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--gold)', textDecoration: 'none' }}>Upgrade →</Link>
+              <Link href="/journeys/new" className="btn btn-gold" style={{ width: '100%', justifyContent: 'center', marginBottom: '0.75rem' }}>
+                Start designing an experience →
+              </Link>
+              <Link href="/journeys" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--muted)', textDecoration: 'none', display: 'block' }}>
+                My Journeys
+              </Link>
             </div>
             <div className="card" style={{ padding: '1.25rem' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Quick links</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {[
-                  { href: '/journeys', label: 'Journey', sub: 'Experience design' },
-                  { href: '/journeys/new', label: 'Design a Journey', sub: 'Create new' },
-                  { href: '/courses', label: 'Courses', sub: `${ALL_COURSES.length} available` },
-                  { href: '/curriculum', label: 'Curriculum', sub: 'Tracks & courses' },
-                  { href: '/schedule', label: 'Schedule', sub: 'Weekly view' },
-                  { href: '/locations', label: 'Locations', sub: 'Campus & places' },
-                ].map(({ href, label, sub }) => (
-                  <Link key={href} href={href} style={{ display: 'block', padding: '0.5rem 0', borderBottom: '1px solid var(--border2)', textDecoration: 'none' }}>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--text)' }}>{label}</div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', color: 'var(--muted)' }}>{sub}</div>
-                  </Link>
-                ))}
-              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Membership</div>
+              <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem' }}>{tierInfo.label}</div>
+              <Link href="/membership" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--gold)', textDecoration: 'none' }}>Upgrade</Link>
             </div>
             <div className="card" style={{ padding: '1.25rem' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Account</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text)' }}>{displayName}</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--muted)', marginBottom: '1rem', wordBreak: 'break-all' }}>{user?.email}</div>
-              <button onClick={async () => { await supabase.auth.signOut(); router.push('/') }} className="btn btn-ghost btn-sm" style={{ width: '100%', justifyContent: 'center' }}>Sign out</button>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text)', wordBreak: 'break-all' }}>{user?.email}</div>
+              <button onClick={async () => { await supabase.auth.signOut(); window.location.href = '/' }} className="btn btn-ghost btn-sm" style={{ width: '100%', justifyContent: 'center', marginTop: '0.75rem' }}>Sign out</button>
             </div>
           </aside>
         </div>
@@ -315,6 +233,19 @@ export default function DashboardPage() {
           .portal-actions { width: 100%; }
         }
         .portal-main { display: flex; flex-direction: column; gap: 2rem; }
+        .dashboard-hero {
+          background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.02) 100%);
+          border: 1px solid var(--border2);
+          border-radius: var(--radius-lg);
+          padding: 2rem;
+          margin-bottom: 0.5rem;
+        }
+        .dashboard-hero-cta {
+          display: inline-flex;
+          align-items: center;
+          padding: 0.9rem 1.5rem;
+          font-size: 0.95rem;
+        }
         .portal-block {
           background: var(--surface2);
           border: 1px solid var(--border2);
